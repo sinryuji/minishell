@@ -6,7 +6,7 @@
 #    By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/03 19:45:18 by hyeongki          #+#    #+#              #
-#    Updated: 2022/10/03 20:01:31 by hyeongki         ###   ########.fr        #
+#    Updated: 2022/10/03 21:06:12 by hyeongki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,9 @@ OBJS = $(SRCS:.c=.o)
 RM = rm -rf
 AR = ar rcs
 NAME = minishell
+READLINE_PATH = ./readline/
+READLINE_FLAG = -lreadline -L$(READLINE_PATH)/lib -I$(READLINE_PATH)/include
+
 #LIBFT_PATH = ./lib/libft/
 #LIBFT = ft
 
@@ -29,13 +32,13 @@ RED = \x1b[31m
 RESET = \x1b[0m
 
 %.o : %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 	@echo "$(GREEN).$(RESET)\c"
 
 all : $(NAME)
 
 $(NAME) :  $(OBJS)
-	$(CC) $(CFLAGS) $^ -lreadline -o $@
+	@$(CC) $(CFLAGS) $^ $(READLINE_FLAG) -o $@
 	@echo "$@: $(GREEN)$@ was created$(RESET)"
 
 clean :
