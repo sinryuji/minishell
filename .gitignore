@@ -1,0 +1,21 @@
+# Object files
+*.o
+*.obj
+
+# Libraries
+*.lib
+*.a
+
+# Executables
+*.exe
+*.out
+minishell
+
+# LLDB
+*.dSYM
+
+# Header
+*.gch
+
+# Swap
+*.swp
