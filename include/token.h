@@ -6,12 +6,14 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 15:33:11 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/03 16:30:15 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/03 19:37:04 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef AST_H
 # define AST_H
+
+# include <unistd.h>
 
 enum e_type
 {

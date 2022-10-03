@@ -6,13 +6,11 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 16:38:32 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/03 16:50:05 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/03 19:52:29 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "token.h"
-
-enum e_type
+enum e_node_type
 {
 	log_expr,
 	pipeline,
