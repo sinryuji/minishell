@@ -6,9 +6,12 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 16:38:32 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/03 19:52:29 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/04 09:01:21 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#ifndef AS_TREE_H
+# define AS_TREE_H
 
 enum e_node_type
 {
@@ -49,3 +52,5 @@ typedef struct s_command
 	int		prefix;
 	int		suffix;
 }t_command;
+
+#endif
