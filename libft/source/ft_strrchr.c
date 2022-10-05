@@ -1,33 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token.h                                            :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/03 15:33:11 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/04 20:25:29 by hyeongki         ###   ########.fr       */
+/*   Created: 2022/03/15 15:34:03 by hyeongki          #+#    #+#             */
+/*   Updated: 2022/04/13 12:22:42 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef AST_H
-# define AST_H
+#include "../include/libft.h"
 
-# include "minishell.h"
-
-enum e_type
+char	*ft_strrchr(const char *s, int c)
 {
-	word = 0,
-	op,
-};
+	size_t	len;
 
-typedef struct s_token
-{
-	int		type;
-	size_t	size;
-	char	*text;
-}t_token;
-
-
-
-#endif
+	len = ft_strlen(s);
+	while (len >= 0)
+	{
+		if (s[len] == (char)c)
+			return ((char *)(s + len));
+		if (len == 0)
+			break ;
+		len--;
+	}
+	return (NULL);
+}

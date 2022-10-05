@@ -1,33 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token.h                                            :+:      :+:    :+:   */
+/*   ft_split_free.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/03 15:33:11 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/04 20:25:29 by hyeongki         ###   ########.fr       */
+/*   Created: 2022/08/08 21:55:18 by hyeongki          #+#    #+#             */
+/*   Updated: 2022/08/08 22:00:04 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef AST_H
-# define AST_H
+#include "../include/libft.h"
 
-# include "minishell.h"
-
-enum e_type
+void	ft_split_free(char **split)
 {
-	word = 0,
-	op,
-};
+	int	i;
 
-typedef struct s_token
-{
-	int		type;
-	size_t	size;
-	char	*text;
-}t_token;
-
-
-
-#endif
+	i = 0;
+	if (!split)
+		return ;
+	while (split[i])
+	{
+		free(split[i]);
+		i++;
+	}
+	free(split);
+}

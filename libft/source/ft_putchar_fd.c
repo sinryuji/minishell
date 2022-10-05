@@ -1,33 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token.h                                            :+:      :+:    :+:   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/03 15:33:11 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/04 20:25:29 by hyeongki         ###   ########.fr       */
+/*   Created: 2022/03/21 12:36:49 by hyeongki          #+#    #+#             */
+/*   Updated: 2022/07/06 18:13:34 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef AST_H
-# define AST_H
+#include "../include/libft.h"
+#include <unistd.h>
 
-# include "minishell.h"
-
-enum e_type
+void	ft_putchar_fd(char c, int fd)
 {
-	word = 0,
-	op,
-};
-
-typedef struct s_token
-{
-	int		type;
-	size_t	size;
-	char	*text;
-}t_token;
-
-
-
-#endif
+	write(fd, &c, 1);
+}

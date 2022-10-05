@@ -1,33 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token.h                                            :+:      :+:    :+:   */
+/*   ft_min.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/03 15:33:11 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/04 20:25:29 by hyeongki         ###   ########.fr       */
+/*   Created: 2022/05/30 13:41:26 by hyeongki          #+#    #+#             */
+/*   Updated: 2022/06/02 16:04:50 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef AST_H
-# define AST_H
+#include "../include/libft.h"
 
-# include "minishell.h"
-
-enum e_type
+int	ft_min(int a, int b)
 {
-	word = 0,
-	op,
-};
-
-typedef struct s_token
-{
-	int		type;
-	size_t	size;
-	char	*text;
-}t_token;
-
-
-
-#endif
+	if (a > b)
+		return (b);
+	else
+		return (a);
+}

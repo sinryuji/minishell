@@ -1,33 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token.h                                            :+:      :+:    :+:   */
+/*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/03 15:33:11 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/04 20:25:29 by hyeongki         ###   ########.fr       */
+/*   Created: 2022/03/22 00:01:45 by hyeongki          #+#    #+#             */
+/*   Updated: 2022/04/13 12:19:47 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef AST_H
-# define AST_H
+#include "../include/libft.h"
 
-# include "minishell.h"
-
-enum e_type
+void	ft_lstadd_front(t_list **lst, t_list *new)
 {
-	word = 0,
-	op,
-};
-
-typedef struct s_token
-{
-	int		type;
-	size_t	size;
-	char	*text;
-}t_token;
-
-
-
-#endif
+	if (!lst || !new)
+		return ;
+	new->next = *lst;
+	*lst = new;
+}

@@ -1,33 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token.h                                            :+:      :+:    :+:   */
+/*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/03 15:33:11 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/04 20:25:29 by hyeongki         ###   ########.fr       */
+/*   Created: 2022/10/04 21:41:23 by hyeongki          #+#    #+#             */
+/*   Updated: 2022/10/05 14:14:59 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef AST_H
-# define AST_H
+#include "../include/minishell.h"
+#include "../include/built_in.h"
 
-# include "minishell.h"
-
-enum e_type
+int	ft_export(int argc, char **argv, char **envp)
 {
-	word = 0,
-	op,
-};
+	char	**ret;
+	
+	if (argc == 0)
+	{
 
-typedef struct s_token
-{
-	int		type;
-	size_t	size;
-	char	*text;
-}t_token;
+	}
+	else
+	{
 
-
-
-#endif
+	}
+	return (EXIT_SUCCESS);
+}
