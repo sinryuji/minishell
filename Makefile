@@ -6,7 +6,7 @@
 #    By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/03 19:45:18 by hyeongki          #+#    #+#              #
-#    Updated: 2022/10/05 13:22:49 by hyeongki         ###   ########.fr        #
+#    Updated: 2022/10/05 14:42:12 by hyeongki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,9 +23,9 @@ NAME = minishell
 READLINE_PATH = ./readline
 READLINE_LIB = -lreadline -L$(READLINE_PATH)/lib
 READLINE_INC = -I$(READLINE_PATH)/include
-
-#LIBFT_PATH = ./lib/libft/
-#LIBFT = ft
+LIBFT_PATH = ./libft/
+LIBFT = libft.a
+LIBFT_FLAG = $(LIBFT_PATH)$(LIBFT)
 
 # Colors
 GREEN = \x1b[32m
@@ -39,14 +39,17 @@ RESET = \x1b[0m
 all : $(NAME)
 
 $(NAME) :  $(OBJS)
-	@$(CC) $(CFLAGS) $^ $(READLINE_LIB) -o $@
+	@make -C $(LIBFT_PATH)
+	@$(CC) $(CFLAGS) $^ $(READLINE_LIB) $(LIBFT_FLAG) -o $@
 	@echo "$@: $(GREEN)$@ was created$(RESET)"
 
 clean :
+	@make clean -C $(LIBFT_PATH)
 	@$(RM) $(OBJS)
 	@echo "$(NAME): $(RED)object files were deleted$(RESET)"
 
 fclean : clean
+	@$(RM) $(LIBFT_PATH)$(LIBFT)
 	@$(RM) $(NAME)
 	@echo "$(NAME): $(RED)$(NAME) was deleted$(RESET)"
 
