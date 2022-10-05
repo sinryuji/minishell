@@ -6,12 +6,16 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 15:58:39 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/05 14:09:45 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/05 15:06:04 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
-#include "../include/built_in.h"
+#include "../include/token.h"
+#include "../include/as_tree.h"
+#include <readline/readline.h>
+#include <readline/history.h>
+#include <termios.h>
+#include <signal.h>
 
 void	signal_handler(int sig)
 {
