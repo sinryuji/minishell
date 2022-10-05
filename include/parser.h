@@ -1,33 +1,56 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token.h                                            :+:      :+:    :+:   */
+/*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/03 15:33:11 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/04 20:25:29 by hyeongki         ###   ########.fr       */
+/*   Created: 2022/10/03 16:38:32 by jiwahn            #+#    #+#             */
+/*   Updated: 2022/10/05 14:54:14 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef AST_H
-# define AST_H
-
-# include "minishell.h"
+#ifndef PARSER_H
+# define PARSER_H
 
 enum e_type
 {
-	word = 0,
-	op,
+	log_expr,
+	pipeline,
+	subshell,
+	command,
+	redirect
 };
 
-typedef struct s_token
+typedef struct s_log_expr
+{
+	char	*op;
+	int		left;
+	int		right;
+}t_log_expr;
+
+typedef struct s_pipeline
+{
+	int		*cmds;
+}t_pipeline;
+
+typedef struct s_subshell
 {
 	int		type;
-	size_t	size;
-	char	*text;
-}t_token;
+	int		*cmds;
+}t_subshell;
 
+typedef struct s_redirect
+{
+	char	*op;
+	char	*file;
+}t_redirect;
 
+typedef struct s_command
+{
+	char	*cmd;
+	int		prefix;
+	int		suffix;
+}t_command;
 
 #endif

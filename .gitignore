@@ -19,3 +19,6 @@ minishell
 
 # Swap
 *.swp
+
+# tags
+tags
