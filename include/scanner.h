@@ -6,12 +6,12 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 15:33:11 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/04 21:51:41 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/05 17:53:46 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef AST_H
-# define AST_H
+#ifndef SCANNER_H
+# define SCANNER_H
 
 # define S_QUOTE  0x01 //1 on not closed
 # define D_QUOTE  0x02 //1 on not closed
@@ -39,5 +39,9 @@ typedef struct s_buffer
 	int		size;
 	char	*word;
 }t_buffer;
+
+//scanner.c
+void	scanner(t_token **tokens, char *script);
+
 
 #endif
