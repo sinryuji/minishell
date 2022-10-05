@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 20:18:21 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/05 14:44:00 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/05 16:34:50 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,5 @@
 # include <signal.h>
 
 # include "../libft/include/libft.h"
-
-typedef struct	s_env
-{
-	char			*key;
-	char			*value;
-	struct s_env	*next;
-}	t_env;
-
-typedef struct	s_env_list
-{
-	struct s_env	*head;
-	struct s_env	*tail;
-}	t_env_list;
 
 #endif
