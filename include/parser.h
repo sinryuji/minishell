@@ -1,28 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   as_tree.h                                          :+:      :+:    :+:   */
+/*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 16:38:32 by jiwahn            #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/10/04 09:01:21 by jiwahn           ###   ########.fr       */
-=======
-/*   Updated: 2022/10/04 20:25:33 by hyeongki         ###   ########.fr       */
->>>>>>> b294830fdbbe203e01123811da1d4445d11cec3e
+/*   Updated: 2022/10/05 14:54:14 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef AS_TREE_H
-# define AS_TREE_H
+#ifndef PARSER_H
+# define PARSER_H
 
-<<<<<<< HEAD
-=======
-# include "minishell.h"
-
->>>>>>> b294830fdbbe203e01123811da1d4445d11cec3e
-enum e_node_type
+enum e_type
 {
 	log_expr,
 	pipeline,
