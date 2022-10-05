@@ -6,19 +6,12 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 15:58:39 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/04 19:45:28 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/05 14:09:45 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/token.h"
-#include "../include/as_tree.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <sys/termios.h>
-#include <termios.h>
-#include <signal.h>
+#include "../include/minishell.h"
+#include "../include/built_in.h"
 
 void	signal_handler(int sig)
 {
@@ -45,7 +38,14 @@ void	set_term(void)
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 }
 
-int	main(int argc, char *argv[], char *envp[])
+void	processing(char *line)
+{
+	int		pipe_fd[2];
+	pid_t	pid;
+	int		status;
+}
+
+int	main(int argc, char **argv, char **envp)
 {
 	char			*line;
 	struct termios	term;
@@ -58,7 +58,7 @@ int	main(int argc, char *argv[], char *envp[])
 	{
 		line = readline("fdf$ ");
 		if (line)
-			printf("%s\n", line);
+			processing(line);
 		else
 		{
 			printf("exit\n");

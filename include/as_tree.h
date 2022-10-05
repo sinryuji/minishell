@@ -6,9 +6,14 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 16:38:32 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/03 19:52:29 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/04 20:25:33 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#ifndef AS_TREE_H
+# define AS_TREE_H
+
+# include "minishell.h"
 
 enum e_node_type
 {
@@ -49,3 +54,5 @@ typedef struct s_command
 	int		prefix;
 	int		suffix;
 }t_command;
+
+#endif
