@@ -9,16 +9,6 @@
 # Executables
 *.exe
 *.out
-minishell
 
-# LLDB
-*.dSYM
-
-# Header
-*.gch
-
-# Swap
+# Swp
 *.swp
-
-# tags
-tags
