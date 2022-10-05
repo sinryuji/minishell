@@ -6,7 +6,6 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 15:58:39 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/03 21:21:36 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +13,6 @@
 #include "../include/as_tree.h"
 #include <readline/readline.h>
 #include <readline/history.h>
-#include <stdio.h>
 #include <termios.h>
 #include <signal.h>
 
