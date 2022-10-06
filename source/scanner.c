@@ -6,12 +6,15 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:05:06 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/05 14:20:58 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/06 20:50:44 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <errno.h>
+#include <stdlib.h>
+
 #include "../include/scanner.h"
+#include "../libft/include/libft.h"
 
 t_token	*get_new_token(int type, char *text)
 {
@@ -19,70 +22,96 @@ t_token	*get_new_token(int type, char *text)
 
 	new_token = (t_token *)malloc(sizeof(t_token));
 	new_token->type = type;
-	new_token->text = ft_strdup(text);
+	new_token->text = text;
 	new_token->prev = NULL;
 	new_token->next = NULL;
 	return (new_token);
 }
 
-void	tok_add_back(t_token **tokens, t_token *new)
+#include <stdio.h>
+void	tok_add_back(t_token **toks, t_token *new)
 {
 	t_token	*p;
 
-	p = *tokens;
+	p = *toks;
 	if (new == NULL)
 		return ;
-	if (*lst == NULL && new != NULL)
+	if (*toks == NULL && new != NULL)
 	{
-		*lst = new;
+		*toks = new;
 		return ;
 	}
-	while ((*lst)->next)
-		*lst = (*lst)->next;
-	(*lst)->next = new;
-	*lst = p;
+	while ((*toks)->next)
+		*toks = (*toks)->next;
+	new->prev = *toks;
+	(*toks)->next = new;
+	*toks = p;
 }
 
-
-/*
- * (char *)srcipt should end with a null char
- * */
-void	scanner(t_token **tokens, char *script)
+void	scanner(t_token **toks, char *script)
 {
-	int			i;
-	char		c;
 	char		flag;
-	t_buffer	buffer;
+	t_buf	buf;
 
 	flag = 0;
-	i = 0;
-	while (1)
+	init_buf(&buf);
+	while (*script)
 	{
-		c = script[i];
+		if (flag ^ D_QUOTE && *script == '\'')
+			flag ^= S_QUOTE;
+		else if (flag ^ S_QUOTE && *script == '\"')
+			flag ^= D_QUOTE;
+		else if ((flag ^ S_QUOTE) && (flag ^ D_QUOTE) && is_delim(*script))
+			flush_buf(toks, &buf);
+		else if ((flag ^ S_QUOTE) && (flag ^ D_QUOTE) && is_op(*script))
+		{
+			flush_buf(toks, &buf);
+			if (find_op(script))
+			{
+				tok_add_back(toks, get_new_token(OP, ft_strndup(script, 2)));
+				script++;
+			}
+			else
+				tok_add_back(toks, get_new_token(OP, ft_strndup(script, 1)));
+		}
+		else if (flag ^ S_QUOTE && *script == '$' && \
+				!is_delim(*(script + 1)) && (ft_isalnum(*(script + 1)) || *(script + 1) == '?'))
+		{
+			flush_buf(toks, &buf);
+			tok_add_back(toks, get_new_token(OP, ft_strndup("$", 1)));
+		}
+		else
+			append_to_buf(*script, &buf);
+		script++;
 	}
+	if (flag & S_QUOTE || flag & D_QUOTE)
+		err_exit("syntax err\n");
+	flush_buf(toks, &buf);
+	free(buf.word);
 }
 
 #include <readline/readline.h>
-#include <stdlib.h>
 #include <stdio.h>
-void	print_tokens(t_tokens *tokens)
+void	print_toks(t_token *toks)
 {
-	while (tokens)
+	while (toks)
 	{
-		printf("[%d]%s->", tokens->type, tokens->text);
-		tokens = tokens->next;
+		printf("[%d]%s->", toks->type, toks->text);
+		toks = toks->next;
 	}
 	printf("\n");
 }
 
 int main(int argc, char *argv[])
 {
-	t_token	*tokens;
-	char	*input;
+	t_token		*toks;
+	char		*input;
 
-	tokens = NULL;
+	toks = NULL;
 	input = readline("input>> ");
-	scanner(&tokens, input, deli);
-	print_tokens(tokens);
+	scanner(&toks, input);
+	print_toks(toks);
+	system("leaks a.out");
 	free(input);
+	return (0);
 }
