@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 16:24:59 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/06 18:20:11 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/06 20:39:41 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,22 +34,42 @@ int	numeric_check(char *arg)
 	return (1);
 }
 
+//int	ft_exit(char **argv, t_env_list *envl)
+//{
+//	if (!*argv)
+//	{
+//		printf("exit\n");
+//		exit(EXIT_SUCCESS);
+//	}
+//	if (!numeric_check(argv[0]))
+//		ft_puterr(ft_strjoin(ft_strjoin(SHELL_NAME": exit: ", \
+//						argv[0]), ": not a vali identifier\n"));
+//	else if (argc_check(argv) != 1)
+//	{
+//		printf(SHELL_NAME": exit: too many arguments\n");
+//		return (EXIT_FAILURE);
+//	}
+//	else
+//		exit(ft_atoi(argv[0]));
+//	return (EXIT_SUCCESS);
+//}
+
 int	ft_exit(char **argv, t_env_list *envl)
 {
 	if (!*argv)
 	{
 		printf("exit\n");
-		exit(EXIT_SUCCESS);
+		return(EXIT_SUCCESS - 2);
 	}
 	if (!numeric_check(argv[0]))
 		ft_puterr(ft_strjoin(ft_strjoin(SHELL_NAME": exit: ", \
-						argv[0]), ": not a vali identifier\n"));
+						argv[0]), ": not a valid identifier\n"));
 	else if (argc_check(argv) != 1)
 	{
 		printf(SHELL_NAME": exit: too many arguments\n");
-		return (EXIT_FAILURE);
+		return (EXIT_FAILURE - 2);
 	}
 	else
-		exit(ft_atoi(argv[0]));
-	return (EXIT_SUCCESS);
+		return(ft_atoi(argv[0]));
+	return (EXIT_SUCCESS - 2);
 }

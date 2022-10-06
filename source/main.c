@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 15:58:39 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/06 17:08:31 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/06 20:53:30 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,37 @@ void	set_term(void)
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 }
 
+void	child_process(int pipe_fd[], char **argv, t_env_list *envl)
+{
+	int	ret;
+
+	ret = built_in(argv[0], argv + 1, envl);
+	if (ret == -1)
+	{
+
+	}
+	else
+		exit(ret);
+}
+
 void	processing(char **argv, t_env_list *envl)
 {
-	int		ret;
+	int		pipe_fd[2];
+	pid_t	pid;
+	int		status;
 
 	if (!*argv)
 		return ;
-	if (argv + 1)
-		ret = built_in(argv[0], argv + 1, envl);
-	else
-		ret = built_in(argv[0], NULL, envl);
+	if (pipe(pipe_fd) == -1)
+		ft_perror_exit("pipe error\n");
+	pid = fork();
+	if (pid == 0)
+		child_process(pipe_fd, argv, envl);
+	waitpid(pid, &status, 0);
+	printf("%d\n", status);
+	ft_split_free(argv);
+	if (status < 0)
+		exit(status);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -70,7 +91,7 @@ int	main(int argc, char **argv, char **envp)
 			processing(ft_split(line, ' '), envl);
 		else
 		{
-			printf("exit\n");
+			printf("\033[1A\033[5Cexit\n");
 			break ;
 		}
 		add_history(line);
