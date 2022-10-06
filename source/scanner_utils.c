@@ -6,27 +6,84 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 17:25:51 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/05 17:59:31 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/06 20:52:24 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
 #include "../include/scanner.h"
-#include "../libft/libft.h"
+#include "../libft/include/libft.h"
 
-void	err_exit(void)
+int	is_op(char c)
 {
-	const char	*err = strerror(errno);
-	write(STDERR_FILENO, err, ft_strlen(errno));
+	return (c == '|'|| c == '&' ||\
+			c == '(' || c == ')'||\
+			c == '<'|| c == '>');
+}
+
+int	is_delim(char c)
+{
+	return (c == ' ' || c == '\n' || c == '\t');
+}
+
+void	err_exit(char *err)
+{
+	if (!errno)
+		err = strerror(errno);
+	write(STDERR_FILENO, err, ft_strlen(err));
 	exit(EXIT_FAILURE);
 }
 
-void	init_buffer(t_buffer *buffer)
+#include <stdio.h>
+void	init_buf(t_buf *buf)
 {
-	buffer->size = 0;
-	word = (char *)malloc(sizoef(char) * BUF_SIZE);
+	buf->size = 0;
+	buf->word = (char *)malloc(sizeof(char) * BUF_SIZE);
 	if (errno)
-		err_exit();
+		err_exit(NULL);
+}
+
+void	realloc_buf(t_buf *buf)
+{
+	char	*word;
+
+	word = (char *)malloc(sizeof(char) * buf->size * 2);
+	if (errno)
+		err_exit(NULL);
+	ft_memmove(word, buf->word, buf->size);
+	free(buf->word);
+	buf->word = word;
+}
+
+void	append_to_buf(char c, t_buf *buf)
+{
+	if (buf->size != 0 && (buf->size % BUF_SIZE == 0))
+		realloc_buf(buf);
+	buf->word[buf->size] = c;
+	(buf->size)++;
+} 
+
+int	find_op(char *script)
+{
+	char	next;
+
+	next = *(script + 1);
+	if (next == '\0')
+		return (1);
+	if (*script == next && next != '(' && next != ')')
+		return (1);
+	return (0);
+}
+
+void	flush_buf(t_token **toks, t_buf *buf)
+{
+	if (buf->size != 0)
+	{
+		tok_add_back(toks, get_new_token(WORD, ft_strndup(buf->word, buf->size)));
+		free(buf->word);
+		init_buf(buf);
+	}
 }

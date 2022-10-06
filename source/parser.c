@@ -6,8 +6,11 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:05:29 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/05 17:46:12 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/06 13:43:22 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <errno.h>
+
 #include "../include/parser.h"
+#include "../include/scanner.h"
