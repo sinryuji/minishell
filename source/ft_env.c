@@ -6,14 +6,14 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 15:34:51 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/06 17:11:10 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/06 18:02:55 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 #include "../include/built_in.h"
 
-int	 print_env(t_env_list *envl)
+int	print_env(t_env_list *envl)
 {
 	t_env	*env;
 

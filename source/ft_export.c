@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 21:41:23 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/06 15:13:43 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/06 18:05:35 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int	ft_export(char **argv, t_env_list *envl)
 	{
 		new = new_env(argv[0]);
 		if (!key_vaildation(new->key))
-			// 일단 보류
+			// 스트링 빌더를 위해 보류
 			ft_puterr(SHELL_NAME": export: ` ': not a valid identifier\n");
 		if (!set_env(&envl, new_env(argv[0])))
 			return (EXIT_FAILURE);
