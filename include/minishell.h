@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 20:18:21 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/05 16:34:50 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/06 14:49:15 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,7 @@
 # include <signal.h>
 
 # include "../libft/include/libft.h"
+
+# define SHELL_NAME "fdf"
 
 #endif

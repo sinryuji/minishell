@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 16:30:46 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/05 17:32:40 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/06 14:17:49 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,12 @@ int	set_env(t_env_list **envl, t_env *new)
 			return (0);
 		(*envl)->head = new;
 		(*envl)->tail = new;
+	}
+	else if (get_env(*envl, new->key))
+	{
+		if (new->value)
+			get_env(*envl, new->key)->value = new->value;
+		free(new);
 	}
 	else
 	{

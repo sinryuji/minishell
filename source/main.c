@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 15:58:39 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/05 17:34:18 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/06 14:58:56 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	main(int argc, char **argv, char **envp)
 	parse_env(&envl, envp);
 	while (1)
 	{
-		line = readline("fdf$ ");
+		line = readline(SHELL_NAME"$ ");
 		if (line)
 			processing(line, envl);
 		else
