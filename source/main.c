@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 15:58:39 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/06 14:58:56 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/06 15:08:52 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,13 @@ int	main(int argc, char **argv, char **envp)
 	signal(SIGQUIT, signal_handler);
 	envl = NULL;
 	parse_env(&envl, envp);
+	ft_export(0, NULL, envl);
+	printf("\n\n\n");
+	char	*str[2];
+	str[0] = "PATH";
+	str[1] = "asdf";
+	ft_unset(1, str, envl);
+	ft_export(0, NULL, envl);
 	while (1)
 	{
 		line = readline(SHELL_NAME"$ ");

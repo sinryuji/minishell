@@ -1,42 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_echo.c                                          :+:      :+:    :+:   */
+/*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/04 19:55:21 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/06 15:13:23 by hyeongki         ###   ########.fr       */
+/*   Created: 2022/10/06 15:00:32 by hyeongki          #+#    #+#             */
+/*   Updated: 2022/10/06 15:14:04 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 #include "../include/built_in.h"
+#include "../include/env.h"
 
-static int	option_check(char *arg)
+int	ft_unset(char **argv, t_env_list *envl)
 {
-	if (arg[0] == '-' && arg[1] == 'n')
-		return (1);
-	return (0);
-}
-
-int	ft_echo(char **argv, t_env_list *envl)
-{
-	int	option;
-
-	(void)envl;
-	option = option_check(argv[0]);
-	if (option)
-		argv++;
-	while (argv)
-	{
-		if (argv + 1)
-			printf("%s ", *argv);
-		else
-			printf("%s", *argv);
-		argv++;
-	}
-	if (!option)
-		write(1, "\n", 1);
+	t_env	*env;
+	
+	if (!argv[0])
+		return (EXIT_FAILURE);
+	env = get_env(envl, argv[0]);
+	if (!env)
+		return (EXIT_FAILURE);
+	del_env(&envl, argv[0]);
 	return (EXIT_SUCCESS);
 }

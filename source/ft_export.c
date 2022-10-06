@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 21:41:23 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/06 14:56:31 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/06 15:13:43 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../include/built_in.h"
 #include "../include/env.h"
 
-void	swap_str(char **a, char **b)
+static void	swap_str(char **a, char **b)
 {
 	char	*tmp;
 
@@ -23,7 +23,7 @@ void	swap_str(char **a, char **b)
 	*b = tmp;
 }
 
-int	sort_env(t_env_list **envl)
+static int	sort_env(t_env_list **envl)
 {
 	t_env	*end;
 	t_env	*cur;
@@ -51,7 +51,7 @@ int	sort_env(t_env_list **envl)
 	return (1);
 }
 
-int	print_export(t_env_list *envl)
+static int	print_export(t_env_list *envl)
 {
 	t_env	*env;
 
@@ -69,7 +69,7 @@ int	print_export(t_env_list *envl)
 	return (1);
 }
 
-int	key_vaildation(char *key)
+static int	key_vaildation(char *key)
 {
 	while (*key)
 	{
@@ -80,12 +80,12 @@ int	key_vaildation(char *key)
 	return (1);
 }
 
-int	ft_export(int argc, char **argv, t_env_list *envl)
+int	ft_export(char **argv, t_env_list *envl)
 {
 	char	**ret;
 	t_env	*new;
 
-	if (argc == 0)
+	if (!argv[0])
 	{
 		if (!sort_env(&envl))
 			return (EXIT_FAILURE);
