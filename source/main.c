@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 15:58:39 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/05 17:34:18 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/06 17:08:31 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,16 @@ void	set_term(void)
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 }
 
-void	processing(char *line, t_env_list *envl)
+void	processing(char **argv, t_env_list *envl)
 {
-	int		pipe_fd[2];
-	pid_t	pid;
-	int		status;
+	int		ret;
+
+	if (!*argv)
+		return ;
+	if (argv + 1)
+		ret = built_in(argv[0], argv + 1, envl);
+	else
+		ret = built_in(argv[0], NULL, envl);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -60,9 +65,9 @@ int	main(int argc, char **argv, char **envp)
 	parse_env(&envl, envp);
 	while (1)
 	{
-		line = readline("fdf$ ");
+		line = readline(SHELL_NAME"$ ");
 		if (line)
-			processing(line, envl);
+			processing(ft_split(line, ' '), envl);
 		else
 		{
 			printf("exit\n");
