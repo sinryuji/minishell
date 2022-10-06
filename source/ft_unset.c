@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 15:00:32 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/06 15:14:04 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/06 15:43:16 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 int	ft_unset(char **argv, t_env_list *envl)
 {
 	t_env	*env;
-	
+
 	if (!argv[0])
 		return (EXIT_FAILURE);
 	env = get_env(envl, argv[0]);
