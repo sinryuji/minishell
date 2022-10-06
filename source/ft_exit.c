@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 16:24:59 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/06 18:05:27 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/06 18:20:11 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ int	ft_exit(char **argv, t_env_list *envl)
 		exit(EXIT_SUCCESS);
 	}
 	if (!numeric_check(argv[0]))
-		// 스트링 빌더를 위해 보류
-		ft_puterr(SHELL_NAME": exit: argv[0]: numeric argument required\n");
+		ft_puterr(ft_strjoin(ft_strjoin(SHELL_NAME": exit: ", \
+						argv[0]), ": not a vali identifier\n"));
 	else if (argc_check(argv) != 1)
 	{
 		printf(SHELL_NAME": exit: too many arguments\n");
