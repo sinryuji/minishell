@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 16:30:46 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/06 14:17:49 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/07 21:35:27 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ t_env	*get_env(t_env_list *envl, char *key)
 	env = envl->head;
 	while (env)
 	{
-		if (!ft_strncmp(env->key, key, ft_strlen(env->key)))
+		if (ft_strcmp(env->key, key) == 0)
 			return (env);
 		env = env->next;
 	}

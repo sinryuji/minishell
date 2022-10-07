@@ -1,26 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pwd.c                                           :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/04 21:12:59 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/07 20:26:43 by hyeongki         ###   ########.fr       */
+/*   Created: 2022/01/11 13:57:29 by hyeongki          #+#    #+#             */
+/*   Updated: 2022/10/07 21:23:41 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
-#include "../include/built_in.h"
+#include "../include/libft.h"
 
-int	ft_pwd(char **argv, t_env_list *envl)
+int	ft_strcmp(char *s1, char *s2)
 {
-	char	buf[BUFSIZ];
+	int	i;
 
-	(void)envl;
-	if (getcwd(buf, BUFSIZ) == NULL)
-		return (EXIT_FAILURE);
-	else
-		printf("%s\n", buf);
-	return (EXIT_SUCCESS);
+	i = 0;
+	while (s1[i] && s2[i] && s1[i] == s2[i])
+		i++;
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }

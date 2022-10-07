@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 21:41:23 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/06 18:18:22 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/07 21:39:35 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,7 @@ static int	sort_env(t_env_list **envl)
 		cur = (*envl)->head;
 		while (cur->next)
 		{
-			if (ft_strncmp(cur->key, cur->next->key, \
-						ft_max(ft_strlen(cur->key), \
-							ft_strlen(cur->next->key))) > 0)
+			if (ft_strcmp(cur->key, cur->next->key))
 			{
 				swap_str(&cur->key, &cur->next->key);
 				swap_str(&cur->value, &cur->next->value);
