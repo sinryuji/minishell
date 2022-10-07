@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:05:06 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/07 14:29:38 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/07 15:49:09 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	tok_add_back(t_token **toks, t_token *new)
 
 void	scanner(t_token **toks, char *script)
 {
-	char		flag;
+	char	flag;
 	t_buf	buf;
 
 	flag = 0;
@@ -60,16 +60,13 @@ void	scanner(t_token **toks, char *script)
 			flag ^= S_QUOTE;
 		else if (flag ^ S_QUOTE && *script == '\"')
 			flag ^= D_QUOTE;
-		if ((flag ^ S_QUOTE) && (flag ^ D_QUOTE) && is_delim(*script))
+		if (!(flag & S_QUOTE + D_QUOTE) && is_delim(*script))
 			flush_buf(toks, &buf);
-		else if ((flag ^ S_QUOTE) && (flag ^ D_QUOTE) && is_op(*script))
+		else if (!(flag & S_QUOTE + D_QUOTE) && is_op(*script))
 		{
 			flush_buf(toks, &buf);
 			if (find_op(script))
-			{
-				tok_add_back(toks, get_new_token(OP, ft_strndup(script, 2)));
-				script++;
-			}
+				tok_add_back(toks, get_new_token(OP, ft_strndup(script++, 2)));
 			else
 				tok_add_back(toks, get_new_token(OP, ft_strndup(script, 1)));
 		}
@@ -81,30 +78,4 @@ void	scanner(t_token **toks, char *script)
 		err_exit("syntax err\n");
 	flush_buf(toks, &buf);
 	free(buf.word);
-}
-
-#include <stdio.h>
-#include <readline/readline.h>
-void	print_toks(t_token *toks)
-{
-	while (toks)
-	{
-		printf("[%d]%s->", toks->type, toks->text);
-		toks = toks->next;
-	}
-	printf("\n");
-}
-
-int main(int argc, char *argv[])
-{
-	t_token		*toks;
-	char		*input;
-
-	toks = NULL;
-	input = readline("input>> ");
-	scanner(&toks, input);
-	print_toks(toks);
-	system("leaks a.out");
-	free(input);
-	return (0);
 }

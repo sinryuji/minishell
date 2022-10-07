@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 17:25:51 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/07 13:45:38 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/07 15:49:48 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,6 @@ int	find_op(char *script)
 	char	next;
 
 	next = *(script + 1);
-	if (next == '\0')
-		return (1);
 	if (*script == next && next != '(' && next != ')')
 		return (1);
 	return (0);

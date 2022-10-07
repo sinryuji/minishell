@@ -6,51 +6,27 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 16:38:32 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/05 14:54:14 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/07 16:16:34 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
 
+#include "scanner.h"
+
 enum e_type
 {
-	log_expr,
-	pipeline,
-	subshell,
-	command,
-	redirect
+	pipe,
+
 };
 
-typedef struct s_log_expr
+typedef struct s_tree
 {
-	char	*op;
-	int		left;
-	int		right;
-}t_log_expr;
-
-typedef struct s_pipeline
-{
-	int		*cmds;
-}t_pipeline;
-
-typedef struct s_subshell
-{
-	int		type;
-	int		*cmds;
-}t_subshell;
-
-typedef struct s_redirect
-{
-	char	*op;
-	char	*file;
-}t_redirect;
-
-typedef struct s_command
-{
-	char	*cmd;
-	int		prefix;
-	int		suffix;
-}t_command;
+	int				type;
+	t_token			*tok;
+	struct s_tree	*left;
+	struct s_tree	*right;
+}t_tree;
 
 #endif
