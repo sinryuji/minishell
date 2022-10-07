@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 16:38:32 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/07 16:16:34 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/07 16:39:59 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@
 
 enum e_type
 {
-	pipe,
-
+	CTLOP,
+	PIPE,
+	CMD
 };
 
 typedef struct s_tree
