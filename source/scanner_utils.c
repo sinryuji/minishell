@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 17:25:51 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/06 20:52:24 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/07 13:45:38 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	err_exit(char *err)
 	exit(EXIT_FAILURE);
 }
 
-#include <stdio.h>
 void	init_buf(t_buf *buf)
 {
 	buf->size = 0;

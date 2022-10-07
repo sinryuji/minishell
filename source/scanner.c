@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:05:06 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/06 20:50:44 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/07 14:29:38 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ t_token	*get_new_token(int type, char *text)
 	return (new_token);
 }
 
-#include <stdio.h>
 void	tok_add_back(t_token **toks, t_token *new)
 {
 	t_token	*p;
@@ -61,7 +60,7 @@ void	scanner(t_token **toks, char *script)
 			flag ^= S_QUOTE;
 		else if (flag ^ S_QUOTE && *script == '\"')
 			flag ^= D_QUOTE;
-		else if ((flag ^ S_QUOTE) && (flag ^ D_QUOTE) && is_delim(*script))
+		if ((flag ^ S_QUOTE) && (flag ^ D_QUOTE) && is_delim(*script))
 			flush_buf(toks, &buf);
 		else if ((flag ^ S_QUOTE) && (flag ^ D_QUOTE) && is_op(*script))
 		{
@@ -74,12 +73,6 @@ void	scanner(t_token **toks, char *script)
 			else
 				tok_add_back(toks, get_new_token(OP, ft_strndup(script, 1)));
 		}
-		else if (flag ^ S_QUOTE && *script == '$' && \
-				!is_delim(*(script + 1)) && (ft_isalnum(*(script + 1)) || *(script + 1) == '?'))
-		{
-			flush_buf(toks, &buf);
-			tok_add_back(toks, get_new_token(OP, ft_strndup("$", 1)));
-		}
 		else
 			append_to_buf(*script, &buf);
 		script++;
@@ -90,8 +83,8 @@ void	scanner(t_token **toks, char *script)
 	free(buf.word);
 }
 
-#include <readline/readline.h>
 #include <stdio.h>
+#include <readline/readline.h>
 void	print_toks(t_token *toks)
 {
 	while (toks)
