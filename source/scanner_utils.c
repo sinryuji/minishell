@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 17:25:51 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/07 13:45:38 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/07 16:45:17 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
+
 #include "../include/scanner.h"
 #include "../libft/include/libft.h"
-
-int	is_op(char c)
-{
-	return (c == '|'|| c == '&' ||\
-			c == '(' || c == ')'||\
-			c == '<'|| c == '>');
-}
-
-int	is_delim(char c)
-{
-	return (c == ' ' || c == '\n' || c == '\t');
-}
 
 void	err_exit(char *err)
 {
@@ -64,18 +53,6 @@ void	append_to_buf(char c, t_buf *buf)
 	buf->word[buf->size] = c;
 	(buf->size)++;
 } 
-
-int	find_op(char *script)
-{
-	char	next;
-
-	next = *(script + 1);
-	if (next == '\0')
-		return (1);
-	if (*script == next && next != '(' && next != ')')
-		return (1);
-	return (0);
-}
 
 void	flush_buf(t_token **toks, t_buf *buf)
 {

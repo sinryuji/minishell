@@ -6,50 +6,39 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:05:06 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/07 14:29:38 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/07 16:44:59 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <errno.h>
-#include <stdlib.h>
 
 #include "../include/scanner.h"
 #include "../libft/include/libft.h"
 
-t_token	*get_new_token(int type, char *text)
+int	is_op(char c)
 {
-	t_token	*new_token;
-
-	new_token = (t_token *)malloc(sizeof(t_token));
-	new_token->type = type;
-	new_token->text = text;
-	new_token->prev = NULL;
-	new_token->next = NULL;
-	return (new_token);
+	return (c == '|'|| c == '&' ||\
+			c == '(' || c == ')'||\
+			c == '<'|| c == '>');
 }
 
-void	tok_add_back(t_token **toks, t_token *new)
+int	is_delim(char c)
 {
-	t_token	*p;
+	return (c == ' ' || c == '\n' || c == '\t');
+}
 
-	p = *toks;
-	if (new == NULL)
-		return ;
-	if (*toks == NULL && new != NULL)
-	{
-		*toks = new;
-		return ;
-	}
-	while ((*toks)->next)
-		*toks = (*toks)->next;
-	new->prev = *toks;
-	(*toks)->next = new;
-	*toks = p;
+int	find_op(char *script)
+{
+	char	next;
+
+	next = *(script + 1);
+	if (*script == next && next != '(' && next != ')')
+		return (1);
+	return (0);
 }
 
 void	scanner(t_token **toks, char *script)
 {
-	char		flag;
+	char	flag;
 	t_buf	buf;
 
 	flag = 0;
@@ -60,16 +49,13 @@ void	scanner(t_token **toks, char *script)
 			flag ^= S_QUOTE;
 		else if (flag ^ S_QUOTE && *script == '\"')
 			flag ^= D_QUOTE;
-		if ((flag ^ S_QUOTE) && (flag ^ D_QUOTE) && is_delim(*script))
+		if (!(flag & S_QUOTE + D_QUOTE) && is_delim(*script))
 			flush_buf(toks, &buf);
-		else if ((flag ^ S_QUOTE) && (flag ^ D_QUOTE) && is_op(*script))
+		else if (!(flag & S_QUOTE + D_QUOTE) && is_op(*script))
 		{
 			flush_buf(toks, &buf);
 			if (find_op(script))
-			{
-				tok_add_back(toks, get_new_token(OP, ft_strndup(script, 2)));
-				script++;
-			}
+				tok_add_back(toks, get_new_token(OP, ft_strndup(script++, 2)));
 			else
 				tok_add_back(toks, get_new_token(OP, ft_strndup(script, 1)));
 		}
@@ -81,30 +67,4 @@ void	scanner(t_token **toks, char *script)
 		err_exit("syntax err\n");
 	flush_buf(toks, &buf);
 	free(buf.word);
-}
-
-#include <stdio.h>
-#include <readline/readline.h>
-void	print_toks(t_token *toks)
-{
-	while (toks)
-	{
-		printf("[%d]%s->", toks->type, toks->text);
-		toks = toks->next;
-	}
-	printf("\n");
-}
-
-int main(int argc, char *argv[])
-{
-	t_token		*toks;
-	char		*input;
-
-	toks = NULL;
-	input = readline("input>> ");
-	scanner(&toks, input);
-	print_toks(toks);
-	system("leaks a.out");
-	free(input);
-	return (0);
 }
