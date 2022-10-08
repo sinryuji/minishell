@@ -1,32 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   util.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/06 15:34:51 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/08 23:30:04 by hyeongki         ###   ########.fr       */
+/*   Created: 2022/10/07 22:38:16 by hyeongki          #+#    #+#             */
+/*   Updated: 2022/10/08 23:38:53 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-#include "../include/built_in.h"
 
-int	ft_env(int argc, char **argv, t_env_list *envl)
+int	get_argc(char **argv)
 {
-	t_env	*env;
+	int	i;
 
-	(void)argc;
-	(void)argv;
-	env = envl->head;
-	if (!env)
-		return (EXIT_FAILURE);
-	while (env)
-	{
-		if (env->value)
-			printf("%s=%s\n", env->key, env->value);
-		env = env->next;
-	}
-	return (EXIT_SUCCESS);
+	i = 0;
+	while (argv[i])
+		i++;
+	return (i);
+}
+
+void	swap_str(char **a, char **b)
+{
+	char	*tmp;
+
+	tmp = *a;
+	*a = *b;
+	*b = tmp;
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   env_01.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 16:30:46 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/06 14:17:49 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/08 23:21:52 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_env	*new_env(char *key_val)
 	}
 	else
 	{
-		new->key = key_val;
+		new->key = ft_strdup(key_val);
 		new->value = NULL;
 	}
 	new->prev = NULL;
@@ -45,7 +45,7 @@ int	del_env(t_env_list **envl, char *key)
 
 	env = get_env(*envl, key);
 	if (!env)
-		return (0);
+		return (FAILURE);
 	if (env == (*envl)->head)
 	{
 		env->next->prev = NULL;
@@ -61,27 +61,26 @@ int	del_env(t_env_list **envl, char *key)
 		env->prev->next = env->next;
 		env->next->prev = env->prev;
 	}
-	free(env->key);
-	free(env->value);
-	free(env);
-	return (1);
+	free_env(env);
+	return (SUCCESS);
 }
 
 int	set_env(t_env_list **envl, t_env *new)
 {
+	if (!new)
+		return (FAILURE);
 	if (!*envl)
 	{
 		*envl = (t_env_list *)malloc(sizeof(t_env_list));
 		if (!*envl)
-			return (0);
+			return (FAILURE);
 		(*envl)->head = new;
 		(*envl)->tail = new;
 	}
 	else if (get_env(*envl, new->key))
 	{
-		if (new->value)
-			get_env(*envl, new->key)->value = new->value;
-		free(new);
+		if (replace_env(envl, new) == FAILURE)
+			return (FAILURE);
 	}
 	else
 	{
@@ -89,7 +88,7 @@ int	set_env(t_env_list **envl, t_env *new)
 		new->prev = (*envl)->tail;
 		(*envl)->tail = new;
 	}
-	return (1);
+	return (SUCCESS);
 }
 
 t_env	*get_env(t_env_list *envl, char *key)
@@ -99,7 +98,7 @@ t_env	*get_env(t_env_list *envl, char *key)
 	env = envl->head;
 	while (env)
 	{
-		if (!ft_strncmp(env->key, key, ft_strlen(env->key)))
+		if (ft_strcmp(env->key, key) == 0)
 			return (env);
 		env = env->next;
 	}
@@ -109,12 +108,12 @@ t_env	*get_env(t_env_list *envl, char *key)
 int	parse_env(t_env_list **envl, char **envp)
 {
 	if (!envp)
-		return (0);
+		return (FAILURE);
 	while (*envp)
 	{
-		if (!set_env(envl, new_env(*envp)))
-			return (0);
+		if (set_env(envl, new_env(*envp)) == FAILURE)
+			return (FAILURE);
 		envp++;
 	}
-	return (1);
+	return (SUCCESS);
 }

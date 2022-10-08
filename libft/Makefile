@@ -6,7 +6,7 @@
 #    By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/08 00:26:55 by hyeongki          #+#    #+#              #
-#    Updated: 2022/09/30 20:35:16 by hyeongki         ###   ########.fr        #
+#    Updated: 2022/10/07 21:31:44 by hyeongki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,8 @@ SRCS_NAME = ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c ft_
 	   ft_calloc.c ft_strdup.c ft_substr.c ft_strjoin.c ft_strtrim.c ft_split.c ft_itoa.c \
 	   ft_strmapi.c ft_striteri.c ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c \
 	   ft_strndup.c ft_nbrlen_base.c ft_itoa_base.c ft_max.c ft_min.c ft_ullen_base.c ft_ultoa_base.c \
-	   ft_puterr.c ft_atol.c ft_split_free.c ft_pow.c get_next_line.c ft_atoi_hex.c ft_perror_exit.c
+	   ft_puterr.c ft_atol.c ft_split_free.c ft_pow.c get_next_line.c ft_atoi_hex.c ft_perror_exit.c \
+	   ft_strcmp.c
 SRCS = $(addprefix $(SRCS_PATH), $(SRCS_NAME))
 OBJS = $(SRCS:.c=.o)
 BONUS_SRCS_NAME = ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c ft_lstadd_back.c ft_lstdelone.c \

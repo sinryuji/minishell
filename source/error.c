@@ -1,32 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/06 15:34:51 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/08 23:30:04 by hyeongki         ###   ########.fr       */
+/*   Created: 2022/10/07 22:18:05 by hyeongki          #+#    #+#             */
+/*   Updated: 2022/10/08 22:33:23 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-#include "../include/built_in.h"
 
-int	ft_env(int argc, char **argv, t_env_list *envl)
+void	put_error(char *cmd, char *arg, char *strerr)
 {
-	t_env	*env;
-
-	(void)argc;
-	(void)argv;
-	env = envl->head;
-	if (!env)
-		return (EXIT_FAILURE);
-	while (env)
-	{
-		if (env->value)
-			printf("%s=%s\n", env->key, env->value);
-		env = env->next;
-	}
-	return (EXIT_SUCCESS);
+	ft_putstr_fd(SHELL_NAME": ", STDERR_FILENO);
+	ft_putstr_fd(cmd, STDERR_FILENO);
+	ft_putstr_fd(": `", STDERR_FILENO);
+	ft_putstr_fd(arg, STDERR_FILENO);
+	ft_putstr_fd("': ", STDERR_FILENO);
+	ft_putendl_fd(strerr, STDERR_FILENO);
 }

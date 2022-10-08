@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 18:59:27 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/09/30 20:34:55 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/07 21:31:33 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,5 +88,6 @@ double	ft_pow(double x, double y);
 char	*get_next_line(int fd);
 int		ft_atoi_hex(char *str);
 int		ft_perror_exit(char *str);
+int		ft_strcmp(char *s1, char *s2);
 
 #endif

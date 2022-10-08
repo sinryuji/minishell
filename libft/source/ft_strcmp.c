@@ -1,32 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/06 15:34:51 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/08 23:30:04 by hyeongki         ###   ########.fr       */
+/*   Created: 2022/01/11 13:57:29 by hyeongki          #+#    #+#             */
+/*   Updated: 2022/10/07 21:23:41 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
-#include "../include/built_in.h"
+#include "../include/libft.h"
 
-int	ft_env(int argc, char **argv, t_env_list *envl)
+int	ft_strcmp(char *s1, char *s2)
 {
-	t_env	*env;
+	int	i;
 
-	(void)argc;
-	(void)argv;
-	env = envl->head;
-	if (!env)
-		return (EXIT_FAILURE);
-	while (env)
-	{
-		if (env->value)
-			printf("%s=%s\n", env->key, env->value);
-		env = env->next;
-	}
-	return (EXIT_SUCCESS);
+	i = 0;
+	while (s1[i] && s2[i] && s1[i] == s2[i])
+		i++;
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }

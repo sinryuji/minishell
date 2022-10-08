@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 15:58:39 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/06 17:08:31 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/08 23:22:31 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,20 @@ void	set_term(void)
 
 void	processing(char **argv, t_env_list *envl)
 {
+	int		pipe_fd[2];
+	pid_t	pid;
+	int		status;
 	int		ret;
 
 	if (!*argv)
 		return ;
-	if (argv + 1)
-		ret = built_in(argv[0], argv + 1, envl);
-	else
-		ret = built_in(argv[0], NULL, envl);
+	ret = built_in(get_argc(argv), argv, envl);
+	printf("%d\n", ret);
+	if (ret == -1)
+	{
+//		포크 뜨고 execve
+	}
+	ft_split_free(argv);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -70,10 +76,11 @@ int	main(int argc, char **argv, char **envp)
 			processing(ft_split(line, ' '), envl);
 		else
 		{
-			printf("exit\n");
+			printf("\033[1A\033[5Cexit\n");
 			break ;
 		}
-		add_history(line);
+		if (ft_strlen(line) > 0)
+			add_history(line);
 		free(line);
 	}
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
