@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 16:30:46 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/08 21:11:12 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/08 23:21:52 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_env	*new_env(char *key_val)
 	}
 	else
 	{
-		new->key = key_val;
+		new->key = ft_strdup(key_val);
 		new->value = NULL;
 	}
 	new->prev = NULL;

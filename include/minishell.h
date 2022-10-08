@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 20:18:21 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/08 22:21:38 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/08 23:39:35 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,7 @@ void	put_error(char *cmd, char *arg, char *strerr);
 
 /* util.c */
 int		get_argc(char **argv);
+void	swap_str(char **a, char **b);
+int		sort_env(t_env_list **envl);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 22:38:16 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/07 22:41:54 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/08 23:38:53 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,4 +20,13 @@ int	get_argc(char **argv)
 	while (argv[i])
 		i++;
 	return (i);
+}
+
+void	swap_str(char **a, char **b)
+{
+	char	*tmp;
+
+	tmp = *a;
+	*a = *b;
+	*b = tmp;
 }

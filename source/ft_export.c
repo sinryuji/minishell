@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 21:41:23 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/08 22:41:47 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/08 23:42:58 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,41 +14,6 @@
 #include "../include/built_in.h"
 #include "../include/env.h"
 #include <stdlib.h>
-
-static void	swap_str(char **a, char **b)
-{
-	char	*tmp;
-
-	tmp = *a;
-	*a = *b;
-	*b = tmp;
-}
-
-static int	sort_env(t_env_list **envl)
-{
-	t_env	*end;
-	t_env	*cur;
-	char	*tmp;
-
-	if (!*envl)
-		return (FAILURE);
-	end = (*envl)->tail;
-	while (end != (*envl)->head)
-	{
-		cur = (*envl)->head;
-		while (cur->next)
-		{
-			if (ft_strcmp(cur->key, cur->next->key) > 0)
-			{
-				swap_str(&cur->key, &cur->next->key);
-				swap_str(&cur->value, &cur->next->value);
-			}
-			cur = cur->next;
-		}
-		end = end->prev;
-	}
-	return (SUCCESS);
-}
 
 static int	print_export(t_env_list *envl)
 {
@@ -68,10 +33,32 @@ static int	print_export(t_env_list *envl)
 	return (SUCCESS);
 }
 
+static int	append_export(char **argv, t_env_list *envl)
+{
+	t_env	*new;
+	int		i;
+	int		ret;
+
+	i = 0;
+	ret = EXIT_SUCCESS;
+	while (argv[++i])
+	{
+		new = new_env(argv[i]);
+		if (key_vaildation(new->key) == FAILURE)
+		{
+			put_error(argv[0], argv[i], "not a valid identifier");
+			ret = EXIT_FAILURE;
+			free_env(new);
+		}
+		else if (set_env(&envl, new) == FAILURE)
+			free_env(new);
+	}
+	return (ret);
+}
+
 int	ft_export(int argc, char **argv, t_env_list *envl)
 {
 	char	**ret;
-	t_env	*new;
 
 	if (argc == 1)
 	{
@@ -81,14 +68,6 @@ int	ft_export(int argc, char **argv, t_env_list *envl)
 			return (EXIT_FAILURE);
 	}
 	else
-	{
-		if (key_vaildation(argv[1]) == FAILURE)
-		{
-			put_error(argv[0], argv[1], "not a valid identifier");
-			return (EXIT_FAILURE);
-		}
-		if (!set_env(&envl, new_env(argv[1])))
-			return (EXIT_FAILURE);
-	}
+		return (append_export(argv, envl));
 	return (EXIT_SUCCESS);
 }

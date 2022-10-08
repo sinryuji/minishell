@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 16:03:53 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/08 22:37:55 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/08 23:25:48 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ int	built_in(int argc, char **argv, t_env_list *envl)
 
 int	key_vaildation(char *key)
 {
+	if (!ft_isalpha(*key) && *key != '_')
+		return (FALSE);
 	while (*key)
 	{
 		if (!ft_isalnum(*key) && *key != '_')
