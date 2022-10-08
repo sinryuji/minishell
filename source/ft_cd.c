@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 21:16:30 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/08 21:38:30 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/08 22:12:04 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,23 +32,24 @@ static int	cd_path(char *path, t_env_list *envl, int flag)
 {
 	char	*tmp;
 	int		ret;
-	char	buf[BUFSIZ];
+	char	*pwd;
 
-	tmp = NULL;
-	getcwd(buf, BUFSIZ);
-	tmp = ft_strjoin("OLDPWD=", buf);
+	pwd = getcwd(NULL, 0);
+	tmp = ft_strjoin("OLDPWD=", pwd);
 	ret = chdir(path);
 	if (ret != -1)
 	{
 		set_env(&envl, new_env(tmp));
 		free(tmp);
-		getcwd(buf, BUFSIZ);
-		tmp = ft_strjoin("PWD=", buf);
+		free(pwd);
+		pwd = getcwd(NULL, 0);
+		tmp = ft_strjoin("PWD=", pwd);
 		set_env(&envl, new_env(tmp));
 	}
-	free(tmp);
 	if (flag == OLDPWD)
-		printf("%s\n", buf);
+		printf("%s\n", pwd);
+	free(tmp);
+	free(pwd);
 	return (ret);
 }
 
