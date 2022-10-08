@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 21:16:30 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/08 18:50:19 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/08 21:38:30 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	put_cd_error(char *arg, char *path, int flag)
 		ft_putendl_fd(SHELL_NAME": cd: HOME net set", STDERR_FILENO);
 	else if (flag == OLDPWD)
 		ft_putendl_fd(SHELL_NAME": cd: OLDPWD net set", STDERR_FILENO);
-	else	
+	else
 		put_error(arg, path, strerror(errno));
 	return (EXIT_FAILURE);
 }
@@ -58,6 +58,7 @@ int	ft_cd(int argc, char **argv, t_env_list *envl)
 	char	*path;
 	int		flag;
 
+	(void)argc;
 	env = NULL;
 	path = NULL;
 	flag = 0;
@@ -76,6 +77,6 @@ int	ft_cd(int argc, char **argv, t_env_list *envl)
 	else
 		path = argv[1];
 	if (cd_path(path, envl, flag) == -1)
-		return (put_cd_error(argv[0], path, flag));	
+		return (put_cd_error(argv[0], path, flag));
 	return (EXIT_SUCCESS);
 }

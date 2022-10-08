@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 16:30:46 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/08 18:48:21 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/08 21:11:12 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	del_env(t_env_list **envl, char *key)
 
 	env = get_env(*envl, key);
 	if (!env)
-		return (0);
+		return (FAILURE);
 	if (env == (*envl)->head)
 	{
 		env->next->prev = NULL;
@@ -78,7 +78,10 @@ int	set_env(t_env_list **envl, t_env *new)
 		(*envl)->tail = new;
 	}
 	else if (get_env(*envl, new->key))
-		replace_env(envl, new);
+	{
+		if (replace_env(envl, new) == FAILURE)
+			return (FAILURE);
+	}
 	else
 	{
 		(*envl)->tail->next = new;
