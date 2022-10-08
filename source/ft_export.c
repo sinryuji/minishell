@@ -6,13 +6,14 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 21:41:23 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/08 16:48:36 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/08 22:41:47 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 #include "../include/built_in.h"
 #include "../include/env.h"
+#include <stdlib.h>
 
 static void	swap_str(char **a, char **b)
 {
@@ -30,7 +31,7 @@ static int	sort_env(t_env_list **envl)
 	char	*tmp;
 
 	if (!*envl)
-		return (0);
+		return (FAILURE);
 	end = (*envl)->tail;
 	while (end != (*envl)->head)
 	{
@@ -46,7 +47,7 @@ static int	sort_env(t_env_list **envl)
 		}
 		end = end->prev;
 	}
-	return (1);
+	return (SUCCESS);
 }
 
 static int	print_export(t_env_list *envl)
@@ -54,7 +55,7 @@ static int	print_export(t_env_list *envl)
 	t_env	*env;
 
 	if (!envl)
-		return (0);
+		return (FAILURE);
 	env = envl->head;
 	while (env)
 	{
@@ -64,18 +65,7 @@ static int	print_export(t_env_list *envl)
 			printf("declare -x %s\n", env->key);
 		env = env->next;
 	}	
-	return (1);
-}
-
-static int	key_vaildation(char *key)
-{
-	while (*key)
-	{
-		if (!ft_isalnum(*key))
-			return (0);
-		key++;
-	}
-	return (1);
+	return (SUCCESS);
 }
 
 int	ft_export(int argc, char **argv, t_env_list *envl)
@@ -85,17 +75,18 @@ int	ft_export(int argc, char **argv, t_env_list *envl)
 
 	if (argc == 1)
 	{
-		if (!sort_env(&envl))
+		if (sort_env(&envl) == FAILURE)
 			return (EXIT_FAILURE);
-		if (!print_export(envl))
+		if (print_export(envl) == FAILURE)
 			return (EXIT_FAILURE);
 	}
 	else
 	{
-		new = new_env(argv[0]);
-		if (!key_vaildation(new->key))
-			ft_puterr(ft_strjoin(ft_strjoin(SHELL_NAME": export: `", \
-							new->key), "': not a vali identifier\n"));
+		if (key_vaildation(argv[1]) == FAILURE)
+		{
+			put_error(argv[0], argv[1], "not a valid identifier");
+			return (EXIT_FAILURE);
+		}
 		if (!set_env(&envl, new_env(argv[1])))
 			return (EXIT_FAILURE);
 	}

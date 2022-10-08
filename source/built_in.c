@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 16:03:53 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/08 16:35:36 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/08 22:37:55 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,15 @@ int	built_in(int argc, char **argv, t_env_list *envl)
 	if (ft_strcmp("exit", argv[0]) == 0)
 		return (ft_exit(argc, argv, envl));
 	return (-1);
+}
+
+int	key_vaildation(char *key)
+{
+	while (*key)
+	{
+		if (!ft_isalnum(*key) && *key != '_')
+			return (FALSE);
+		key++;
+	}
+	return (TRUE);
 }

@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 18:21:12 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/08 18:48:33 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/08 22:39:24 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 void	free_env(t_env *env)
 {
 	free(env->key);
-	free(env->value);
+	if (env->value)
+		free(env->value);
 	free(env);
 }
 

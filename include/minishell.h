@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 20:18:21 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/08 21:54:02 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/08 22:21:38 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@
 # define SHELL_NAME "fdf"
 # define SUCCESS 1
 # define FAILURE 0
+# define TRUE 1
+# define FALSE 0
 
 /* main.c */
 void	processing(char **argv, t_env_list *envl);
