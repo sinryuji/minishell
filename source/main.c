@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 15:58:39 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/07 20:56:30 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/08 18:14:03 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,7 @@ void	processing(char **argv, t_env_list *envl)
 
 	if (!*argv)
 		return ;
-	if (pipe(pipe_fd) == -1)
-		ft_perror_exit("pipe error\n");
-	ret = built_in(argv[0], argv + 1, envl);
+	ret = built_in(get_argc(argv), argv, envl);
 	printf("%d\n", ret);
 	if (ret == -1)
 	{

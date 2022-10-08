@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 21:41:23 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/07 21:39:35 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/08 16:48:36 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	sort_env(t_env_list **envl)
 		cur = (*envl)->head;
 		while (cur->next)
 		{
-			if (ft_strcmp(cur->key, cur->next->key))
+			if (ft_strcmp(cur->key, cur->next->key) > 0)
 			{
 				swap_str(&cur->key, &cur->next->key);
 				swap_str(&cur->value, &cur->next->value);
@@ -78,12 +78,12 @@ static int	key_vaildation(char *key)
 	return (1);
 }
 
-int	ft_export(char **argv, t_env_list *envl)
+int	ft_export(int argc, char **argv, t_env_list *envl)
 {
 	char	**ret;
 	t_env	*new;
 
-	if (!argv[0])
+	if (argc == 1)
 	{
 		if (!sort_env(&envl))
 			return (EXIT_FAILURE);
@@ -96,7 +96,7 @@ int	ft_export(char **argv, t_env_list *envl)
 		if (!key_vaildation(new->key))
 			ft_puterr(ft_strjoin(ft_strjoin(SHELL_NAME": export: `", \
 							new->key), "': not a vali identifier\n"));
-		if (!set_env(&envl, new_env(argv[0])))
+		if (!set_env(&envl, new_env(argv[1])))
 			return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);

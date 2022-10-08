@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 19:55:21 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/06 16:56:10 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/08 16:46:19 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,18 @@ static int	option_check(char *arg)
 	return (0);
 }
 
-int	ft_echo(char **argv, t_env_list *envl)
+int	ft_echo(int argc, char **argv, t_env_list *envl)
 {
 	int	option;
 
 	(void)envl;
-	if (!*argv)
+	if (argc == 1)
 	{
 		printf("\n");
 		return (EXIT_SUCCESS);
 	}
-	option = option_check(argv[0]);
+	option = option_check(argv[1]);
+	argv++;
 	if (option)
 		argv++;
 	while (*argv)
