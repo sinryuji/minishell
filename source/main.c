@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 15:58:39 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/08 23:22:31 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/09 18:19:57 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	signal_handler(int sig)
 {
 	if (sig == SIGINT)
 	{
-		write(1, "\n", 1);
+		write(STDOUT_FILENO, "\n", 1);
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
@@ -39,21 +39,51 @@ void	set_term(void)
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 }
 
-void	processing(char **argv, t_env_list *envl)
+char	*get_command(char **paths, char *cmd)
 {
-	int		pipe_fd[2];
+	if (!paths || !cmd)
+		return (NULL);
+	ft_split_free(paths);
+	return (NULL);
+}
+
+int	execute_command(char **argv, t_env_list *envl, int fork_flag)
+{
 	pid_t	pid;
 	int		status;
-	int		ret;
+	char	*cmd;
 
-	if (!*argv)
-		return ;
-	ret = built_in(get_argc(argv), argv, envl);
-	printf("%d\n", ret);
-	if (ret == -1)
+	cmd = get_command(ft_split(get_env(envl, "PATH")->value, ':'), argv[0]);
+	if (cmd == NULL)
 	{
-//		포크 뜨고 execve
+		put_error_cmd(argv[0], "command not found");
+		if (fork_flag == TRUE)
+			exit(CMD_NOTFOUND);
 	}
+//	execve();
+	waitpid(pid, &status, 0);
+	return (status);
+}
+
+int	get_fork()
+{
+	return (FALSE);
+}
+
+void	processing(char **argv, t_env_list *envl)
+{
+	int			fork_flag;
+	t_built_in	built_in;
+	pid_t		pid;
+
+	built_in = get_built_in(argv[0]);
+	fork_flag = get_fork();
+	if (fork_flag == TRUE)
+		pid = fork();
+	if (built_in)
+		built_in(get_argc(argv), argv, envl);
+	else
+		execute_command(argv, envl, fork_flag);
 	ft_split_free(argv);
 }
 
@@ -69,20 +99,21 @@ int	main(int argc, char **argv, char **envp)
 	signal(SIGQUIT, signal_handler);
 	envl = NULL;
 	parse_env(&envl, envp);
-	while (1)
+	while (TRUE)
 	{
 		line = readline(SHELL_NAME"$ ");
-		if (line)
+		if (line && ft_strlen(line) > 0)
+		{
 			processing(ft_split(line, ' '), envl);
-		else
+			add_history(line);
+		}
+		else if (line == NULL)
 		{
 			printf("\033[1A\033[5Cexit\n");
 			break ;
 		}
-		if (ft_strlen(line) > 0)
-			add_history(line);
 		free(line);
 	}
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
-	return (0);
+	return (EXIT_SUCCESS);
 }

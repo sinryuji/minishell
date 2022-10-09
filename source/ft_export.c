@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 21:41:23 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/08 23:42:58 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/09 18:04:50 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static int	append_export(char **argv, t_env_list *envl)
 		new = new_env(argv[i]);
 		if (key_vaildation(new->key) == FAILURE)
 		{
-			put_error(argv[0], argv[i], "not a valid identifier");
+			put_error_arg(argv[0], argv[i], "not a valid identifier");
 			ret = EXIT_FAILURE;
 			free_env(new);
 		}

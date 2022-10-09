@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 21:16:30 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/08 22:12:04 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/09 18:10:22 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@
 static int	put_cd_error(char *arg, char *path, int flag)
 {
 	if (flag == HOME)
-		ft_putendl_fd(SHELL_NAME": cd: HOME net set", STDERR_FILENO);
+		put_error_cmd(arg, "HOME not set");
 	else if (flag == OLDPWD)
-		ft_putendl_fd(SHELL_NAME": cd: OLDPWD net set", STDERR_FILENO);
+		put_error_cmd(arg, "OLDPWD not set");
 	else
-		put_error(arg, path, strerror(errno));
+		put_error_arg(arg, path, strerror(errno));
 	return (EXIT_FAILURE);
 }
 
