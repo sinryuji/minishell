@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 20:18:21 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/08 23:39:35 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/09 18:45:32 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,17 @@
 # define TRUE 1
 # define FALSE 0
 
+# define CMD_NOTFOUND 127
+
 /* main.c */
 void	processing(char **argv, t_env_list *envl);
 
 /* error.c */
-void	put_error(char *cmd, char *arg, char *strerr);
+void	put_error_arg(char *cmd, char *arg, char *strerr);
+void	put_error_cmd(char *cmd, char *strerr);
 
 /* util.c */
 int		get_argc(char **argv);
 void	swap_str(char **a, char **b);
-int		sort_env(t_env_list **envl);
 
 #endif

@@ -6,14 +6,13 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 21:41:23 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/08 23:42:58 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/09 20:51:42 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 #include "../include/built_in.h"
 #include "../include/env.h"
-#include <stdlib.h>
 
 static int	print_export(t_env_list *envl)
 {
@@ -46,7 +45,7 @@ static int	append_export(char **argv, t_env_list *envl)
 		new = new_env(argv[i]);
 		if (key_vaildation(new->key) == FAILURE)
 		{
-			put_error(argv[0], argv[i], "not a valid identifier");
+			put_error_arg(argv[0], argv[i], "not a valid identifier");
 			ret = EXIT_FAILURE;
 			free_env(new);
 		}
@@ -58,14 +57,18 @@ static int	append_export(char **argv, t_env_list *envl)
 
 int	ft_export(int argc, char **argv, t_env_list *envl)
 {
-	char	**ret;
+	char		**ret;
+	t_env_list	*tmp;
 
 	if (argc == 1)
 	{
-		if (sort_env(&envl) == FAILURE)
+		tmp = copy_envl(envl);
+		if (sort_env(&tmp) == FAILURE || print_export(tmp) == FAILURE)
+		{
+			free_envl(&tmp);
 			return (EXIT_FAILURE);
-		if (print_export(envl) == FAILURE)
-			return (EXIT_FAILURE);
+		}
+		free_envl(&tmp);
 	}
 	else
 		return (append_export(argv, envl));

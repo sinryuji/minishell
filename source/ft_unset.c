@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 15:00:32 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/08 22:31:35 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/09 18:05:00 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	ft_unset(int argc, char **argv, t_env_list *envl)
 		return (EXIT_SUCCESS);
 	if (key_vaildation(argv[1]) == FALSE)
 	{
-		put_error(argv[0], argv[1], "not a valid identifier");
+		put_error_arg(argv[0], argv[1], "not a valid identifier");
 		return (EXIT_FAILURE);
 	}
 	if (del_env(&envl, argv[1]) == FAILURE)
