@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 15:58:39 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/09 18:19:57 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/09 20:49:27 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,8 @@ char	*get_command(char **paths, char *cmd)
 	return (NULL);
 }
 
-int	execute_command(char **argv, t_env_list *envl, int fork_flag)
+int	execute_command(char **argv, t_env_list *envl, int fork_flag, pid_t pid)
 {
-	pid_t	pid;
 	int		status;
 	char	*cmd;
 
@@ -60,7 +59,16 @@ int	execute_command(char **argv, t_env_list *envl, int fork_flag)
 		if (fork_flag == TRUE)
 			exit(CMD_NOTFOUND);
 	}
-//	execve();
+	else
+	{
+		if (fork_flag == FALSE)
+			pid = fork();
+		if (pid == 0)
+		{
+//			execve();
+		}
+
+	}
 	waitpid(pid, &status, 0);
 	return (status);
 }
@@ -83,7 +91,7 @@ void	processing(char **argv, t_env_list *envl)
 	if (built_in)
 		built_in(get_argc(argv), argv, envl);
 	else
-		execute_command(argv, envl, fork_flag);
+		execute_command(argv, envl, fork_flag, pid);
 	ft_split_free(argv);
 }
 

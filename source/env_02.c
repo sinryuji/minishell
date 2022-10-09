@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 18:21:12 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/09 00:36:04 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/09 20:59:57 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,14 @@
 void	free_env(t_env *env)
 {
 	free(env->key);
+	env->key = NULL;
 	if (env->value)
+	{
 		free(env->value);
+		env->value = NULL;
+	}
 	free(env);
+	env = NULL;
 }
 
 int	replace_env(t_env_list **envl, t_env *new)
@@ -61,4 +66,49 @@ int	sort_env(t_env_list **envl)
 		end = end->prev;
 	}
 	return (SUCCESS);
+}
+
+int	get_envlen(t_env_list *envl)
+{
+	int		i;
+	t_env	*env;
+
+	i = 0;
+	if (!envl)
+		return (FAILURE);
+	env = envl->head;
+	if (!env)
+		return (FAILURE);
+	while (env)
+	{
+		i++;
+		env = env->next;
+	}
+	return (i);
+}
+
+char	**reverse_env(t_env_list *envl)
+{
+	char	**ret;
+	t_env	*env;
+	char	*tmp;
+	int		i;
+
+	if (!envl)
+		return (NULL);
+	ret = (char **)malloc(sizeof(char *) * (get_envlen(envl) + 1));
+	env = envl->head;
+	if (!env)
+		return (NULL);
+	i = 0;
+	while (env)
+	{
+		tmp = ft_strjoin(env->key, "=");
+		ret[i] = ft_strjoin(tmp, env->value);
+		free(tmp);
+		i++;
+		env = env->next;
+	}
+	ret[i] = NULL;
+	return (ret);
 }

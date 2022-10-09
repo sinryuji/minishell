@@ -6,14 +6,14 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 16:03:53 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/09 18:10:38 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/09 20:59:21 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 #include "../include/built_in.h"
 
-t_built_in get_built_in(char *cmd)
+t_built_in	get_built_in(char *cmd)
 {
 	if (ft_strcmp("echo", cmd) == 0)
 		return (&ft_echo);
