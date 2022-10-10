@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 15:58:39 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/10 20:50:35 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/10 21:08:32 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,11 @@ void	processing(char **argv, t_env_list *envl)
 	ft_split_free(argv);
 }
 
-int	main(int argc, char **argv, char **envp)
+void	minishell(char **envp)
 {
 	char			*line;
-	struct termios	term;
 	t_env_list		*envl;
 
-	tcgetattr(STDIN_FILENO, &term);
-	set_term();
-	set_signal(HAN, HAN);
 	envl = NULL;
 	parse_env(&envl, envp);
 	while (TRUE)
@@ -74,6 +70,18 @@ int	main(int argc, char **argv, char **envp)
 		}
 		free(line);
 	}
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	struct termios	term;
+
+	(void)argc;
+	(void)argv;
+	tcgetattr(STDIN_FILENO, &term);
+	set_term();
+	set_signal(HAN, HAN);
+	minishell(envp);
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 	return (EXIT_SUCCESS);
 }

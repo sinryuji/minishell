@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 20:18:21 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/10 20:52:54 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/10 21:04:18 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	signal_handler(int sig);
 void	set_signal(int sig_int, int sig_quit);
 
 /* excute.c */
-int		execute_command(char **argv, t_env_list *envl, int fork_flag, pid_t pid);
+void	execute_command(char **argv, t_env_list *envl, int fork_flag, pid_t pid);
 void	wait_child(void);
 char	*get_command(char **paths, char *cmd);
 int		dir_check(char *path, char *cmd);

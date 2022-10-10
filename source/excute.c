@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 20:49:38 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/10 20:52:39 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/10 21:04:06 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,8 @@ void	wait_child(void)
 	}
 }
 
-int	execute_command(char **argv, t_env_list *envl, int fork_flag, pid_t pid)
+void	execute_command(char **argv, t_env_list *envl, int fork_flag, pid_t pid)
 {
-	int		status;
 	char	*cmd;
 
 	if (fork_flag == FALSE)
@@ -112,5 +111,4 @@ int	execute_command(char **argv, t_env_list *envl, int fork_flag, pid_t pid)
 	else
 		set_signal(IGN, IGN);
 	wait_child();
-	return (status);
 }
