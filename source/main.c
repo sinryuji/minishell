@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 15:58:39 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/10 13:48:57 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/10 17:11:39 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,22 +90,26 @@ int	execute_command(char **argv, t_env_list *envl, int fork_flag, pid_t pid)
 	int		status;
 	char	*cmd;
 
-	cmd = get_command(ft_split(get_env(envl, "PATH")->value, ':'), argv[0]);
-	if (cmd == NULL)
+	if (fork_flag == FALSE)
+		pid = fork();
+	if (pid == 0)
 	{
-		put_error_cmd(argv[0], "command not found");
-		if (fork_flag == TRUE)
-			exit(CMD_NOTFOUND);
-	}
-	else
-	{
-		if (fork_flag == FALSE)
-			pid = fork();
-		if (pid == 0)
-			execve(cmd, argv, reverse_env(envl));
+		if (*argv[0] == '.')
+		{
+			if (execve(argv[0], argv, reverse_env(envl)) == -1)
+				put_error_cmd_exit(argv[0], "command not found", CMD_NOTFOUND);
+		}
+		else
+		{
+			cmd = get_command(ft_split(get_env(envl, "PATH")->value, ':'), \
+					argv[0]);
+			if (cmd == NULL)
+				put_error_cmd_exit(argv[0], "command not found", CMD_NOTFOUND);
+			else
+				execve(cmd, argv, reverse_env(envl));
+		}
 	}
 	waitpid(pid, &status, 0);
-	free(cmd);
 	return (status);
 }
 

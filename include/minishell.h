@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 20:18:21 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/10 13:21:11 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/10 17:07:46 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void	processing(char **argv, t_env_list *envl);
 /* error.c */
 void	put_error_arg(char *cmd, char *arg, char *strerr);
 void	put_error_cmd(char *cmd, char *strerr);
+void	put_error_arg_exit(char *cmd, char *arg, char *strerr, int exit_code);
+void	put_error_cmd_exit(char *cmd, char *strerr, int exit_code);
 
 /* util.c */
 int		get_argc(char **argv);
