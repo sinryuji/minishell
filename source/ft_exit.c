@@ -6,13 +6,12 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 16:24:59 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/09 18:04:42 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/10 12:22:43 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 #include "../include/built_in.h"
-#include <stdlib.h>
 
 int	numeric_check(char *arg)
 {
@@ -27,6 +26,7 @@ int	numeric_check(char *arg)
 
 int	ft_exit(int argc, char **argv, t_env_list *envl)
 {
+	(void)envl;
 	printf("exit\n");
 	if (argc == 1)
 		exit(EXIT_SUCCESS);

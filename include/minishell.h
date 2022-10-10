@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 20:18:21 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/09 18:45:32 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/10 13:21:11 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 # include <signal.h>
 # include <string.h>
 # include <errno.h>
+# include <sys/stat.h>
+# include <dirent.h>
 
 # include "../libft/include/libft.h"
 # include "env.h"

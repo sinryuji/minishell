@@ -6,13 +6,12 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 21:16:30 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/09 18:10:22 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/10 12:22:30 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 #include "../include/built_in.h"
-#include <stdlib.h>
 
 #define HOME 1
 #define OLDPWD 2
