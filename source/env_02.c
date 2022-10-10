@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 18:21:12 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/09 20:59:57 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/10 21:03:37 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int	sort_env(t_env_list **envl)
 {
 	t_env	*end;
 	t_env	*cur;
-	char	*tmp;
 
 	if (!*envl)
 		return (FAILURE);

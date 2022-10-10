@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 21:41:23 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/09 20:51:42 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/10 21:02:54 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ static int	append_export(char **argv, t_env_list *envl)
 
 int	ft_export(int argc, char **argv, t_env_list *envl)
 {
-	char		**ret;
 	t_env_list	*tmp;
 
 	if (argc == 1)

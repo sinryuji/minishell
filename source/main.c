@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 15:58:39 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/09 20:49:27 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/10 21:08:32 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,7 @@
 #include "../include/built_in.h"
 #include "../include/env.h"
 
-void	signal_handler(int sig)
-{
-	if (sig == SIGINT)
-	{
-		write(STDOUT_FILENO, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-	}
-	if (sig == SIGQUIT)
-	{
-		rl_on_new_line();
-		rl_redisplay();
-	}
-}
+int	g_exit_code;
 
 void	set_term(void)
 {
@@ -39,41 +25,7 @@ void	set_term(void)
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 }
 
-char	*get_command(char **paths, char *cmd)
-{
-	if (!paths || !cmd)
-		return (NULL);
-	ft_split_free(paths);
-	return (NULL);
-}
-
-int	execute_command(char **argv, t_env_list *envl, int fork_flag, pid_t pid)
-{
-	int		status;
-	char	*cmd;
-
-	cmd = get_command(ft_split(get_env(envl, "PATH")->value, ':'), argv[0]);
-	if (cmd == NULL)
-	{
-		put_error_cmd(argv[0], "command not found");
-		if (fork_flag == TRUE)
-			exit(CMD_NOTFOUND);
-	}
-	else
-	{
-		if (fork_flag == FALSE)
-			pid = fork();
-		if (pid == 0)
-		{
-//			execve();
-		}
-
-	}
-	waitpid(pid, &status, 0);
-	return (status);
-}
-
-int	get_fork()
+int	get_fork(void)
 {
 	return (FALSE);
 }
@@ -89,22 +41,18 @@ void	processing(char **argv, t_env_list *envl)
 	if (fork_flag == TRUE)
 		pid = fork();
 	if (built_in)
-		built_in(get_argc(argv), argv, envl);
+		g_exit_code = built_in(get_argc(argv), argv, envl);
 	else
 		execute_command(argv, envl, fork_flag, pid);
+	set_signal(HAN, HAN);
 	ft_split_free(argv);
 }
 
-int	main(int argc, char **argv, char **envp)
+void	minishell(char **envp)
 {
 	char			*line;
-	struct termios	term;
 	t_env_list		*envl;
 
-	tcgetattr(STDIN_FILENO, &term);
-	set_term();
-	signal(SIGINT, signal_handler);
-	signal(SIGQUIT, signal_handler);
 	envl = NULL;
 	parse_env(&envl, envp);
 	while (TRUE)
@@ -122,6 +70,18 @@ int	main(int argc, char **argv, char **envp)
 		}
 		free(line);
 	}
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	struct termios	term;
+
+	(void)argc;
+	(void)argv;
+	tcgetattr(STDIN_FILENO, &term);
+	set_term();
+	set_signal(HAN, HAN);
+	minishell(envp);
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 	return (EXIT_SUCCESS);
 }

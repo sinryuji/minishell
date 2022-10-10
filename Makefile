@@ -6,15 +6,14 @@
 #    By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/03 19:45:18 by hyeongki          #+#    #+#              #
-#    Updated: 2022/10/09 19:07:18 by hyeongki         ###   ########.fr        #
+#    Updated: 2022/10/10 21:10:26 by hyeongki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
-#CFLAGS = -Wall -Wextra -Werror
-CFALGS =
+CFLAGS = -Wall -Wextra -Werror
 SRCS_PATH = ./source/
-SRCS_NAME = main.c ft_echo.c ft_pwd.c ft_cd.c ft_export.c ft_unset.c ft_env.c ft_exit.c built_in.c env_01.c env_02.c env_03.c error.c util.c
+SRCS_NAME = main.c ft_echo.c ft_pwd.c ft_cd.c ft_export.c ft_unset.c ft_env.c ft_exit.c built_in.c env_01.c env_02.c env_03.c error.c util.c signal.c excute.c
 SRCS = $(addprefix $(SRCS_PATH), $(SRCS_NAME))
 OBJS = $(SRCS:.c=.o)
 RM = rm -rf
