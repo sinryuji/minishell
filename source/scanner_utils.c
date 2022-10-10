@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 17:25:51 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/07 16:45:17 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/10 13:11:21 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,18 @@
 
 void	err_exit(char *err)
 {
-	if (!errno)
+	if (errno)
 		err = strerror(errno);
 	write(STDERR_FILENO, err, ft_strlen(err));
 	exit(EXIT_FAILURE);
 }
 
+#include <stdio.h>
 void	init_buf(t_buf *buf)
 {
 	buf->size = 0;
 	buf->word = (char *)malloc(sizeof(char) * BUF_SIZE);
-	if (errno)
+	if (!buf->word)
 		err_exit(NULL);
 }
 
@@ -39,7 +40,7 @@ void	realloc_buf(t_buf *buf)
 	char	*word;
 
 	word = (char *)malloc(sizeof(char) * buf->size * 2);
-	if (errno)
+	if (!word)
 		err_exit(NULL);
 	ft_memmove(word, buf->word, buf->size);
 	free(buf->word);
