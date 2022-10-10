@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 15:00:32 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/09 18:05:00 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/10 12:21:18 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	ft_unset(int argc, char **argv, t_env_list *envl)
 {
 	t_env	*env;
 
-	(void)argc;
 	if (argc == 1)
 		return (EXIT_SUCCESS);
 	if (key_vaildation(argv[1]) == FALSE)
