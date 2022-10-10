@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 20:18:21 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/10 17:07:46 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/10 20:52:54 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,20 @@
 # include "env.h"
 
 # define SHELL_NAME "fdf"
+
 # define SUCCESS 1
 # define FAILURE 0
+
 # define TRUE 1
 # define FALSE 0
 
-# define CMD_NOTFOUND 127
+# define HAN 0
+# define DFL 1
+# define IGN 2
+
+# define CMD_NOT_FOUND 127
+
+extern int	g_exit_code;
 
 /* main.c */
 void	processing(char **argv, t_env_list *envl);
@@ -49,5 +57,17 @@ void	put_error_cmd_exit(char *cmd, char *strerr, int exit_code);
 /* util.c */
 int		get_argc(char **argv);
 void	swap_str(char **a, char **b);
+
+/* signal.c */
+void	signal_handler(int sig);
+void	set_signal(int sig_int, int sig_quit);
+
+/* excute.c */
+int		execute_command(char **argv, t_env_list *envl, int fork_flag, pid_t pid);
+void	wait_child(void);
+char	*get_command(char **paths, char *cmd);
+int		dir_check(char *path, char *cmd);
+
+
 
 #endif
