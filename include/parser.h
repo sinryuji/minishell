@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 16:38:32 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/10 13:52:26 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/11 12:16:31 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,17 @@
 #include "scanner.h"
 
 # define PAREN 0x01 // set subshell pair
-# define LEFT  0x02 //derivative leftmost
+# define LEFT  0x02 // to get left associativity
 # define TERM  0x04 //terminate once it's on
 
 enum e_type
 {
-	CTLOP,
-	SUBSH,
-	REDIR,
-	PIPE,
 	LIST,
-	CMD
+	CTLOP,
+	PIPELINE,
+	PIPE,
+	REDIR,
+	SUBSH
 };
 
 typedef struct s_tree
