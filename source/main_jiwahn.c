@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 17:06:33 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/10 13:53:08 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/11 15:57:43 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ int main(int argc, char *argv[])
 	print_toks(toks);
 
 	//parse here
-	root = get_new_node(0 & LEFT, LIST, toks);
+	toks =  get_last_token(toks);
+	root = get_new_node(LIST, 0 & LEFT, toks);
 	parser(toks, root);
 	printf("\n\nparser executed\n");
 	traverse_tree(root);
