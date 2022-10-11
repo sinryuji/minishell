@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 19:55:21 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/08 21:56:09 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/10 21:02:41 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	option_check(char *arg)
 		while (arg[i] == 'n')
 			i++;
 	}
-	if (ft_strlen(arg) != i)
+	if ((int)ft_strlen(arg) != i)
 		return (FAILURE);
 	return (SUCCESS);
 }
