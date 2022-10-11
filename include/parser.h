@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 16:38:32 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/07 17:25:20 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/11 15:46:01 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,33 @@
 
 #include "scanner.h"
 
+# define PAREN 0x01 // set subshell pair
+# define LEFT  0x02 // to get left associativity
+# define TERM  0x04 //terminate once it's on
+
 enum e_type
 {
+	LIST,
 	CTLOP,
-	SUBSH,
-	REDIR,
+	PIPELINE,
 	PIPE,
-	CMD
+	CMD,
+	REDIR,
+	SUBSH
 };
 
 typedef struct s_tree
 {
 	int				type;
-	t_token			*tok;
+	int				flag;
+	t_token			*toks;
 	struct s_tree	*left;
 	struct s_tree	*right;
 }t_tree;
 
 //parser.c
-void	parser(t_token toks, t_tree **root);
+void	parser(t_token *toks, t_tree *root);
+t_tree	*get_new_node(int type, int flag, t_token *toks);
+int		find_ctlop(t_tree *root, t_toks **toks);
 
 #endif
