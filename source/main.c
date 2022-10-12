@@ -6,13 +6,14 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 15:58:39 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/10 21:08:32 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/12 15:14:15 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 #include "../include/built_in.h"
 #include "../include/env.h"
+#include "../include/parser.h"
 
 int	g_exit_code;
 
@@ -29,6 +30,7 @@ int	get_fork(void)
 {
 	return (FALSE);
 }
+
 
 void	processing(char **argv, t_env_list *envl)
 {
@@ -48,10 +50,26 @@ void	processing(char **argv, t_env_list *envl)
 	ft_split_free(argv);
 }
 
+void	parsing(t_token **toks, t_tree **root, char *line)
+{
+	scanner(toks, line);
+	*toks =  get_last_token(*toks);
+	*root = get_new_node(LIST, 0 & LEFT, *toks);
+	parser(*toks, *root);
+	//syntax check fnction
+}
+
+void	tree_traverse(t_tree *root, t_env_list *envl)
+{
+//	processing(, envl);
+}
+
 void	minishell(char **envp)
 {
 	char			*line;
 	t_env_list		*envl;
+	t_token			*toks;
+	t_tree			*root;
 
 	envl = NULL;
 	parse_env(&envl, envp);
@@ -60,7 +78,8 @@ void	minishell(char **envp)
 		line = readline(SHELL_NAME"$ ");
 		if (line && ft_strlen(line) > 0)
 		{
-			processing(ft_split(line, ' '), envl);
+			parsing(&toks, &root, line);
+			//tree_travese()
 			add_history(line);
 		}
 		else if (line == NULL)
