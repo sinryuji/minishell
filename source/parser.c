@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:05:29 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/11 15:59:17 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/12 12:33:01 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,21 +29,24 @@ t_tree	*get_new_node(int type, int flag, t_token *toks)
 	return (node);
 }
 
-void	parse_list(t_toks *toks, t_tree *root)
+void	parse_list(t_toks **toks, t_tree *root)
 {
 	int				success;
-	const t_toks	*origin = toks;
+	const t_toks	*origin = *toks;
 
 	success = 0;
 	while (*toks)
 	{
-		if ((*toks)->type == OP && !(root->flag & PAREN)\
+		if ((*toks)->type == OP && !(root->flag & PAREN) && \
 				(!ft_strncmp(toks->text, "&&", 2) || \
 				 !ft_strncmp(toks->text, "||", 2)))
+		{
 			success = 1;
+			break ;
+		}
 		else if ((*toks)->type == OP && \
 				(!ft_strncmp(toks->text, "(", 1) || \
-				  !ft_strncmp(toks->text, "(", 1)))
+				  !ft_strncmp(toks->text, ")", 1)))
 			(root->flag) ^= PAREN;
 		*toks = (root->flag & LEFT) ? (*toks)->prev : (*toks)->next;
 	}
@@ -52,12 +55,48 @@ void	parse_list(t_toks *toks, t_tree *root)
 	if (!success)
 	{
 		*toks = origin;
-		toks->type = PIPELINE;
+		(*toks)->type = PIPELINE;
+		root->flag ^= LEFT;
 	}
+}
+
+void	parse_pipe(t_toks **toks, t_tree *root)
+{
+	int				success;
+	const t_toks	*origin = *toks;
+
+	success = 0;
+	while (*toks)
+	{
+		if ((*toks)->type == OP && !(root->flag & PAREN) \
+				!ft_strncmp(toks->text, "|", 1))
+		{
+			success = 1;
+			break ;
+		}
+		else if ((*toks)->type == OP && \
+				(!ft_strncmp(toks->text, "(", 1) || \
+				  !ft_strncmp(toks->text, ")", 1)))
+			(root->flag) ^= PAREN;
+		*toks = (*toks)->next;
+	}
+	if (root->flag & PAREN)
+		err_exit("syntax err");
+	if (!success)
+	{
+		*toks = origin;
+		(*toks)->type = CMD;
+	}
+}
+
+void	parse_cmd(t_toks **toks, t_tree *root)
+{
+
 }
 
 void	parser(t_toks *toks, t_tree *root)
 {
+	t_toks	*origin = toks;
 	t_tree	*left = NULL;
 	t_tree	*right = NULL;;
 
@@ -68,9 +107,11 @@ void	parser(t_toks *toks, t_tree *root)
 	if (toks->type == PIPELINE)
 		parse_pipeline(toks, root);
 	if (toks->type == CMD)
-		parser_cmd(toks, root);
+		parse_cmd(toks, root);
+
 	root->left = left;
 	root->right = right;
+	//TODO - figure out whether it's token prev or next
 	parser(toks->prev, root->right);
 	parser(toks->next, root->left);
 }

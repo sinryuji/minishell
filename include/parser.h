@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 16:38:32 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/11 15:46:01 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/11 16:13:02 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ typedef struct s_tree
 //parser.c
 void	parser(t_token *toks, t_tree *root);
 t_tree	*get_new_node(int type, int flag, t_token *toks);
-int		find_ctlop(t_tree *root, t_toks **toks);
+void	parse_list(t_token **toks, t_tree *root);
+void	parse_pipe(t_token **toks, t_tree *root);
+void	parse_cmd(t_token **toks, t_tree *root);
 
 #endif
