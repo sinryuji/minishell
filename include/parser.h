@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 16:38:32 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/11 16:13:02 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/13 14:47:27 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 
 # define PAREN 0x01 // set subshell pair
 # define LEFT  0x02 // to get left associativity
-# define TERM  0x04 //terminate once it's on
+# define TERM  0x04 // terminate once it's on
+# define FOUND 0x08 // found target
 
 enum e_type
 {
@@ -26,7 +27,6 @@ enum e_type
 	PIPELINE,
 	PIPE,
 	CMD,
-	REDIR,
 	SUBSH
 };
 
