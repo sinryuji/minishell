@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:43:17 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/07 17:02:34 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/13 16:23:48 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,14 @@ t_token	*get_last_token(t_token *toks)
 		return (NULL);
 	while (toks->next)
 		toks = toks->next;
+	return (toks);
+}
+
+t_token *get_first_token(t_token *toks)
+{
+	if (!toks)
+		return (NULL);
+	while (toks->prev)
+		toks = toks->prev;
 	return (toks);
 }

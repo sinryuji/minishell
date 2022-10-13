@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 15:58:39 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/13 14:15:49 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/13 16:38:05 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,33 @@ void	processing(char **argv, t_env_list *envl)
 	ft_split_free(argv);
 }
 
+void	print_tree(t_tree *root)
+{
+	if (root == NULL)
+		return ;
+	print_tree(root->right);
+	printf("%s ", root->toks->text);
+	print_tree(root->left);
+}
+
+void	print_toks(t_token *toks)
+{
+	while (toks)
+	{
+		printf("type : %d, text : %s\n", toks->type, toks->text);
+		toks = toks->next;
+	}
+}
+
 void	parsing(t_token **toks, t_tree **root, char *line)
 {
 	scanner(toks, line);
+	print_toks(*toks);
 	*toks =  get_last_token(*toks);
 	*root = get_new_node(LIST, 0 & LEFT, *toks);
 	parser(*toks, *root);
+	print_tree(*root);
+	printf("\n");
 	//syntax check fnction
 }
 
@@ -75,6 +96,7 @@ void	minishell(char **envp)
 	parse_env(&envl, envp);
 	while (TRUE)
 	{
+		toks = NULL;
 		line = readline(SHELL_NAME"$ ");
 		if (line && ft_strlen(line) > 0)
 		{
