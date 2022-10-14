@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 16:38:32 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/13 14:47:27 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/14 13:13:21 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@
 #include "scanner.h"
 
 # define PAREN 0x01 // set subshell pair
-# define LEFT  0x02 // to get left associativity
-# define TERM  0x04 // terminate once it's on
-# define FOUND 0x08 // found target
+# define FOUND 0x04 // terminate once it's on
 
 enum e_type
 {
@@ -33,17 +31,22 @@ enum e_type
 typedef struct s_tree
 {
 	int				type;
-	int				flag;
+	char			flag;
 	t_token			*toks;
 	struct s_tree	*left;
 	struct s_tree	*right;
 }t_tree;
 
 //parser.c
-void	parser(t_token *toks, t_tree *root);
+void	parser(t_tree *root);
+void	parse_list(t_tree *root);
+void	parse_pipeline(t_tree *root);
+void	parse_cmd(t_tree *root);
+
+//tree_utils.c
 t_tree	*get_new_node(int type, int flag, t_token *toks);
-void	parse_list(t_token **toks, t_tree *root);
-void	parse_pipe(t_token **toks, t_tree *root);
-void	parse_cmd(t_token **toks, t_tree *root);
+t_tree	*make_right_node(t_tree *root);
+t_tree	*make_left_node(t_tree *root);
+void	make_root_node(t_tree **root);
 
 #endif
