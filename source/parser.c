@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:05:29 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/14 13:13:55 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/14 13:36:50 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,16 @@ void	parse_list(t_tree *root)
 	while (toks)
 	{
 		if (toks->type == OP && !(root->flag & PAREN) && \
-				(!ft_strncmp(toks->text, "&&", 2) || \
-				 !ft_strncmp(toks->text, "||", 2)))
+				(!ft_strcmp(toks->text, "&&") || \
+				 !ft_strcmp(toks->text, "||")))
 		{
 			root->flag |= FOUND;
 			success = 1;
 			break ;
 		}
 		else if (toks->type == OP && \
-				(!ft_strncmp(toks->text, "(", 1) || \
-				  !ft_strncmp(toks->text, ")", 1)))
+				(!ft_strcmp(toks->text, "(") || \
+				  !ft_strcmp(toks->text, ")")))
 			(root->flag) ^= PAREN;
 		//*toks = (root->flag & LEFT) ? (*toks)->prev : (*toks)->next;
 		if (toks->prev == NULL)
@@ -65,7 +65,7 @@ void	parse_pipeline(t_tree *root)
 	while (toks)
 	{
 		if (toks->type == OP && !(root->flag & PAREN) &&\
-				!ft_strncmp(toks->text, "|", 1))
+				!ft_strcmp(toks->text, "|"))
 		{
 			root->flag |= FOUND;
 			root->toks = toks;
@@ -73,8 +73,8 @@ void	parse_pipeline(t_tree *root)
 			break ;
 		}
 		else if (toks->type == OP && \
-				(!ft_strncmp(toks->text, "(", 1) || \
-				  !ft_strncmp(toks->text, ")", 1)))
+				(!ft_strcmp(toks->text, "(") || \
+				  !ft_strcmp(toks->text, ")")))
 			(root->flag) ^= PAREN;
 		toks = toks->next;
 	}
@@ -99,8 +99,8 @@ void	parse_cmd(t_tree *root)
 	while (toks)
 	{
 		if (toks->type == OP && \
-			(!ft_strncmp(toks->text, "(", 1) || \
-			  !ft_strncmp(toks->text, ")", 1)))
+			(ft_strcmp(toks->text, "(") || \
+			  ft_strcmp(toks->text, ")")))
 		{
 			(root->flag) ^= PAREN;
 			subsh = TRUE;

@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 15:33:11 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/13 16:23:43 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/14 13:38:07 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	flush_buf(t_token **toks, t_buf *buf);
 
 //token_utils.c
 t_token	*get_new_token(int type, char *text);
-void	tok_add_back(t_token **tokens, t_token *new);
+void	tok_add_back(t_token **tokens, t_token *tok);
 t_token	*get_last_token(t_token *toks);
 t_token *get_first_token(t_token *toks);
 
