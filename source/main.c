@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 15:58:39 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/13 16:38:05 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/14 13:24:45 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,14 @@ void	print_tree(t_tree *root)
 {
 	if (root == NULL)
 		return ;
-	print_tree(root->right);
-	printf("%s ", root->toks->text);
+	while (root->toks)
+	{
+		printf("%s ", root->toks->text);
+		root->toks = root->toks->next;
+	}
+	printf("\n");
 	print_tree(root->left);
+	print_tree(root->right);
 }
 
 void	print_toks(t_token *toks)
@@ -73,8 +78,8 @@ void	parsing(t_token **toks, t_tree **root, char *line)
 	scanner(toks, line);
 	print_toks(*toks);
 	*toks =  get_last_token(*toks);
-	*root = get_new_node(LIST, 0 & LEFT, *toks);
-	parser(*toks, *root);
+	*root = get_new_node(LIST, 0, *toks);
+	parser(*root);
 	print_tree(*root);
 	printf("\n");
 	//syntax check fnction
@@ -82,6 +87,8 @@ void	parsing(t_token **toks, t_tree **root, char *line)
 
 void	tree_traverse(t_tree *root, t_env_list *envl)
 {
+	(void)root;
+	(void)envl;
 //	processing(, envl);
 }
 
