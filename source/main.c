@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 15:58:39 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/17 17:29:35 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/17 18:47:12 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,8 @@ void	parsing(t_token **toks, t_tree **root, char *line)
 	*toks =  get_last_token(*toks);
 	*root = get_new_node(LIST, 0, *toks);
 	parser(*root);
-	print_tree(*root);
-	printf("\n");
+	//print_tree(*root);
+	//printf("\n");
 	//syntax check fnction
 }
 
