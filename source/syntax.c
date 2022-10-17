@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 11:45:45 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/17 18:17:01 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/17 18:52:28 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ void	match_redir(t_token *toks)
 			if (toks->next->type != WORD)
 				err_exit(ERR_MSG);
 		}
+		else
+			break ;
 		toks = toks->next->next;
 	}
 }
