@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 11:45:45 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/17 17:33:47 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/17 18:17:01 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static void	check_right_node(t_tree *root)
 
 int	is_redir(t_token *toks)
 {
-	return (toks->type == OP && \
+	return ( toks && toks->type == OP && \
 			(!ft_strcmp(toks->text, ">") || \
 			 !ft_strcmp(toks->text, "<") || \
 			 !ft_strcmp(toks->text, ">>") || \
@@ -100,14 +100,14 @@ void	check_node(t_tree *root)
 			err_exit(ERR_MSG);
 		while (!(toks->type == OP && !ft_strcmp(toks->text, ")")))
 			toks = toks->next;
-		match_redir(toks);
+		match_redir(toks->next);
 	}
 	else if (type == CMD)
 	{ 
 		int flag = 0;
 		if (toks->type == WORD)
 		{
-			while (toks->type == WORD)
+			while (toks && toks->type == WORD)
 				toks = toks->next;
 			flag = 1;
 		}
