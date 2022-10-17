@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 15:33:11 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/14 13:38:07 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/17 14:30:21 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # define D_QUOTE  0x02 //1 when not closed
 
 # define BUF_SIZE 1024
+# define ERR_MSG  "syntax error"
 
 enum e_token_type
 {
