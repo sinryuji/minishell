@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 15:58:39 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/14 13:33:38 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/17 17:29:35 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "../include/built_in.h"
 #include "../include/env.h"
 #include "../include/parser.h"
+#include "../include/executor.h"
 
 int	g_exit_code;
 
@@ -108,6 +109,7 @@ void	minishell(char **envp)
 		if (line && ft_strlen(line) > 0)
 		{
 			parsing(&toks, &root, line);
+			check_syntax(root);
 			//tree_travese()
 			add_history(line);
 		}
