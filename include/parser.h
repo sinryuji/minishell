@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 16:38:32 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/14 13:38:10 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/17 16:51:10 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@
 
 # define PAREN 0x01 // set subshell pair
 # define FOUND 0x04 // terminate once it's on
+
+# define ROOT	0
+# define LEFT	1
+# define RIGHT	2
+
 
 enum e_type
 {
@@ -35,6 +40,7 @@ typedef struct s_tree
 	t_token			*toks;
 	struct s_tree	*left;
 	struct s_tree	*right;
+	struct s_tree	*parent;
 }t_tree;
 
 //parser.c
@@ -44,9 +50,11 @@ void	parse_pipeline(t_tree *root);
 void	parse_cmd(t_tree *root);
 
 //tree_utils.c
-t_tree	*get_new_node(int type, int flag, t_token *toks);
+t_tree	*get_new_node(int type, int flag, t_token *toks, t_tree *parent);
 t_tree	*make_right_node(t_tree *root);
 t_tree	*make_left_node(t_tree *root);
 void	make_root_node(t_tree **root);
+t_tree	*get_sibilng_node(t_tree *root);
+int		who_am_i(t_tree *root);
 
 #endif

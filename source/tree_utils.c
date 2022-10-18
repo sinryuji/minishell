@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 08:15:49 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/14 13:33:21 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/17 16:49:30 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 #include "../include/parser.h"
 
-t_tree	*get_new_node(int type, int flag, t_token *toks)
+t_tree	*get_new_node(int type, int flag, t_token *toks, t_tree *parent)
 {
 	t_tree	*node;
 
@@ -24,6 +24,7 @@ t_tree	*get_new_node(int type, int flag, t_token *toks)
 	node->toks = toks;
 	node->left = NULL;
 	node->right = NULL;
+	node->parent = parent;
 	return (node);
 }
 
@@ -40,9 +41,9 @@ t_tree	*make_left_node(t_tree *root)
 	{
 		toks->prev->next = NULL;
 		if (root->type == LIST)
-			new = get_new_node(LIST, 0, toks->prev);
+			new = get_new_node(LIST, 0, toks->prev, root);
 		if (root->type == PIPELINE)
-			new = get_new_node(CMD, 0, get_first_token(toks));
+			new = get_new_node(CMD, 0, get_first_token(toks), root);
 	}
 	return (new);
 }
@@ -58,14 +59,17 @@ t_tree	*make_right_node(t_tree *root)
 		return (NULL);
 	if (root->flag & FOUND)
 	{
-		if (root->type == LIST)
-		{
-			if (toks->next)
-				toks->next->prev = NULL;
-			new = get_new_node(PIPELINE, 0, toks->next);
-		}
-		if (root->type == PIPELINE)
-			new = get_new_node(CMD, 0, toks->next);
+//		if (root->type == LIST)
+//		{
+//			if (toks->next)
+//				toks->next->prev = NULL;
+//			new = get_new_node(PIPELINE, 0, toks->next);
+//		}
+//		if (root->type == PIPELINE)
+//			new = get_new_node(CMD, 0, toks->next);
+		if (toks->next)
+			toks->next->prev = NULL;
+		new = get_new_node(PIPELINE, 0, toks->next, root);
 	}
 	return (new);
 }
@@ -86,4 +90,26 @@ void	make_root_node(t_tree **root)
 		(*root)->toks = toks;
 	}
 } 
+
+int	who_am_i(t_tree *root)
+{
+	if (root->parent == NULL)
+		return (ROOT);
+	else if (root->parent->left == root)
+		return (LEFT);
+	else
+		return (RIGHT);
+}
+
+t_tree	*get_sibilng_node(t_tree *root)
+{
+	if (root == NULL || root->parent == NULL)
+		return (NULL);
+	if (root->parent->left == root)
+		return (root->parent->right);
+	else if(root->parent->right == root)
+		return (root->parent->left);
+	else
+		return (NULL);
+}
 

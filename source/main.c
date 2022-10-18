@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 15:58:39 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/14 13:33:38 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/17 18:10:31 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "../include/built_in.h"
 #include "../include/env.h"
 #include "../include/parser.h"
+#include <stdlib.h>
 
 int	g_exit_code;
 
@@ -31,37 +32,48 @@ int	get_fork(void)
 	return (FALSE);
 }
 
-
-void	processing(char **argv, t_env_list *envl)
+char	**convert_toks(t_tree *root)
 {
-	int			fork_flag;
-	t_built_in	built_in;
-	pid_t		pid;
+	char	**ret;
+	t_token	*origin;
+	int		cnt;
+	int		i;
 
-	built_in = get_built_in(argv[0]);
-	fork_flag = get_fork();
-	if (fork_flag == TRUE)
-		pid = fork();
-	if (built_in)
-		g_exit_code = built_in(get_argc(argv), argv, envl);
-	else
-		execute_command(argv, envl, fork_flag, pid);
-	set_signal(HAN, HAN);
-	ft_split_free(argv);
+	origin = root->toks;
+	cnt = 0;
+	i = 0;
+	while (root->toks)
+	{
+		cnt++;
+		root->toks = root->toks->next;
+	}
+	root->toks = origin;
+	ret = (char **)malloc(sizeof(char *) * (cnt + 1));
+	while (root->toks)
+	{
+		ret[i] = root->toks->text;
+		i++;
+		root->toks = root->toks->next;
+	}
+	ret[i] = NULL;
+	return (ret);
 }
 
-void	print_tree(t_tree *root)
+void	processing(t_tree *root, t_env_list *envl)
 {
 	if (root == NULL)
 		return ;
-	while (root->toks)
+	processing(root->left, envl);
+	if (root->type == CTLOP && (!ft_strcmp(root->toks->text, "&&") && g_exit_code != EXIT_SUCCESS) || (!ft_strcmp(root->toks->text, "||") && g_exit_code == EXIT_SUCCESS))
+		return ;
+	if (root->type == CMD)
 	{
-		printf("%s ", root->toks->text);
-		root->toks = root->toks->next;
+		if (root->parent != NULL && root->parent->type == PIPE)
+			excute_pipe(root, envl);
+		else
+			execute_command(convert_toks(root), envl, NULL);
 	}
-	printf("\n");
-	print_tree(root->left);
-	print_tree(root->right);
+	processing(root->right, envl);
 }
 
 void	print_toks(t_token *toks)
@@ -73,23 +85,42 @@ void	print_toks(t_token *toks)
 	}
 }
 
+void	print_tree(t_tree *root)
+{
+	t_token	*origin;
+
+	if (root == NULL)
+		return ;
+	print_tree(root->left);
+	origin = root->toks;
+	while (root->toks)
+	{
+		printf("%s ", root->toks->text);
+		root->toks = root->toks->next;
+	}
+	root->toks = origin;
+	printf("\n");
+	print_tree(root->right);
+}
+
+void	syntax_check(t_tree *root)
+{
+	if (root == NULL)
+		return ;
+	// 전위 순회하며 syntax error 잡기
+	syntax_check(root->left);
+	syntax_check(root->right);
+}
+
 void	parsing(t_token **toks, t_tree **root, char *line)
 {
 	scanner(toks, line);
 	print_toks(*toks);
 	*toks =  get_last_token(*toks);
-	*root = get_new_node(LIST, 0, *toks);
+	*root = get_new_node(LIST, 0, *toks, NULL);
 	parser(*root);
 	print_tree(*root);
-	printf("\n");
 	//syntax check fnction
-}
-
-void	tree_traverse(t_tree *root, t_env_list *envl)
-{
-	(void)root;
-	(void)envl;
-//	processing(, envl);
 }
 
 void	minishell(char **envp)
@@ -108,7 +139,8 @@ void	minishell(char **envp)
 		if (line && ft_strlen(line) > 0)
 		{
 			parsing(&toks, &root, line);
-			//tree_travese()
+			printf("execute=================================================\n");
+			processing(root, envl);
 			add_history(line);
 		}
 		else if (line == NULL)

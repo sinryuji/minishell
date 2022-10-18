@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:05:29 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/14 13:36:50 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/16 22:12:01 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,8 @@ void	parse_cmd(t_tree *root)
 	while (toks)
 	{
 		if (toks->type == OP && \
-			(ft_strcmp(toks->text, "(") || \
-			  ft_strcmp(toks->text, ")")))
+			(!ft_strcmp(toks->text, "(") || \
+			  !ft_strcmp(toks->text, ")")))
 		{
 			(root->flag) ^= PAREN;
 			subsh = TRUE;
