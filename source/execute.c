@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 20:49:38 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/17 18:57:51 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/18 14:11:19 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,17 +114,16 @@ void	execve_command(char **argv, t_env_list *envl, pid_t pid)
 		wait_child();
 }
 
-void	execute_command(char **argv, t_env_list *envl, int pipe_fd[2])
+void	execute_command(char **argv, t_env_list *envl, pid_t pid)
 {
 //	int			fork_flag;
 	t_built_in	built_in;
-	pid_t		pid;
 
 	built_in = get_built_in(argv[0]);
 //	fork_flag = get_fork();
-	pid = -1;
-	if (pipe_fd != NULL)
-		pid = ft_fork();
+//	pid = -1;
+//	if (pipe_fd != NULL)
+//		pid = ft_fork();
 	if (built_in)
 	{
 		g_exit_code = built_in(get_argc(argv), argv, envl);

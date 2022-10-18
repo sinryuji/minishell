@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 15:58:39 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/17 18:10:31 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/18 15:42:56 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,21 +59,21 @@ char	**convert_toks(t_tree *root)
 	return (ret);
 }
 
-void	processing(t_tree *root, t_env_list *envl)
+void	processing(t_tree *root, t_env_list *envl, int pipe_fd[2])
 {
 	if (root == NULL)
 		return ;
-	processing(root->left, envl);
+	processing(root->left, envl, pipe_fd);
 	if (root->type == CTLOP && (!ft_strcmp(root->toks->text, "&&") && g_exit_code != EXIT_SUCCESS) || (!ft_strcmp(root->toks->text, "||") && g_exit_code == EXIT_SUCCESS))
 		return ;
 	if (root->type == CMD)
 	{
 		if (root->parent != NULL && root->parent->type == PIPE)
-			excute_pipe(root, envl);
+			excute_pipe(root, envl, pipe_fd);
 		else
-			execute_command(convert_toks(root), envl, NULL);
+			execute_command(convert_toks(root), envl, -1);
 	}
-	processing(root->right, envl);
+	processing(root->right, envl, pipe_fd);
 }
 
 void	print_toks(t_token *toks)
@@ -129,6 +129,7 @@ void	minishell(char **envp)
 	t_env_list		*envl;
 	t_token			*toks;
 	t_tree			*root;
+	int				pipe_fd[2];
 
 	envl = NULL;
 	parse_env(&envl, envp);
@@ -140,7 +141,11 @@ void	minishell(char **envp)
 		{
 			parsing(&toks, &root, line);
 			printf("execute=================================================\n");
-			processing(root, envl);
+			if (pipe(pipe_fd) == -1)
+				ft_perror_exit("pipe error\n");
+			processing(root, envl, pipe_fd);
+			close(pipe_fd[0]);
+			close(pipe_fd[1]);
 			add_history(line);
 		}
 		else if (line == NULL)

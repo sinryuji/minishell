@@ -6,7 +6,7 @@
 #    By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/03 19:45:18 by hyeongki          #+#    #+#              #
-#    Updated: 2022/10/17 18:34:55 by hyeongki         ###   ########.fr        #
+#    Updated: 2022/10/18 13:24:36 by hyeongki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,8 +20,8 @@ OBJS = $(SRCS:.c=.o)
 RM = rm -rf
 AR = ar rcs
 NAME = minishell
-READLINE_LIB = -lreadline -L/opt/homebrew/opt/readline/lib
-READLINE_INC = -I/opt/homebrew/opt/readline/include
+READLINE_LIB = -lreadline -L/Users/hyeongki/.brew/opt/readline/lib
+READLINE_INC = -I/Users/hyeongki/.brew/opt/readline/include
 LIBFT_PATH = ./libft/
 LIBFT = libft.a
 LIBFT_FLAG = $(LIBFT_PATH)$(LIBFT)
