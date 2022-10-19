@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 15:58:39 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/17 18:47:12 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/19 18:56:18 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,6 @@ void	parsing(t_token **toks, t_tree **root, char *line)
 	*toks =  get_last_token(*toks);
 	*root = get_new_node(LIST, 0, *toks);
 	parser(*root);
-	//print_tree(*root);
-	//printf("\n");
-	//syntax check fnction
 }
 
 void	tree_traverse(t_tree *root, t_env_list *envl)
@@ -110,6 +107,9 @@ void	minishell(char **envp)
 		{
 			parsing(&toks, &root, line);
 			check_syntax(root);
+			expand(root, envl);
+			print_tree(root);
+			printf("\n");
 			//tree_travese()
 			add_history(line);
 		}
