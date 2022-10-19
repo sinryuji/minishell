@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 20:18:21 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/18 14:21:02 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/18 21:59:32 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ extern int	g_exit_code;
 typedef void	(*t_tree_func)(t_tree *tree, t_env_list *envl);
 
 /* main.c */
-void	processing(t_tree *root, t_env_list *envl, int pipe_fd[2]);
+void	processing(t_tree *root, t_env_list *envl);
 char	**convert_toks(t_tree *root);
 
 /* error.c */
