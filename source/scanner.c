@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:05:06 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/07 16:44:59 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/19 17:37:34 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,14 @@ int	find_op(char *script)
 	return (0);
 }
 
+void	ctl_quote_flag(char *flag, char c)
+{
+	if (*flag ^ D_QUOTE && c == '\'')
+		(*flag) ^= S_QUOTE;
+	else if (*flag ^ S_QUOTE && c == '\"')
+		(*flag) ^= D_QUOTE;
+}
+
 void	scanner(t_token **toks, char *script)
 {
 	char	flag;
@@ -45,10 +53,7 @@ void	scanner(t_token **toks, char *script)
 	init_buf(&buf);
 	while (*script)
 	{
-		if (flag ^ D_QUOTE && *script == '\'')
-			flag ^= S_QUOTE;
-		else if (flag ^ S_QUOTE && *script == '\"')
-			flag ^= D_QUOTE;
+		ctl_quote_flag(&flag, *script);
 		if (!(flag & S_QUOTE + D_QUOTE) && is_delim(*script))
 			flush_buf(toks, &buf);
 		else if (!(flag & S_QUOTE + D_QUOTE) && is_op(*script))

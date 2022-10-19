@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 15:33:11 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/17 14:30:21 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/19 17:24:23 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct s_buf
 
 //scanner.c
 void	scanner(t_token **tokens, char *script);
+void	ctl_quote_flag(char *flag, char c);
 int		is_op(char c);
 int		is_delim(char c);
 int		find_op(char *script);
