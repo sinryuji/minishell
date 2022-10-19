@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 20:49:38 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/18 14:11:19 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/19 18:59:49 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,16 +114,52 @@ void	execve_command(char **argv, t_env_list *envl, pid_t pid)
 		wait_child();
 }
 
+//void	redir_processing(int fd, char **argv, int i)
+//{
+//	if (!ft_strcmp("<", argv[i]))
+//		dup2(fd, STDIN_FILENO);
+//	else
+//		dup2(fd, STDOUT_FILENO);
+//		
+//}
+//
+//int	redir(char **argv, pid_t pid)
+//{
+//	int	i;
+//	int	fd;
+//	
+//	i = 0;
+//	while (argv[i + 1])
+//	{
+//		if (!ft_strcmp("<", argv[i]))
+//			fd = open(argv[i + 1], O_RDONLY);
+//		else if (!ft_strcmp(">", argv[i]))
+//			fd = open(argv[i + 1], O_WRONLY | O_CREAT | O_TRUNC, S_IWUSR);
+//		else if (!ft_strcmp(">>", argv[i]))
+//			fd = open(argv[i + 1], O_WRONLY | O_CREAT | O_APPEND, S_IWUSR);
+//		if (fd == -1)
+//		{
+//			put_error_cmd(argv[i + 1], strerror(errno));
+//			return (fd);
+//		}
+//		else
+//			redir_processing(fd, argv, i);
+//		i++;
+//	}
+//	return (fd);
+//}
+
 void	execute_command(char **argv, t_env_list *envl, pid_t pid)
 {
-//	int			fork_flag;
 	t_built_in	built_in;
+	int			fd;
 
+	if (argv == NULL)
+		return ;
 	built_in = get_built_in(argv[0]);
-//	fork_flag = get_fork();
-//	pid = -1;
-//	if (pipe_fd != NULL)
-//		pid = ft_fork();
+//	fd = redir(argv, pid);
+//	if (fd == -1)
+//		return ;
 	if (built_in)
 	{
 		g_exit_code = built_in(get_argc(argv), argv, envl);

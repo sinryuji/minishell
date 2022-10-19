@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 15:58:39 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/19 15:19:05 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/19 19:00:02 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,25 +32,80 @@ int	get_fork(void)
 	return (FALSE);
 }
 
+int	get_toks_length(t_token *toks)
+{
+	int	ret;
+
+	ret = 0;
+	while (toks)
+	{
+		ret++;
+		toks = toks->next;
+	}
+	return (ret);
+}
+
+int	is_redir(char *text)
+{
+	if (!ft_strcmp("<", text) || !ft_strcmp(">", text) || !ft_strcmp(">>", text))
+		return (TRUE);
+	return (FALSE);
+}
+
+t_token	*redir(t_token *toks)
+{
+	int	fd;
+
+	if (!ft_strcmp("<", toks->text))
+		fd = open(toks->next->text, O_RDONLY);
+	else if (!ft_strcmp(">", toks->text))
+		fd = open(toks->next->text, O_WRONLY | O_CREAT | O_TRUNC, S_IWUSR);
+	else if (!ft_strcmp(">>", toks->text))
+		fd = open(toks->next->text, O_WRONLY | O_CREAT | O_APPEND, S_IWUSR);
+	if (fd == -1)
+	{
+		put_error_cmd(toks->next->text, strerror(errno));
+		return (NULL);
+	}
+	else
+	{
+		if (!ft_strcmp("<", toks->text))
+			dup2(fd, STDIN_FILENO);
+		else
+			dup2(fd, STDOUT_FILENO);
+		close(fd);
+	}
+	return (toks->next->next);
+}
+
 char	**convert_toks(t_tree *root)
 {
 	char	**ret;
-	t_token	*origin;
-	int		cnt;
+	int		len;
 	int		i;
 
-	origin = root->toks;
-	cnt = 0;
 	i = 0;
-	while (root->toks)
+	len = get_toks_length(root->toks);
+	ret = (char **)malloc(sizeof(char *) * (len + 1));
+	if (!ret)
 	{
-		cnt++;
-		root->toks = root->toks->next;
+		ft_putendl_fd("malloc error!", STDOUT_FILENO);
+		return (NULL);
 	}
-	root->toks = origin;
-	ret = (char **)malloc(sizeof(char *) * (cnt + 1));
 	while (root->toks)
 	{
+		if (is_redir(root->toks->text) == TRUE)
+		{
+			root->toks = redir(root->toks);
+			if (root->toks == NULL)
+			{
+				if (errno == ENOENT)
+					return (NULL);
+				else
+					break ;
+			}
+			continue ;
+		}
 		ret[i] = root->toks->text;
 		i++;
 		root->toks = root->toks->next;
