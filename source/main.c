@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 15:58:39 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/20 15:33:47 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/20 16:37:57 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ void	processing(t_tree *root, t_lists *list, int *prev_fd, int pipe_fd[2])
 		}
 		else
 			execute_command(convert_toks(root, list), list, -1);
+		free_redirl(&(list->redirl));
 	}
 	processing(root->right, list, prev_fd, pipe_fd);
 }
@@ -172,7 +173,6 @@ void	minishell(char **envp)
 			printf("execute=================================================\n");
 			*prev_fd = -1;
 			processing(root, list, prev_fd, pipe_fd);
-			free_redirl(&(list->redirl));
 			add_history(line);
 		}
 		else if (line == NULL)

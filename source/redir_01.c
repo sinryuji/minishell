@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:23:25 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/20 15:37:48 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/20 17:11:52 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ int	redir_open(char *redir, char *file)
 	if (!ft_strcmp("<", redir))
 		fd = open(file, O_RDONLY);
 	else if (!ft_strcmp(">", redir))
-		fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, S_IWUSR);
+		fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	else if (!ft_strcmp(">>", redir))
-		fd = open(file, O_WRONLY | O_CREAT | O_APPEND, S_IWUSR);
+		fd = open(file, O_WRONLY | O_CREAT | O_APPEND, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	return (fd);
 }
 
@@ -49,6 +49,7 @@ int	redir(t_redir_list *redirl, pid_t pid)
 		if (fd == -1)
 		{
 			put_error_cmd(redir->file, strerror(errno));
+			g_exit_code = EXIT_FAILURE;
 			return (FAILURE);
 		}
 		if (!ft_strcmp("<", redir->redir))

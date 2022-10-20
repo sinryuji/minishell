@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 20:49:38 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/20 15:37:10 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/20 17:12:02 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,15 +117,17 @@ void	execve_command(char **argv, t_env_list *envl, pid_t pid)
 void	execute_command(char **argv, t_lists *list, pid_t pid)
 {
 	t_built_in	built_in;
-	int			tmp[2];
 
-	if (argv == NULL)
+	if (argv == NULL || argv[0] == NULL)
 		return ;
 	built_in = get_built_in(argv[0]);
-	tmp[0] = dup(STDIN_FILENO);
-	tmp[1] = dup(STDOUT_FILENO);
 	if (redir(list->redirl, pid) == FAILURE)
-		return ;
+	{
+		if (pid == 0)
+			exit(g_exit_code);
+		else
+			return ;
+	}
 	if (built_in)
 	{
 		g_exit_code = built_in(get_argc(argv), argv, list->envl);
@@ -134,7 +136,10 @@ void	execute_command(char **argv, t_lists *list, pid_t pid)
 	}
 	else
 		execve_command(argv, list->envl, pid);
-	dup2(tmp[0], STDIN_FILENO);
-	dup2(tmp[1], STDOUT_FILENO);
+	if (list->redirl)
+	{
+		dup2(list->redirl->tmp[0], STDIN_FILENO);
+		dup2(list->redirl->tmp[1], STDOUT_FILENO);
+	}
 	ft_split_free(argv);
 }

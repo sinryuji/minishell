@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:15:41 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/20 15:22:17 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/20 16:38:27 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct	s_redir_list
 {
 	struct s_redir	*head;
 	struct s_redir	*tail;
+	int				tmp[2];
 }	t_redir_list;
 
 

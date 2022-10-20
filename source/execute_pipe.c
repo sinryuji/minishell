@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 15:41:49 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/20 14:52:09 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/20 15:59:11 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	first_pipe(t_tree *node, t_lists *list, pid_t pid, int pipe_fd[2])
 		dup2(pipe_fd[1], STDOUT_FILENO);
 		close(pipe_fd[0]);
 		close(pipe_fd[1]);
-		execute_command(convert_toks(node, list->redirl), list, pid);
+		execute_command(convert_toks(node, list), list, pid);
 	}
 	else
 		close(pipe_fd[1]);
@@ -33,7 +33,7 @@ static void	middle_pipe(t_tree *node, t_lists *list, pid_t pid, int pipe_fd[2])
 		dup2(pipe_fd[1], STDOUT_FILENO);
 		close(pipe_fd[0]);
 		close(pipe_fd[1]);
-		execute_command(convert_toks(node, list->redirl), list, pid);
+		execute_command(convert_toks(node, list), list, pid);
 	}
 	else
 	{
@@ -49,7 +49,7 @@ static void	last_pipe(t_tree *node, t_lists *list, pid_t pid, int pipe_fd[2])
 		dup2(pipe_fd[0], STDIN_FILENO);
 		close(pipe_fd[0]);
 		close(pipe_fd[1]);
-		execute_command(convert_toks(node, list->redirl), list, pid);
+		execute_command(convert_toks(node, list), list, pid);
 	}
 	else
 	{

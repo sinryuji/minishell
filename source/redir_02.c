@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:55:13 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/20 15:11:54 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/20 16:39:24 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ int	set_redir(t_redir_list **redirl, t_redir *new)
 			return (FAILURE);
 		(*redirl)->head = new;
 		(*redirl)->tail = new;
+		(*redirl)->tmp[0] = dup(STDIN_FILENO);
+		(*redirl)->tmp[1] = dup(STDOUT_FILENO);
 	}
 	else
 	{
