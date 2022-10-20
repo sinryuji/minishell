@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 20:49:38 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/19 18:59:49 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/20 15:37:10 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,59 +114,27 @@ void	execve_command(char **argv, t_env_list *envl, pid_t pid)
 		wait_child();
 }
 
-//void	redir_processing(int fd, char **argv, int i)
-//{
-//	if (!ft_strcmp("<", argv[i]))
-//		dup2(fd, STDIN_FILENO);
-//	else
-//		dup2(fd, STDOUT_FILENO);
-//		
-//}
-//
-//int	redir(char **argv, pid_t pid)
-//{
-//	int	i;
-//	int	fd;
-//	
-//	i = 0;
-//	while (argv[i + 1])
-//	{
-//		if (!ft_strcmp("<", argv[i]))
-//			fd = open(argv[i + 1], O_RDONLY);
-//		else if (!ft_strcmp(">", argv[i]))
-//			fd = open(argv[i + 1], O_WRONLY | O_CREAT | O_TRUNC, S_IWUSR);
-//		else if (!ft_strcmp(">>", argv[i]))
-//			fd = open(argv[i + 1], O_WRONLY | O_CREAT | O_APPEND, S_IWUSR);
-//		if (fd == -1)
-//		{
-//			put_error_cmd(argv[i + 1], strerror(errno));
-//			return (fd);
-//		}
-//		else
-//			redir_processing(fd, argv, i);
-//		i++;
-//	}
-//	return (fd);
-//}
-
-void	execute_command(char **argv, t_env_list *envl, pid_t pid)
+void	execute_command(char **argv, t_lists *list, pid_t pid)
 {
 	t_built_in	built_in;
-	int			fd;
+	int			tmp[2];
 
 	if (argv == NULL)
 		return ;
 	built_in = get_built_in(argv[0]);
-//	fd = redir(argv, pid);
-//	if (fd == -1)
-//		return ;
+	tmp[0] = dup(STDIN_FILENO);
+	tmp[1] = dup(STDOUT_FILENO);
+	if (redir(list->redirl, pid) == FAILURE)
+		return ;
 	if (built_in)
 	{
-		g_exit_code = built_in(get_argc(argv), argv, envl);
+		g_exit_code = built_in(get_argc(argv), argv, list->envl);
 		if (pid == 0)
 			exit(g_exit_code);
 	}
 	else
-		execve_command(argv, envl, pid);
+		execve_command(argv, list->envl, pid);
+	dup2(tmp[0], STDIN_FILENO);
+	dup2(tmp[1], STDOUT_FILENO);
 	ft_split_free(argv);
 }

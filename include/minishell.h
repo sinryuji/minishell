@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 20:18:21 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/19 16:24:21 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/20 15:31:04 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # include "../libft/include/libft.h"
 # include "env.h"
 # include "parser.h"
+# include "redir.h"
 
 # define SHELL_NAME "fdf"
 
@@ -49,9 +50,15 @@ extern int	g_exit_code;
 
 typedef void	(*t_tree_func)(t_tree *tree, t_env_list *envl);
 
+typedef struct	s_lists
+{
+	struct s_env_list	*envl;
+	struct s_redir_list	*redirl;
+}	t_lists;
+
 /* main.c */
-void	processing(t_tree *root, t_env_list *envl, int *prev_fd, int pipe_fd[2]);
-char	**convert_toks(t_tree *root);
+void	processing(t_tree *root, t_lists *list, int *prev_fd, int pipe_fd[2]);
+char	**convert_toks(t_tree *root, t_lists *list);
 
 /* error.c */
 void	put_error_arg(char *cmd, char *arg, char *strerr);
@@ -68,14 +75,14 @@ void	signal_handler(int sig);
 void	set_signal(int sig_int, int sig_quit);
 
 /* execute.c */
-void	execute_command(char **argv, t_env_list *envl, pid_t pid);
+void	execute_command(char **argv, t_lists *list, pid_t pid);
 void	execve_command(char **argv, t_env_list *envl, pid_t pid);
 void	wait_child(void);
 char	*get_command(char **paths, char *cmd);
 int		dir_check(char *path, char *cmd);
 
 /* execute_pipe.c */
-void		excute_pipe(t_tree *node, t_env_list *envl, int pipe_in, int pipe_out);
+void		excute_pipe(t_tree *node, t_lists *list, int pipe_in, int pipe_out);
 
 /* execute_utils.c */
 pid_t	ft_fork(void);
