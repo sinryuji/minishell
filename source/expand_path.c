@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 13:17:41 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/20 20:07:40 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/20 20:35:48 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,7 @@ void	print_pattern(t_list *pattern)
 void	expand_pathname(t_tree *root)
 {
 	t_token	*toks;
+	t_token	*save;
 	t_list	*pattern;
 	t_list	*matches;
 
@@ -163,11 +164,13 @@ void	expand_pathname(t_tree *root)
 			pattern = make_pattern(toks->text);
 			print_pattern(pattern);
 			matches = find_matches(pattern);
-			//insert_matches(&toks, matches);
 			toks = insert_matches(toks, matches);
 		}
+		if (toks->next == NULL)
+			save = toks;
 		toks = toks->next;
 	}
+	root->toks = get_first_token(save);
 	ft_lstclear(&pattern, free);
 	ft_lstclear(&matches, NULL);
 }
