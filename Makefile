@@ -6,14 +6,14 @@
 #    By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/03 19:45:18 by hyeongki          #+#    #+#              #
-#    Updated: 2022/10/19 22:27:39 by jiwahn           ###   ########.fr        #
+#    Updated: 2022/10/20 16:40:48 by jiwahn           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 SRCS_PATH = ./source/
-SRCS_NAME = main.c ft_echo.c ft_pwd.c ft_cd.c ft_export.c ft_unset.c ft_env.c ft_exit.c built_in.c env_01.c env_02.c env_03.c error.c util.c signal.c excute.c parser.c scanner.c scanner_utils.c token_utils.c tree_utils.c syntax.c expander.c expand_env.c split_field.c
+SRCS_NAME = main.c ft_echo.c ft_pwd.c ft_cd.c ft_export.c ft_unset.c ft_env.c ft_exit.c built_in.c env_01.c env_02.c env_03.c error.c util.c signal.c excute.c parser.c scanner.c scanner_utils.c token_utils.c tree_utils.c syntax.c expander.c expand_env.c split_field.c expand_path.c
 SRCS = $(addprefix $(SRCS_PATH), $(SRCS_NAME))
 OBJS = $(SRCS:.c=.o)
 RM = rm -rf
@@ -38,7 +38,7 @@ RESET = \x1b[0m
 all : $(NAME)
 
 $(NAME) :  $(OBJS)
-	@make -C $(LIBFT_PATH)
+	@make -C $(LIBFT_PATH) bonus
 	@$(CC) $(CFLAGS) $^ $(READLINE_LIB) $(LIBFT_FLAG) -o $@
 	@echo "$@: $(GREEN)$@ was created$(RESET)"
 

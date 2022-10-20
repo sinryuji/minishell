@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 18:39:20 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/19 21:56:05 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/20 13:59:50 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,4 +115,3 @@ void	expand_env(t_tree *root, t_env_list *envl)
 		toks = toks->next;
 	}
 }
-

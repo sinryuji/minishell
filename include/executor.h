@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:20:56 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/19 22:28:10 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/20 13:17:30 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,3 +27,7 @@ void	expand_env(t_tree *root, t_env_list *envl);
 
 //split_field.c
 void	split_field(t_tree *root);
+
+
+//expand_path.c
+void	expand_path(t_tree *root);

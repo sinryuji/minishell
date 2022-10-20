@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:19:25 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/19 22:31:34 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/20 13:17:53 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,18 @@
 #include "../include/executor.h"
 #include "../libft/include/libft.h"
 
-void	expand_pathname(t_tree *root)
-{
-	t_token	*toks;
-
-	toks = root->toks;
-}
-
 void	quote_removal(t_tree *root)
 {
 	t_token	*toks;
 
 	toks = root->toks;
+	while (toks)
+	{
+		if (toks->type == WORD)
+		{
+		}
+		toks = toks->next;
+	}
 }
 
 void	expand(t_tree *root, t_env_list *envl)
@@ -38,7 +38,7 @@ void	expand(t_tree *root, t_env_list *envl)
 		return ;
 	expand_env(root, envl);
 	split_field(root);
-//	expand_pathname(root);
-//	quote_removal(root);
+	expand_pathname(root);
+	quote_removal(root);
 	expand(root->right, envl);
 }

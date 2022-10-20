@@ -6,14 +6,12 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 21:59:37 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/19 22:32:11 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/20 17:00:33 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft/include/libft.h"
 #include "../include/executor.h"
-
-/**/
 
 static void	split_token(t_token **toks, int start)
 {
@@ -35,8 +33,10 @@ static void	split_token(t_token **toks, int start)
 	child->prev = parent;
 	parent->prev = (*toks)->prev;
 	child->next = (*toks)->next;
-	(*toks)->prev->next = parent;
-	(*toks)->next->prev = child;
+	if ((*toks)->prev)
+		(*toks)->prev->next = parent;
+	if ((*toks)->next)
+		(*toks)->next->prev = child;
 	free((*toks)->text);
 	free(*toks);
 	toks = &child;
@@ -48,13 +48,13 @@ void	split_field(t_tree *root)
 	char	flag;
 	t_token	*toks;
 
-	flag = 0;
 	toks = root->toks;
 	while (toks)
 	{
 		if (toks->type == WORD)
 		{
 			i = 0;
+			flag = 0;
 			while (toks->text[i])
 			{
 				ctl_quote_flag(&flag, toks->text[i]);
