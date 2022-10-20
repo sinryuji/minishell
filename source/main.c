@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 15:58:39 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/20 16:37:57 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/20 20:20:41 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,14 @@ char	**convert_toks(t_tree *root, t_lists *list)
 	}
 	while (root->toks)
 	{
-		if (is_redir(root->toks->text) == TRUE)
+		if (!ft_strcmp("<<", root->toks->text))
 		{
-//			root->toks = redir(root->toks, redirl);
-//			if (root->toks == NULL)
-//				return (NULL);
-//			continue ;
+			set_heredoc(&(list->heredocl), new_heredoc(root->toks->next->text));
+			root->toks = root->toks->next->next;
+			continue ;
+		}
+		else if (is_redir(root->toks->text) == TRUE)
+		{
 			set_redir(&(list->redirl), new_redir(root->toks->text, root->toks->next->text));
 			root->toks = root->toks->next->next;
 			continue ;
@@ -95,6 +97,7 @@ void	processing(t_tree *root, t_lists *list, int *prev_fd, int pipe_fd[2])
 		else
 			execute_command(convert_toks(root, list), list, -1);
 		free_redirl(&(list->redirl));
+		free_heredocl(&(list->heredocl));
 	}
 	processing(root->right, list, prev_fd, pipe_fd);
 }
@@ -151,6 +154,7 @@ void	minishell(char **envp)
 	char			*line;
 	t_env_list		*envl;
 	t_redir_list	*redirl;
+	t_heredoc_list	*heredocl;
 	t_lists			*list;
 	t_token			*toks;
 	t_tree			*root;
@@ -158,10 +162,13 @@ void	minishell(char **envp)
 	int				*prev_fd;
 
 	envl = NULL;
-	parse_env(&envl, envp);
 	redirl = NULL;
+	heredocl = NULL;
+	parse_env(&envl, envp);
+	list = (t_lists *)malloc(sizeof(t_lists));
 	list->envl = envl;
 	list->redirl = redirl;
+	list->heredocl = heredocl;
 	prev_fd = (int *)malloc(sizeof(int));
 	while (TRUE)
 	{

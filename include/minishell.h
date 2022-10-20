@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 20:18:21 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/20 15:31:04 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/20 17:59:41 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,9 @@ typedef void	(*t_tree_func)(t_tree *tree, t_env_list *envl);
 
 typedef struct	s_lists
 {
-	struct s_env_list	*envl;
-	struct s_redir_list	*redirl;
+	struct s_env_list		*envl;
+	struct s_redir_list		*redirl;
+	struct s_heredoc_list	*heredocl;
 }	t_lists;
 
 /* main.c */
