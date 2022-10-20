@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 13:17:41 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/20 20:35:48 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/20 21:23:35 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,36 +16,34 @@
 #include "../libft/include/libft.h"
 #include "../include/executor.h"
 
+static void	flush_pattern(t_list **pattern, t_buf *buf)
+{
+
+}
+
 static t_list	*make_pattern(char *text)
 {
 	int		i;
-	int		found;
 	char	flag;
+	t_buf	buf;
 	t_list	*pattern;
 
 	i = 0;
 	flag = 0;
-	found = 0;
 	pattern = NULL;
+	init_buf(&buf);
 	while (text[i])
 	{
 		ctl_quote_flag(&flag, text[i]);
 		if (!(flag & S_QUOTE + D_QUOTE) && text[i] == '*')
 		{
-			if (i != 0)
-				ft_lstadd_back(&pattern, \
-						ft_lstnew(ft_strndup(text + found, i - found)));
-			ft_lstadd_back(&pattern, \
-					ft_lstnew(ft_strndup("*", 1)));
-			while (text[i + 1] == '*')
-				i++;
-			found = i;
+			flush_pattern(&pattern, &buf);
 		}
+		else
+			append_export();
 		i++;
 	}
-	if (found != 0 && (found != i))
-		ft_lstadd_back(&pattern, \
-				ft_lstnew(ft_strndup(text + found, i - found)));
+	flush_pattern();
 	return (pattern);
 }
 
@@ -105,7 +103,6 @@ static t_list	*find_matches(t_list *pattern)
 		if (ft_strncmp(dirent->d_name, ".", 1) == 0)
 			continue ;
 		if (match_pattern(pattern, dirent->d_name))
-			//ft_lstadd_back(&matches, ft_lstnew(dirent->d_name));
 			ft_lstadd_back(&matches, ft_lstnew(ft_strdup(dirent->d_name)));
 	}
 	closedir(d);
