@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 19:55:21 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/10 21:02:41 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/21 15:47:37 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,31 @@ static int	option_check(char *arg)
 	if (arg[0] == '-')
 	{
 		while (arg[i] == 'n')
+		{
 			i++;
+			if ((int)ft_strlen(arg) == i)
+				return (TRUE);
+		}
 	}
-	if ((int)ft_strlen(arg) != i)
-		return (FAILURE);
-	return (SUCCESS);
+	return (FALSE);
+}
+
+static void	print_echo(char **argv, int i)
+{
+	while (argv[i])
+	{
+		if (argv[i + 1])
+			printf("%s ", argv[i]);
+		else
+			printf("%s", argv[i]);
+		i++;
+	}
 }
 
 int	ft_echo(int argc, char **argv, t_env_list *envl)
 {
 	int	option;
+	int	i;
 
 	(void)envl;
 	if (argc == 1)
@@ -38,18 +53,17 @@ int	ft_echo(int argc, char **argv, t_env_list *envl)
 		printf("\n");
 		return (EXIT_SUCCESS);
 	}
-	option = option_check(argv[1]);
-	argv++;
-	if (option)
-		argv++;
-	while (*argv)
+	i = 1;
+	option = FALSE;
+	while (argv[i][0] == '-')
 	{
-		if (*(argv + 1))
-			printf("%s ", *argv);
+		option = option_check(argv[i]);
+		if (option == TRUE)
+			i++;
 		else
-			printf("%s", *argv);
-		argv++;
+			break ;
 	}
+	print_echo(argv, i);
 	if (!option)
 		printf("\n");
 	return (EXIT_SUCCESS);
