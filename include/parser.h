@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 16:38:32 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/14 13:38:10 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/19 21:42:58 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "scanner.h"
 
 # define PAREN 0x01 // set subshell pair
-# define FOUND 0x04 // terminate once it's on
+# define FOUND 0x02 // terminate once it's on
 
 enum e_type
 {
