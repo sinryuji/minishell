@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:54:58 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/21 15:41:56 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/21 17:34:17 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,11 +87,11 @@ void	quote_removal(t_tree *root)
 	char	*chunk;
 	t_token	*toks;
 
-	removed = NULL;
 	toks = root->toks;
 	while (toks)
 	{
 		i = 0;
+		removed = NULL;
 		if (toks->type == WORD)
 		{
 			while (toks->text[i])

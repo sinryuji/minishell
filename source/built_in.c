@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 16:03:53 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/09 20:59:21 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/20 16:56:56 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 
 t_built_in	get_built_in(char *cmd)
 {
-	if (ft_strcmp("echo", cmd) == 0)
+	if (cmd == NULL)
+		return (NULL);
+	else if (ft_strcmp("echo", cmd) == 0)
 		return (&ft_echo);
 	else if (ft_strcmp("cd", cmd) == 0)
 		return (&ft_cd);

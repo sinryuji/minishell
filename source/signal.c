@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 20:47:29 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/10 20:48:00 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/20 17:39:57 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	signal_handler(int sig)
 	{
 		write(STDOUT_FILENO, "\n", 1);
 		rl_on_new_line();
-		rl_replace_line("", 0);
+		rl_replace_line("", 1);
 		rl_redisplay();
 	}
 	if (sig == SIGQUIT)

@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:05:29 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/17 18:35:29 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/21 15:58:00 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,6 @@ void	parser(t_tree *root)
 		parse_pipeline(root);
 	if (root->type == CMD)
 		parse_cmd(root);
-	
 	left = make_left_node(root);
 	right = make_right_node(root);
 	make_root_node(&root);

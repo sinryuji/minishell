@@ -6,21 +6,21 @@
 #    By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/03 19:45:18 by hyeongki          #+#    #+#              #
-#    Updated: 2022/10/21 14:59:36 by jiwahn           ###   ########.fr        #
+#    Updated: 2022/10/21 16:08:33 by hyeongki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 SRCS_PATH = ./source/
-SRCS_NAME = main.c ft_echo.c ft_pwd.c ft_cd.c ft_export.c ft_unset.c ft_env.c ft_exit.c built_in.c env_01.c env_02.c env_03.c error.c util.c signal.c excute.c parser.c scanner.c scanner_utils.c token_utils.c tree_utils.c syntax.c expander.c expand_env.c split_field.c expand_path.c remove_quote.c
+SRCS_NAME = main.c ft_echo.c ft_pwd.c ft_cd.c ft_export.c ft_unset.c ft_env.c ft_exit.c built_in.c env_01.c env_02.c env_03.c error.c util.c signal.c execute.c parser.c scanner.c scanner_utils.c token_utils.c tree_utils.c syntax.c expander.c expand_env.c split_field.c expand_path.c remove_quote.c redir_01.c redir_02.c redir_03.c execute_pipe.c execute_utils.c
 SRCS = $(addprefix $(SRCS_PATH), $(SRCS_NAME))
 OBJS = $(SRCS:.c=.o)
 RM = rm -rf
 AR = ar rcs
 NAME = minishell
-READLINE_LIB = -lreadline -L${HOME}/homebrew/opt/readline/lib
-READLINE_INC = -I${HOME}/homebrew/opt/readline/include
+READLINE_LIB = -lreadline -L${HOME}/.brew/opt/readline/lib
+READLINE_INC = -I${HOME}/.brew/opt/readline/include
 READLINE_PATH = ./readline
 LIBFT_PATH = ./libft/
 LIBFT = libft.a
