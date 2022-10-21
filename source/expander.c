@@ -6,28 +6,13 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:19:25 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/21 10:13:25 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/21 15:00:00 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 
 #include "../include/executor.h"
-#include "../libft/include/libft.h"
-
-void	quote_removal(t_tree *root)
-{
-	t_token	*toks;
-
-	toks = root->toks;
-	while (toks)
-	{
-		if (toks->type == WORD)
-		{
-		}
-		toks = toks->next;
-	}
-}
 
 void	expand(t_tree *root, t_env_list *envl)
 {
