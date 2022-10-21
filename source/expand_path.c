@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 13:17:41 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/20 21:23:35 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/21 10:08:54 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,12 @@
 
 static void	flush_pattern(t_list **pattern, t_buf *buf)
 {
-
+	if (buf->size)
+	{
+		ft_lstadd_back(pattern, ft_lstnew(ft_strndup(buf->word, buf->size)));
+		free(buf->word);
+		init_buf(buf);
+	}
 }
 
 static t_list	*make_pattern(char *text)
@@ -38,12 +43,15 @@ static t_list	*make_pattern(char *text)
 		if (!(flag & S_QUOTE + D_QUOTE) && text[i] == '*')
 		{
 			flush_pattern(&pattern, &buf);
+			ft_lstadd_back(&pattern, ft_lstnew(ft_strdup("*")));
+			while (text[i + 1] == '*')
+				i++;
 		}
 		else
-			append_export();
+			append_to_buf(text[i], &buf);
 		i++;
 	}
-	flush_pattern();
+	flush_pattern(&pattern, &buf);
 	return (pattern);
 }
 
@@ -66,7 +74,7 @@ static int	match_pattern(t_list *pattern, char *str)
 			len = ft_strlen(pattern->content);
 			if (flag)
 			{
-				str = ft_strnstr(str, pattern->content, len);
+				str = ft_strnstr(str, pattern->content, ft_strlen(str));
 				if (str == NULL)
 					return (0);
 			}
@@ -159,7 +167,7 @@ void	expand_pathname(t_tree *root)
 		if (toks->type == WORD)
 		{
 			pattern = make_pattern(toks->text);
-			print_pattern(pattern);
+			//print_pattern(pattern);
 			matches = find_matches(pattern);
 			toks = insert_matches(toks, matches);
 		}
