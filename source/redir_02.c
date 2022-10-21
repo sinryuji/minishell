@@ -6,19 +6,19 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:55:13 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/20 19:20:20 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/21 16:10:29 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 #include "../include/redir.h"
 
-int	is_redir(char *text)
-{
-	if (!ft_strcmp("<", text) || !ft_strcmp(">", text) || !ft_strcmp(">>", text) || !ft_strcmp("<<", text))
-		return (TRUE);
-	return (FALSE);
-}
+//int	is_redirection(char *text)
+//{
+//	if (!ft_strcmp("<", text) || !ft_strcmp(">", text) || !ft_strcmp(">>", text) || !ft_strcmp("<<", text))
+//		return (TRUE);
+//	return (FALSE);
+//}
 
 t_redir	*new_redir(char *redir, char *file)
 {

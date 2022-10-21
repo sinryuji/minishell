@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:15:41 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/20 20:58:52 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/21 16:10:04 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,10 @@ typedef struct	s_heredoc_list
 }	t_heredoc_list;
 
 /* redir_01.c */
-int		redir(t_redir_list *redirl, pid_t pid);
-int		heredoc(t_heredoc_list *heredocl, pid_t pid);
+int		redir(t_redir_list *redirl);
+int		heredoc(t_heredoc_list *heredocl);
 
 /* redir_02.c */
-int		is_redir(char *text);
 t_redir	*new_redir(char *redir, char *file);
 int		set_redir(t_redir_list **redirl, t_redir *redir);
 void	free_redirl(t_redir_list **redirl);

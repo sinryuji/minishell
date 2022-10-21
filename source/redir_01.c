@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:23:25 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/20 21:07:27 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/21 16:07:28 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static int	heredoc_processing(t_heredoc *heredoc, int tmp)
 	return (SUCCESS);
 }
 
-int	heredoc(t_heredoc_list *heredocl, pid_t pid)
+int	heredoc(t_heredoc_list *heredocl)
 {
 	t_heredoc	*heredoc;
 
@@ -79,12 +79,12 @@ int	redir_open(char *redir, char *file)
 		fd = open(file, O_RDONLY);
 	else if (!ft_strcmp(">", redir))
 		fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-	else if (!ft_strcmp(">>", redir))
+	else
 		fd = open(file, O_WRONLY | O_CREAT | O_APPEND, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	return (fd);
 }
 
-int	redir(t_redir_list *redirl, pid_t pid)
+int	redir(t_redir_list *redirl)
 {
 	t_redir *redir;
 	int		fd;

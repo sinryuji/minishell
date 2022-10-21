@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 20:49:38 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/20 20:59:36 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/21 16:10:33 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,14 +118,14 @@ void	execute_command(char **argv, t_lists *list, pid_t pid)
 {
 	t_built_in	built_in;
 
-	if (heredoc(list->heredocl, pid) == FAILURE)
+	if (heredoc(list->heredocl) == FAILURE)
 	{
 		if (pid == 0)
 			exit(g_exit_code);
 		else
 			return ;
 	}
-	if (redir(list->redirl, pid) == FAILURE)
+	if (redir(list->redirl) == FAILURE)
 	{
 		if (pid == 0)
 			exit(g_exit_code);

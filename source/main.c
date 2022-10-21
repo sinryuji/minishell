@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 15:58:39 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/20 20:20:41 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/21 16:20:12 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 #include "../include/env.h"
 #include "../include/parser.h"
 #include "../include/redir.h"
-#include <stdlib.h>
+#include "../include/executor.h"
+#include "../include/executor.h"
 
 int	g_exit_code;
 
@@ -63,7 +64,7 @@ char	**convert_toks(t_tree *root, t_lists *list)
 			root->toks = root->toks->next->next;
 			continue ;
 		}
-		else if (is_redir(root->toks->text) == TRUE)
+		else if (is_redir(root->toks) == TRUE)
 		{
 			set_redir(&(list->redirl), new_redir(root->toks->text, root->toks->next->text));
 			root->toks = root->toks->next->next;
@@ -82,7 +83,7 @@ void	processing(t_tree *root, t_lists *list, int *prev_fd, int pipe_fd[2])
 	if (root == NULL)
 		return ;
 	processing(root->left, list, prev_fd, pipe_fd);
-	if (root->type == CTLOP && (!ft_strcmp(root->toks->text, "&&") && g_exit_code != EXIT_SUCCESS) || (!ft_strcmp(root->toks->text, "||") && g_exit_code == EXIT_SUCCESS))
+	if (root->type == CTLOP && ((!ft_strcmp(root->toks->text, "&&") && g_exit_code != EXIT_SUCCESS) || (!ft_strcmp(root->toks->text, "||") && g_exit_code == EXIT_SUCCESS)))
 		return ;
 	if (root->type == CMD)
 	{
@@ -145,8 +146,6 @@ void	parsing(t_token **toks, t_tree **root, char *line)
 	*toks =  get_last_token(*toks);
 	*root = get_new_node(LIST, 0, *toks, NULL);
 	parser(*root);
-	print_tree(*root);
-	//syntax check fnction
 }
 
 void	minishell(char **envp)
@@ -177,7 +176,10 @@ void	minishell(char **envp)
 		if (line && ft_strlen(line) > 0)
 		{
 			parsing(&toks, &root, line);
-			printf("execute=================================================\n");
+			check_syntax(root);
+			//print_tree(root);
+			expand(root, envl);
+			print_tree(root);
 			*prev_fd = -1;
 			processing(root, list, prev_fd, pipe_fd);
 			add_history(line);

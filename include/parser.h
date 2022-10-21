@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 16:38:32 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/17 16:51:10 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/21 15:56:01 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "scanner.h"
 
 # define PAREN 0x01 // set subshell pair
-# define FOUND 0x04 // terminate once it's on
+# define FOUND 0x02 // terminate once it's on
 
 # define ROOT	0
 # define LEFT	1
