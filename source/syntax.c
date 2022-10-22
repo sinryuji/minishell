@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 11:45:45 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/22 14:49:59 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/22 14:59:56 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,20 +70,20 @@ int	is_redir(t_token *toks)
 			 !ft_strcmp(toks->text, "<<")));
 }
 
-void	match_redir(t_token *toks)
+t_token	*match_redir(t_token *toks)
 {
 	while (toks)
 	{
 		if (is_redir(toks))
 		{
-			//if (toks->next->type != WORD)
-			if (toks->next->type != WORD || toks->next->type != LIST)
+			if (toks->next->type != WORD)
 				err_exit(ERR_MSG);
 		}
 		else
 			break ;
 		toks = toks->next->next;
 	}
+	return (toks);
 }
 
 void	check_node(t_tree *root)
@@ -115,7 +115,7 @@ void	check_node(t_tree *root)
 			flag = 1;
 		}
 		if (is_redir(toks))
-			match_redir(toks);
+			toks = match_redir(toks);
 		if (!flag)
 		{
 			while (toks)
