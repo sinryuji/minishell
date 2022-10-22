@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 21:59:37 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/21 10:16:38 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/22 16:18:47 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,33 +39,35 @@ static t_token	*split_token(t_token *toks, int start)
 		toks->next->prev = child;
 	free(toks->text);
 	free(toks);
-	return (child);
+	return (parent);
 }
 
 void	split_field(t_tree *root)
 {
 	int		i;
 	char	flag;
-	t_token	*toks;
+	t_token	*save;
 
-	toks = root->toks;
-	while (toks)
+	while (root->toks)
 	{
-		if (toks->type == WORD)
+		if (root->toks->type == WORD)
 		{
 			i = 0;
 			flag = 0;
-			while (toks->text[i])
+			while (root->toks->text[i])
 			{
-				ctl_quote_flag(&flag, toks->text[i]);
-				if (!(flag & S_QUOTE + D_QUOTE) && is_delim(toks->text[i]))
+				ctl_quote_flag(&flag, root->toks->text[i]);
+				if (!(flag & S_QUOTE + D_QUOTE) && is_delim(root->toks->text[i]))
 				{
-					toks = split_token(toks, i);
+					root->toks = split_token(root->toks, i);
 					break ;
 				}
 				i++;
 			}
 		}
-		toks = toks->next;
+		if (root->toks->next == NULL)
+			save = root->toks;
+		root->toks = root->toks->next;
 	}
+	root->toks = get_first_token(save);
 }
