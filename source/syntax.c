@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 11:45:45 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/22 14:59:56 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/22 17:07:46 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	check_left_node(t_tree *root)
 	{
 		if (root->left == NULL)
 			err_exit(ERR_MSG);
-		if (root->left->type == CTLOP)
+		if (root->left->type == CTLOP || root->left->type == PIPE)
 			err_exit(ERR_MSG);
 	}
 	else if (type == CMD || type == SUBSH)
@@ -51,7 +51,7 @@ static void	check_right_node(t_tree *root)
 	{
 		if (root->right == NULL)
 			err_exit(ERR_MSG);
-		if (root->right->type == CTLOP || root->right->type == PIPE)
+		if (root->right->type == CTLOP)
 			err_exit(ERR_MSG);
 	}
 	else if (type == CMD || type == SUBSH)
@@ -114,7 +114,7 @@ void	check_node(t_tree *root)
 				toks = toks->next;
 			flag = 1;
 		}
-		if (is_redir(toks))
+		else if (is_redir(toks))
 			toks = match_redir(toks);
 		if (!flag)
 		{
