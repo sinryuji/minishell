@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 11:45:45 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/17 18:52:28 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/22 14:49:59 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,8 @@ void	match_redir(t_token *toks)
 	{
 		if (is_redir(toks))
 		{
-			if (toks->next->type != WORD)
+			//if (toks->next->type != WORD)
+			if (toks->next->type != WORD || toks->next->type != LIST)
 				err_exit(ERR_MSG);
 		}
 		else
