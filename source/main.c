@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 15:58:39 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/24 20:07:12 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/24 22:24:22 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,9 @@ char	**convert_toks(t_tree *root, t_lists *list)
 	char	**ret;
 	int		len;
 	int		i;
+	t_token	*origin;
 
+	origin = root->toks;
 	expand(root, list->envl);
 	i = 0;
 	len = get_toks_length(root->toks);
@@ -76,6 +78,7 @@ char	**convert_toks(t_tree *root, t_lists *list)
 		root->toks = root->toks->next;
 	}
 	ret[i] = NULL;
+	root->toks = origin;
 	return (ret);
 }
 
@@ -97,7 +100,7 @@ void	processing(t_tree *root, t_lists *list, int *prev_fd, int pipe_fd[2])
 			*prev_fd = pipe_fd[0];
 		}
 		else
-			execute_command(convert_toks(root, list), list, -1);
+			execute_command(root, convert_toks(root, list), list, -1);
 	}
 	processing(root->right, list, prev_fd, pipe_fd);
 }

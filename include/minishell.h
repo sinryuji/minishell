@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 20:18:21 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/24 19:05:31 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/24 22:25:40 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ typedef struct	s_lists
 /* main.c */
 void	processing(t_tree *root, t_lists *list, int *prev_fd, int pipe_fd[2]);
 char	**convert_toks(t_tree *root, t_lists *list);
+void	print_tree(t_tree *root);
 void	minishell(char **envp);
 
 /* error.c */
@@ -77,9 +78,9 @@ void	signal_handler(int sig);
 void	set_signal(int sig_int, int sig_quit);
 
 /* execute.c */
-void	execute_command(char **argv, t_lists *list, pid_t pid);
+void	execute_command(t_tree *root, char **argv, t_lists *list, pid_t pid);
 void	execve_command(char **argv, t_env_list *envl, pid_t pid);
-void	execute_subshell(t_tree *root, t_token *toks, t_lists *list);
+void	execute_subshell(t_tree *root, t_token *toks, t_lists *list, pid_t pid);
 
 /* execute_pipe.c */
 void		excute_pipe(t_tree *node, t_lists *list, int pipe_in, int pipe_fd[2]);
