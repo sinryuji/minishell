@@ -6,11 +6,12 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:54:58 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/24 12:50:19 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/24 14:49:03 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include <stdio.h>
 
 #include "../libft/include/libft.h"
 #include "../include/executor.h"
@@ -92,7 +93,7 @@ void	quote_removal(t_tree *root)
 	{
 		i = 0;
 		removed = NULL;
-		if (toks->type == WORD)
+		if (toks->type == WORD || is_redir(toks))
 		{
 			while (toks->text[i])
 			{

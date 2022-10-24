@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 13:17:41 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/21 17:28:02 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/23 20:35:50 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ void	print_pattern(t_list *pattern)
 	printf("\ncheck pattern\n");
 	while (pattern)
 	{
-		printf("%s\n", pattern->content);
+		printf("%s\n", (unsigned char *)pattern->content);
 		pattern = pattern->next;
 	}
 }
