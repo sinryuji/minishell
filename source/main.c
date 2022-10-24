@@ -167,7 +167,6 @@ void	line_processing(char *line, t_lists *list)
 	parsing(&toks, &root, line);
 	print_tree(root);
 	check_syntax(root);
-	expand(root, list->envl);
 	prev_fd = -1;
 	processing(root, list, &prev_fd, pipe_fd);
 	free_redirl(&list->redirl);
