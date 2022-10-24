@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 18:39:20 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/20 13:59:50 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/24 16:52:22 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 #include "../include/executor.h"
 #include "../libft/include/libft.h"
+#include "../include/minishell.h"
 
 static int	is_allowed(char c)
 {
-	return (ft_isalnum(c) || c == '-');
+	return (ft_isalnum(c) || c == '_' || c == '?' || c == '$');
 }
 
 static char	*get_env_val(t_env *env)
@@ -67,8 +68,15 @@ static int	replace_text(t_token *toks, int start, t_env_list *envl)
 	i = start;
 	while(toks->text[i] && is_allowed(toks->text[i]))
 		i++;
+	if (i == start)
+		return (i);
 	key = ft_strndup(toks->text + start, i - start);
-	mid = get_env_val(get_env(envl, key));
+	if (!ft_strcmp(key, "?"))
+		mid = ft_itoa(g_exit_code);
+	else if (!ft_strcmp(key, "$"))
+		mid = ft_strdup("$$");
+	else
+		mid = get_env_val(get_env(envl, key));
 	pre = ft_substr(toks->text, 0, start - 1);
 	post = ft_substr(toks->text, i, ft_strlen(toks->text) - i);
 	free(toks->text);
