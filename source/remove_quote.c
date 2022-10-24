@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:54:58 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/21 17:34:17 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/24 12:50:19 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,11 @@ void	quote_removal(t_tree *root)
 				i++;
 			}
 		}
-		free(toks->text);
-		toks->text = removed;
+		if (i)
+		{
+			free(toks->text);
+			toks->text = removed;
+		}
 		toks = toks->next;
 	}
 }

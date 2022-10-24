@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 15:58:39 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/21 16:20:12 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/24 12:19:06 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	**convert_toks(t_tree *root, t_lists *list)
 	ret = (char **)malloc(sizeof(char *) * (len + 1));
 	if (!ret)
 	{
-		ft_putendl_fd("malloc error!", STDOUT_FILENO);
+		ft_putendl_fd("malloc error!", STDERR_FILENO);
 		return (NULL);
 	}
 	while (root->toks)
