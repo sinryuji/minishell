@@ -6,21 +6,35 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 20:49:38 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/23 21:20:31 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/24 17:13:22 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 #include "../include/built_in.h"
+#include "../include/executor.h"
 
-void	execute_subshell(char **envp)
+void	execute_subshell(t_token *toks, t_lists *list)
 {
 	pid_t pid;
+	t_tree	*root;
+	int		prev_fd;
+	int		pipe_fd[2];
 
-	printf("subshell?\n");
 	pid = ft_fork();
 	if (pid == 0)
-		minishell(envp);
+	{
+		remove_parenthesis(&toks);
+		root = get_new_node(LIST, 0, toks, NULL);
+		parser(root);
+		free_redirl(&list->redirl);
+		free_heredocl(&list->heredocl);
+		check_syntax(root);
+		expand(root, list->envl);
+		prev_fd = -1;
+		processing(root, list, &prev_fd, pipe_fd);
+		exit(g_exit_code);
+	}
 	else
 		wait_child();
 }

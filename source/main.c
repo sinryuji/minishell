@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 15:58:39 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/24 14:48:50 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/24 16:26:20 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	processing(t_tree *root, t_lists *list, int *prev_fd, int pipe_fd[2])
 			if (who_am_i(root) == LEFT)
 				if (pipe(pipe_fd) == -1)
 					ft_perror_exit("pipe error\n");
-			excute_pipe(root, list, *prev_fd, pipe_fd[1]);
+			excute_pipe(root, list, *prev_fd, pipe_fd);
 			*prev_fd = pipe_fd[0];
 		}
 		else
@@ -101,7 +101,7 @@ void	processing(t_tree *root, t_lists *list, int *prev_fd, int pipe_fd[2])
 		free_heredocl(&(list->heredocl));
 	}
 	else if (root->type == SUBSH)
-		execute_subshell(reverse_env(list->envl));
+		execute_subshell(root->toks, list);
 	processing(root->right, list, prev_fd, pipe_fd);
 }
 
@@ -164,7 +164,7 @@ void	line_processing(char *line, t_lists *list)
 	t_token *toks;
 	t_tree	*root;
 	int		prev_fd;
-	int		pipe_fd;
+	int		pipe_fd[2];
 
 	toks = NULL;
 	parsing(&toks, &root, line);
@@ -172,7 +172,9 @@ void	line_processing(char *line, t_lists *list)
 	check_syntax(root);
 	expand(root, list->envl);
 	prev_fd = -1;
-	processing(root, list, &prev_fd, &pipe_fd);
+	processing(root, list, &prev_fd, pipe_fd);
+	free_redirl(&list->redirl);
+	free_heredocl(&list->heredocl);
 	add_history(line);
 }
 

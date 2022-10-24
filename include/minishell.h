@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 20:18:21 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/23 21:49:29 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/24 16:46:32 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,15 +79,16 @@ void	set_signal(int sig_int, int sig_quit);
 /* execute.c */
 void	execute_command(char **argv, t_lists *list, pid_t pid);
 void	execve_command(char **argv, t_env_list *envl, pid_t pid);
-void	execute_subshell(char **envp);
+void	execute_subshell(t_token *toks, t_lists *list);
 
 /* execute_pipe.c */
-void		excute_pipe(t_tree *node, t_lists *list, int pipe_in, int pipe_out);
+void		excute_pipe(t_tree *node, t_lists *list, int pipe_in, int pipe_fd[2]);
 
 /* execute_utils.c */
 pid_t	ft_fork(void);
 void	wait_child(void);
 char	*get_command(char **paths, char *cmd);
 int		dir_check(char *path, char *cmd);
+void	remove_parenthesis(t_token **toks);
 
 #endif
