@@ -6,12 +6,13 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 13:17:41 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/24 15:44:10 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/24 20:06:33 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <dirent.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 #include "../libft/include/libft.h"
 #include "../include/executor.h"
@@ -55,7 +56,6 @@ static t_list	*make_pattern(char *text)
 	return (pattern);
 }
 
-#include <stdio.h>
 static int	match_pattern(t_list *pattern, char *str)
 {
 	int	len;
@@ -149,7 +149,7 @@ void	print_pattern(t_list *pattern)
 	printf("\ncheck pattern\n");
 	while (pattern)
 	{
-		printf("%s\n", pattern->content);
+		printf("%s\n", (unsigned char *)pattern->content);
 		pattern = pattern->next;
 	}
 }

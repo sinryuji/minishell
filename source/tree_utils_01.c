@@ -1,18 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tree_utils.c                                       :+:      :+:    :+:   */
+/*   tree_utils_01.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 08:15:49 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/21 16:01:03 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/24 19:54:16 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 
 #include "../include/parser.h"
+#include "../include/minishell.h"
 
 t_tree	*get_new_node(int type, int flag, t_token *toks, t_tree *parent)
 {
@@ -106,16 +107,3 @@ int	who_am_i(t_tree *root)
 	else
 		return (RIGHT);
 }
-
-t_tree	*get_sibilng_node(t_tree *root)
-{
-	if (root == NULL || root->parent == NULL)
-		return (NULL);
-	if (root->parent->left == root)
-		return (root->parent->right);
-	else if(root->parent->right == root)
-		return (root->parent->left);
-	else
-		return (NULL);
-}
-

@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 15:58:39 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/24 16:37:02 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/24 20:07:12 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,20 +86,18 @@ void	processing(t_tree *root, t_lists *list, int *prev_fd, int pipe_fd[2])
 	processing(root->left, list, prev_fd, pipe_fd);
 	if (root->type == CTLOP && ((!ft_strcmp(root->toks->text, "&&") && g_exit_code != EXIT_SUCCESS) || (!ft_strcmp(root->toks->text, "||") && g_exit_code == EXIT_SUCCESS)))
 		return ;
-	if (root->type == CMD)
+	if (root->type == CMD || root->type == SUBSH)
 	{
 		if (root->parent != NULL && root->parent->type == PIPE)
 		{
 			if (who_am_i(root) == LEFT)
 				if (pipe(pipe_fd) == -1)
 					ft_perror_exit("pipe error\n");
-			excute_pipe(root, list, *prev_fd, pipe_fd[1]);
+			excute_pipe(root, list, *prev_fd, pipe_fd);
 			*prev_fd = pipe_fd[0];
 		}
 		else
 			execute_command(convert_toks(root, list), list, -1);
-		free_redirl(&(list->redirl));
-		free_heredocl(&(list->heredocl));
 	}
 	processing(root->right, list, prev_fd, pipe_fd);
 }
@@ -131,14 +129,6 @@ void	print_tree(t_tree *root)
 	print_tree(root->right);
 }
 
-void	syntax_check(t_tree *root)
-{
-	if (root == NULL)
-		return ;
-	syntax_check(root->left);
-	syntax_check(root->right);
-}
-
 void	parsing(t_token **toks, t_tree **root, char *line)
 {
 	scanner(toks, line);
@@ -148,17 +138,12 @@ void	parsing(t_token **toks, t_tree **root, char *line)
 	parser(*root);
 }
 
-void	minishell(char **envp)
+t_lists	*init_list(char **envp)
 {
-	char			*line;
+	t_lists			*list;
 	t_env_list		*envl;
 	t_redir_list	*redirl;
 	t_heredoc_list	*heredocl;
-	t_lists			*list;
-	t_token			*toks;
-	t_tree			*root;
-	int				pipe_fd[2];
-	int				*prev_fd;
 
 	envl = NULL;
 	redirl = NULL;
@@ -168,20 +153,39 @@ void	minishell(char **envp)
 	list->envl = envl;
 	list->redirl = redirl;
 	list->heredocl = heredocl;
-	prev_fd = (int *)malloc(sizeof(int));
+	return (list);
+}
+
+void	line_processing(char *line, t_lists *list)
+{
+	t_token *toks;
+	t_tree	*root;
+	int		prev_fd;
+	int		pipe_fd[2];
+
+	toks = NULL;
+	parsing(&toks, &root, line);
+	print_tree(root);
+	check_syntax(root);
+	expand(root, list->envl);
+	prev_fd = -1;
+	processing(root, list, &prev_fd, pipe_fd);
+	free_redirl(&list->redirl);
+	free_heredocl(&list->heredocl);
+	add_history(line);
+}
+
+void	minishell(char **envp)
+{
+	char			*line;
+	t_lists			*list;
+
+	list = init_list(envp);
 	while (TRUE)
 	{
-		toks = NULL;
 		line = readline(SHELL_NAME"$ ");
 		if (line && ft_strlen(line) > 0)
-		{
-			parsing(&toks, &root, line);
-			check_syntax(root);
-			print_tree(root);
-			*prev_fd = -1;
-			processing(root, list, prev_fd, pipe_fd);
-			add_history(line);
-		}
+			line_processing(line, list);
 		else if (line == NULL)
 		{
 			printf("\033[1A\033[5Cexit\n");

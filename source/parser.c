@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:05:29 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/24 15:06:31 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/24 20:08:05 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,10 @@ void	parse_cmd(t_tree *root)
 	if (root->flag & PAREN)
 		err_exit("syntax err");
 	else if (subsh == TRUE)
+	{
+		remove_parenthesis(&(root->toks));
 		root->type = SUBSH;
+	}
 	toks = origin;
 }
 
@@ -154,12 +157,17 @@ void	parser(t_tree *root)
 
 	if (root == NULL)
 		return ;
-	if (root->type == LIST)
+	if (root->type == LIST || root->type == SUBSH)
 		parse_list(root);
 	if (root->type == PIPELINE)
 		parse_pipeline(root);
 	if (root->type == CMD)
 		parse_cmd(root);
+	if (root->type == SUBSH)
+	{
+		parser(root);
+		return ;
+	}
 	left = make_left_node(root);
 	right = make_right_node(root);
 	make_root_node(&root);
