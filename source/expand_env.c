@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 18:39:20 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/24 16:52:22 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/24 19:03:35 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ static int	replace_text(t_token *toks, int start, t_env_list *envl)
 	if (i == start)
 		return (i);
 	key = ft_strndup(toks->text + start, i - start);
-	if (!ft_strcmp(key, "?"))
-		mid = ft_itoa(g_exit_code);
+	if (!ft_strncmp(key, "?", 1))
+		mid = ft_strjoin(ft_itoa(g_exit_code), key + 1);
 	else if (!ft_strcmp(key, "$"))
 		mid = ft_strdup("$$");
 	else
