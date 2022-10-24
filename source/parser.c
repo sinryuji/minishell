@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:05:29 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/21 15:58:00 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/24 20:08:05 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,37 @@
 #include "../include/parser.h"
 #include "../libft/include/libft.h"
 
+static int	is_line_op(char *str)
+{
+	return (!(ft_strcmp(str, "&&") && ft_strcmp(str, "||")));
+}
+
+static int	is_paren(char *str)
+{
+	return (!(ft_strcmp(str, "(") && ft_strcmp(str, ")")));
+}
+
+static void	parse_list_loop(
+		t_token **toks, t_tree *root, t_token **tmp, int *success
+)
+{
+	while (*toks)
+	{
+		if ((*toks)->type == OP && !(root->flag & PAREN) \
+				&& is_line_op((*toks)->text))
+		{
+			root->flag |= FOUND;
+			*success = SUCCESS;
+			break ;
+		}
+		else if ((*toks)->type == OP && is_paren((*toks)->text))
+			root->flag ^= PAREN;
+		if ((*toks)->prev == NULL)
+			*tmp = *toks;
+		*toks = (*toks)->prev;
+	}
+}
+
 void	parse_list(t_tree *root)
 {
 	int		success;
@@ -24,11 +55,13 @@ void	parse_list(t_tree *root)
 
 	toks = root->toks;
 	success = 0;
+	parse_list_loop(&toks, root, &tmp, &success);
+	/*
 	while (toks)
 	{
 		if (toks->type == OP && !(root->flag & PAREN) && \
 				(!ft_strcmp(toks->text, "&&") || \
-				 !ft_strcmp(toks->text, "||")))
+				!ft_strcmp(toks->text, "||")))
 		{
 			root->flag |= FOUND;
 			success = 1;
@@ -36,13 +69,13 @@ void	parse_list(t_tree *root)
 		}
 		else if (toks->type == OP && \
 				(!ft_strcmp(toks->text, "(") || \
-				  !ft_strcmp(toks->text, ")")))
+				!ft_strcmp(toks->text, ")")))
 			(root->flag) ^= PAREN;
-		//*toks = (root->flag & LEFT) ? (*toks)->prev : (*toks)->next;
 		if (toks->prev == NULL)
 			tmp = toks;
 		toks = toks->prev;
 	}
+	*/
 	if (root->flag & PAREN)
 		err_exit("syntax err");
 	if (!success)
@@ -64,7 +97,7 @@ void	parse_pipeline(t_tree *root)
 	origin = toks;
 	while (toks)
 	{
-		if (toks->type == OP && !(root->flag & PAREN) &&\
+		if (toks->type == OP && !(root->flag & PAREN) && \
 				!ft_strcmp(toks->text, "|"))
 		{
 			root->flag |= FOUND;
@@ -74,7 +107,7 @@ void	parse_pipeline(t_tree *root)
 		}
 		else if (toks->type == OP && \
 				(!ft_strcmp(toks->text, "(") || \
-				  !ft_strcmp(toks->text, ")")))
+				!ft_strcmp(toks->text, ")")))
 			(root->flag) ^= PAREN;
 		toks = toks->next;
 	}
@@ -100,7 +133,7 @@ void	parse_cmd(t_tree *root)
 	{
 		if (toks->type == OP && \
 			(!ft_strcmp(toks->text, "(") || \
-			  !ft_strcmp(toks->text, ")")))
+			!ft_strcmp(toks->text, ")")))
 		{
 			(root->flag) ^= PAREN;
 			subsh = TRUE;
@@ -110,7 +143,10 @@ void	parse_cmd(t_tree *root)
 	if (root->flag & PAREN)
 		err_exit("syntax err");
 	else if (subsh == TRUE)
+	{
+		remove_parenthesis(&(root->toks));
 		root->type = SUBSH;
+	}
 	toks = origin;
 }
 
@@ -121,12 +157,17 @@ void	parser(t_tree *root)
 
 	if (root == NULL)
 		return ;
-	if (root->type == LIST)
+	if (root->type == LIST || root->type == SUBSH)
 		parse_list(root);
 	if (root->type == PIPELINE)
 		parse_pipeline(root);
 	if (root->type == CMD)
 		parse_cmd(root);
+	if (root->type == SUBSH)
+	{
+		parser(root);
+		return ;
+	}
 	left = make_left_node(root);
 	right = make_right_node(root);
 	make_root_node(&root);

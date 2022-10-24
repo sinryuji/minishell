@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 15:58:39 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/24 16:26:20 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/24 20:07:12 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ char	**convert_toks(t_tree *root, t_lists *list)
 	int		len;
 	int		i;
 
+	expand(root, list->envl);
 	i = 0;
 	len = get_toks_length(root->toks);
 	ret = (char **)malloc(sizeof(char *) * (len + 1));
@@ -85,7 +86,7 @@ void	processing(t_tree *root, t_lists *list, int *prev_fd, int pipe_fd[2])
 	processing(root->left, list, prev_fd, pipe_fd);
 	if (root->type == CTLOP && ((!ft_strcmp(root->toks->text, "&&") && g_exit_code != EXIT_SUCCESS) || (!ft_strcmp(root->toks->text, "||") && g_exit_code == EXIT_SUCCESS)))
 		return ;
-	if (root->type == CMD)
+	if (root->type == CMD || root->type == SUBSH)
 	{
 		if (root->parent != NULL && root->parent->type == PIPE)
 		{
@@ -97,11 +98,7 @@ void	processing(t_tree *root, t_lists *list, int *prev_fd, int pipe_fd[2])
 		}
 		else
 			execute_command(convert_toks(root, list), list, -1);
-		free_redirl(&(list->redirl));
-		free_heredocl(&(list->heredocl));
 	}
-	else if (root->type == SUBSH)
-		execute_subshell(root->toks, list);
 	processing(root->right, list, prev_fd, pipe_fd);
 }
 

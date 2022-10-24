@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 16:38:32 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/21 15:56:01 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/24 19:42:43 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,15 @@ void	parse_list(t_tree *root);
 void	parse_pipeline(t_tree *root);
 void	parse_cmd(t_tree *root);
 
-//tree_utils.c
+//tree_utils_01.c
 t_tree	*get_new_node(int type, int flag, t_token *toks, t_tree *parent);
 t_tree	*make_right_node(t_tree *root);
 t_tree	*make_left_node(t_tree *root);
 void	make_root_node(t_tree **root);
-t_tree	*get_sibilng_node(t_tree *root);
 int		who_am_i(t_tree *root);
+
+/* tree_utils_02.c */
+t_tree	*get_sibilng_node(t_tree *root);
+void	remove_parenthesis(t_token **toks);
 
 #endif

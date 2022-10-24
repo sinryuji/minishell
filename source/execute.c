@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 20:49:38 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/24 17:13:22 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/24 19:08:35 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 #include "../include/built_in.h"
 #include "../include/executor.h"
 
-void	execute_subshell(t_token *toks, t_lists *list)
+void	execute_subshell(t_tree *root, t_token *toks, t_lists *list)
 {
 	pid_t pid;
-	t_tree	*root;
+	t_tree	*new;
 	int		prev_fd;
 	int		pipe_fd[2];
 
@@ -25,18 +25,21 @@ void	execute_subshell(t_token *toks, t_lists *list)
 	if (pid == 0)
 	{
 		remove_parenthesis(&toks);
-		root = get_new_node(LIST, 0, toks, NULL);
+		new = get_new_node(LIST, 0, toks, NULL);
 		parser(root);
 		free_redirl(&list->redirl);
 		free_heredocl(&list->heredocl);
-		check_syntax(root);
-		expand(root, list->envl);
+		check_syntax(new);
+		expand(new, list->envl);
 		prev_fd = -1;
-		processing(root, list, &prev_fd, pipe_fd);
+		processing(new, list, &prev_fd, pipe_fd);
 		exit(g_exit_code);
 	}
 	else
+	{
 		wait_child();
+//		execute_command(convert_toks(root, list), list, -1);
+	}
 }
 
 void	execve_command(char **argv, t_env_list *envl, pid_t pid)

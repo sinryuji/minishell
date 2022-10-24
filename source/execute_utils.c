@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 18:28:27 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/24 17:12:39 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/24 19:40:18 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,21 +97,3 @@ void	wait_child(void)
 	}
 	set_signal(HAN, HAN);
 }
-
-void	remove_parenthesis(t_token **toks)
-{
-	t_token *tmp;
-
-	tmp = (*toks)->next;
-	tmp->prev = NULL;
-	free((*toks)->text);
-	free(*toks);
-	*toks = tmp;
-	while (ft_strcmp((*toks)->text, ")"))
-		*toks = (*toks)->next;
-	(*toks)->prev->next = NULL;
-	free((*toks)->text);
-	free(*toks);
-	*toks = tmp;
-}
-

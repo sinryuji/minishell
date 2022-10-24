@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 20:18:21 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/24 16:46:32 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/24 19:05:31 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	set_signal(int sig_int, int sig_quit);
 /* execute.c */
 void	execute_command(char **argv, t_lists *list, pid_t pid);
 void	execve_command(char **argv, t_env_list *envl, pid_t pid);
-void	execute_subshell(t_token *toks, t_lists *list);
+void	execute_subshell(t_tree *root, t_token *toks, t_lists *list);
 
 /* execute_pipe.c */
 void		excute_pipe(t_tree *node, t_lists *list, int pipe_in, int pipe_fd[2]);

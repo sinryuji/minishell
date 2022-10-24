@@ -6,12 +6,13 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 13:17:41 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/23 20:35:50 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/24 20:06:33 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <dirent.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 #include "../libft/include/libft.h"
 #include "../include/executor.h"
@@ -55,7 +56,6 @@ static t_list	*make_pattern(char *text)
 	return (pattern);
 }
 
-#include <stdio.h>
 static int	match_pattern(t_list *pattern, char *str)
 {
 	int	len;
@@ -167,7 +167,7 @@ void	expand_pathname(t_tree *root)
 		if (toks->type == WORD)
 		{
 			pattern = make_pattern(toks->text);
-			print_pattern(pattern);
+			//print_pattern(pattern);
 			matches = find_matches(pattern);
 			toks = insert_matches(toks, matches);
 		}
