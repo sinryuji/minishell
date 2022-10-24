@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 13:17:41 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/21 17:28:02 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/24 15:44:10 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,7 @@ void	expand_pathname(t_tree *root)
 		if (toks->type == WORD)
 		{
 			pattern = make_pattern(toks->text);
-			print_pattern(pattern);
+			//print_pattern(pattern);
 			matches = find_matches(pattern);
 			toks = insert_matches(toks, matches);
 		}

@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 15:58:39 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/24 12:19:06 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/24 16:37:02 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ char	**convert_toks(t_tree *root, t_lists *list)
 	int		len;
 	int		i;
 
+	expand(root, list->envl);
 	i = 0;
 	len = get_toks_length(root->toks);
 	ret = (char **)malloc(sizeof(char *) * (len + 1));
@@ -134,7 +135,6 @@ void	syntax_check(t_tree *root)
 {
 	if (root == NULL)
 		return ;
-	// 전위 순회하며 syntax error 잡기
 	syntax_check(root->left);
 	syntax_check(root->right);
 }
@@ -177,8 +177,6 @@ void	minishell(char **envp)
 		{
 			parsing(&toks, &root, line);
 			check_syntax(root);
-			//print_tree(root);
-			expand(root, envl);
 			print_tree(root);
 			*prev_fd = -1;
 			processing(root, list, prev_fd, pipe_fd);
