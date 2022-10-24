@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 15:41:49 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/24 15:35:27 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/24 22:23:29 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	first_pipe(t_tree *node, t_lists *list, pid_t pid, int pipe_fd[2])
 		close(pipe_fd[0]);
 		close(pipe_fd[1]);
 		close(pipe_fd[2]);
-		execute_command(convert_toks(node, list), list, pid);
+		execute_command(node, convert_toks(node, list), list, pid);
 	}
 	else
 		close(pipe_fd[2]);
@@ -35,7 +35,7 @@ static void	middle_pipe(t_tree *node, t_lists *list, pid_t pid, int pipe_fd[2])
 		close(pipe_fd[0]);
 		close(pipe_fd[1]);
 		close(pipe_fd[2]);
-		execute_command(convert_toks(node, list), list, pid);
+		execute_command(node, convert_toks(node, list), list, pid);
 	}
 	else
 	{
@@ -52,7 +52,7 @@ static void	last_pipe(t_tree *node, t_lists *list, pid_t pid, int pipe_fd[3])
 		close(pipe_fd[0]);
 		close(pipe_fd[1]);
 		close(pipe_fd[2]);
-		execute_command(convert_toks(node, list), list, pid);
+		execute_command(node, convert_toks(node, list), list, pid);
 	}
 	else
 	{

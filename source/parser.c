@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:05:29 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/24 20:08:05 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/24 22:29:32 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,7 @@ static int	is_paren(char *str)
 	return (!(ft_strcmp(str, "(") && ft_strcmp(str, ")")));
 }
 
-static void	parse_list_loop(
-		t_token **toks, t_tree *root, t_token **tmp, int *success
-)
+static void	parse_list_loop(t_token **toks, t_tree *root, t_token **tmp, int *success)
 {
 	while (*toks)
 	{
@@ -143,10 +141,7 @@ void	parse_cmd(t_tree *root)
 	if (root->flag & PAREN)
 		err_exit("syntax err");
 	else if (subsh == TRUE)
-	{
-		remove_parenthesis(&(root->toks));
 		root->type = SUBSH;
-	}
 	toks = origin;
 }
 
@@ -163,11 +158,6 @@ void	parser(t_tree *root)
 		parse_pipeline(root);
 	if (root->type == CMD)
 		parse_cmd(root);
-	if (root->type == SUBSH)
-	{
-		parser(root);
-		return ;
-	}
 	left = make_left_node(root);
 	right = make_right_node(root);
 	make_root_node(&root);

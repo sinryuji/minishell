@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 16:38:32 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/24 19:42:43 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/24 22:25:30 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,5 @@ int		who_am_i(t_tree *root);
 
 /* tree_utils_02.c */
 t_tree	*get_sibilng_node(t_tree *root);
-void	remove_parenthesis(t_token **toks);
 
 #endif

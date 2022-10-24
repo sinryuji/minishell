@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 20:49:38 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/24 19:08:35 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/24 22:22:48 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,21 @@
 #include "../include/built_in.h"
 #include "../include/executor.h"
 
-void	execute_subshell(t_tree *root, t_token *toks, t_lists *list)
+void	execute_subshell(t_tree *root, t_token *toks, t_lists *list, pid_t pid)
 {
-	pid_t pid;
 	t_tree	*new;
 	int		prev_fd;
 	int		pipe_fd[2];
 
-	pid = ft_fork();
+	(void)root;
+	if (pid == -1)
+		pid = ft_fork();
 	if (pid == 0)
 	{
 		remove_parenthesis(&toks);
+		toks =  get_last_token(toks);
 		new = get_new_node(LIST, 0, toks, NULL);
-		parser(root);
+		parser(new);
 		free_redirl(&list->redirl);
 		free_heredocl(&list->heredocl);
 		check_syntax(new);
@@ -69,7 +71,7 @@ void	execve_command(char **argv, t_env_list *envl, pid_t pid)
 		wait_child();
 }
 
-void	execute_command(char **argv, t_lists *list, pid_t pid)
+void	execute_command(t_tree *root, char **argv, t_lists *list, pid_t pid)
 {
 	t_built_in	built_in;
 
@@ -99,6 +101,18 @@ void	execute_command(char **argv, t_lists *list, pid_t pid)
 		return ;
 	}
 	built_in = get_built_in(argv[0]);
+	if (root->type == SUBSH)
+	{
+		execute_subshell(root, root->toks, list, pid);
+		if (list->redirl)
+		{
+			dup2(list->redirl->tmp[0], STDIN_FILENO);
+			dup2(list->redirl->tmp[1], STDOUT_FILENO);
+		}
+		if (list->heredocl)
+			dup2(list->heredocl->tmp, STDIN_FILENO);
+		return ;
+	}
 	if (built_in)
 	{
 		g_exit_code = built_in(get_argc(argv), argv, list->envl);
