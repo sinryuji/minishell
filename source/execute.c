@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 20:49:38 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/25 14:36:05 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/25 15:24:58 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,34 +38,29 @@ void	execute_subshell(t_tree *root, t_token *toks, t_lists *list, pid_t pid)
 		exit(g_exit_code);
 	}
 	else
-	{
 		wait_child();
-//		execute_command(convert_toks(root, list), list, -1);
-	}
 }
 
 void	execve_command(char **argv, t_env_list *envl, pid_t pid)
 {
 	char	*cmd;
+	int		flag;
 
+	flag = TRUE;
 	if (pid == -1)
 		pid = ft_fork();
 	if (pid == 0)
 	{
-		if (*argv[0] == '.')
-		{
-			if (execve(argv[0], argv, reverse_env(envl)) == -1)
-				put_error_cmd_exit(argv[0], "command not found", CMD_NOT_FOUND);
-		}
+		if (execve(argv[0], argv, reverse_env(envl)) == -1)
+			flag = FALSE;
+		cmd = get_command(ft_split(get_env(envl, "PATH")->value, ':'), \
+				argv[0]);
+		if (cmd != NULL)
+			flag = TRUE;
+		if (flag == FALSE)
+			put_error_cmd_exit(argv[0], "command not found", CMD_NOT_FOUND);
 		else
-		{
-			cmd = get_command(ft_split(get_env(envl, "PATH")->value, ':'), \
-					argv[0]);
-			if (cmd == NULL)
-				put_error_cmd_exit(argv[0], "command not found", CMD_NOT_FOUND);
-			else
-				execve(cmd, argv, reverse_env(envl));
-		}
+			execve(cmd, argv, reverse_env(envl));
 	}
 	else
 		wait_child();
