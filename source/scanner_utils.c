@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 17:25:51 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/25 14:34:11 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/25 17:46:37 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ void	init_buf(t_buf *buf)
 {
 	buf->size = 0;
 	buf->word = (char *)malloc(sizeof(char) * BUF_SIZE);
-	if (!buf->word)
-		err_exit(NULL);
 }
 
 void	realloc_buf(t_buf *buf)
@@ -39,8 +37,6 @@ void	realloc_buf(t_buf *buf)
 	char	*word;
 
 	word = (char *)malloc(sizeof(char) * buf->size * 2);
-	if (!word)
-		err_exit(NULL);
 	ft_memmove(word, buf->word, buf->size);
 	free(buf->word);
 	buf->word = word;

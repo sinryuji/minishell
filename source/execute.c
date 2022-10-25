@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 20:49:38 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/25 16:24:39 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/25 17:57:01 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,20 @@ void	execute_subshell(t_tree *root, t_token *toks, t_lists *list, pid_t pid)
 		remove_parenthesis(&toks);
 		toks = get_last_token(toks);
 		new = get_new_node(LIST, 0, toks, NULL);
-		parser(new);
+		if (!parser(new, TRUE))
+		{
+			g_exit_code = 258;
+			write(STDERR_FILENO, "syntax err\n", 11);
+			exit(g_exit_code);
+		}
 		free_redirl(&list->redirl);
 		free_heredocl(&list->heredocl);
-		check_syntax(new);
+		if (!check_syntax(new, TRUE))
+		{
+			g_exit_code = 258;
+			write(STDERR_FILENO, "syntax err\n", 11);
+			exit(g_exit_code);
+		}
 		expand(new, list->envl);
 		prev_fd = -1;
 		processing(new, list, &prev_fd, pipe_fd);

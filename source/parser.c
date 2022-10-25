@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:05:29 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/24 22:29:32 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/25 17:43:54 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static void	parse_list_loop(t_token **toks, t_tree *root, t_token **tmp, int *su
 	}
 }
 
-void	parse_list(t_tree *root)
+int	parse_list(t_tree *root)
 {
 	int		success;
 	t_token	*toks;
@@ -54,37 +54,18 @@ void	parse_list(t_tree *root)
 	toks = root->toks;
 	success = 0;
 	parse_list_loop(&toks, root, &tmp, &success);
-	/*
-	while (toks)
-	{
-		if (toks->type == OP && !(root->flag & PAREN) && \
-				(!ft_strcmp(toks->text, "&&") || \
-				!ft_strcmp(toks->text, "||")))
-		{
-			root->flag |= FOUND;
-			success = 1;
-			break ;
-		}
-		else if (toks->type == OP && \
-				(!ft_strcmp(toks->text, "(") || \
-				!ft_strcmp(toks->text, ")")))
-			(root->flag) ^= PAREN;
-		if (toks->prev == NULL)
-			tmp = toks;
-		toks = toks->prev;
-	}
-	*/
 	if (root->flag & PAREN)
-		err_exit("syntax err");
+		return (FALSE);
 	if (!success)
 	{
 		toks = tmp;
 		root->type = PIPELINE;
 	}
 	root->toks = toks;
+	return (TRUE);
 }
 
-void	parse_pipeline(t_tree *root)
+int	parse_pipeline(t_tree *root)
 {
 	int		success;
 	t_token	*toks;
@@ -110,15 +91,16 @@ void	parse_pipeline(t_tree *root)
 		toks = toks->next;
 	}
 	if (root->flag & PAREN)
-		err_exit("syntax err");
+		return (FALSE);
 	if (!success)
 	{
 		toks = origin;
 		root->type = CMD;
 	}
+	return (TRUE);
 }
 
-void	parse_cmd(t_tree *root)
+int	parse_cmd(t_tree *root)
 {
 	int		subsh;
 	t_token	*origin;
@@ -139,30 +121,37 @@ void	parse_cmd(t_tree *root)
 		toks = toks->next;
 	}
 	if (root->flag & PAREN)
-		err_exit("syntax err");
+		return (FALSE);
 	else if (subsh == TRUE)
 		root->type = SUBSH;
 	toks = origin;
+	return (TRUE);
 }
 
-void	parser(t_tree *root)
+int	parser(t_tree *root, int ret)
 {
 	t_tree	*left;
 	t_tree	*right;
 
 	if (root == NULL)
-		return ;
+		return (TRUE);
+	if (ret == FALSE)
+		return (FALSE);
 	if (root->type == LIST || root->type == SUBSH)
-		parse_list(root);
+		if (!parse_list(root))
+			return (FALSE);
 	if (root->type == PIPELINE)
-		parse_pipeline(root);
+		if (!parse_pipeline(root))
+			return (FALSE);
 	if (root->type == CMD)
-		parse_cmd(root);
+		if (!parse_cmd(root))
+			return (FALSE);
 	left = make_left_node(root);
 	right = make_right_node(root);
 	make_root_node(&root);
 	root->left = left;
 	root->right = right;
-	parser(root->right);
-	parser(root->left);
+	parser(root->right, ret);
+	parser(root->left, ret);
+	return (ret);
 }

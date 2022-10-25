@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 13:17:41 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/25 17:05:44 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/25 17:47:40 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 
 #include "../libft/include/libft.h"
 #include "../include/executor.h"
+#include "../include/minishell.h"
 
 static void	flush_pattern(t_list **pattern, t_buf *buf)
 {
@@ -128,7 +129,7 @@ static t_list	*find_matches(t_list *pattern)
 	matches = NULL;
 	d = opendir(".");
 	if (d == NULL)
-		err_exit("dir open failed");
+		return (FALSE);
 	while (1)
 	{
 		dirent = readdir(d);

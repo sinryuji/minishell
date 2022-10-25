@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:20:56 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/25 12:53:45 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/25 17:36:40 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include "parser.h"
 
 //syntax.c
-void	check_syntax(t_tree *root);
+int		check_syntax(t_tree *root, int ret);
 int		is_redir(t_token *toks);
 
 //expander.c

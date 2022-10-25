@@ -6,59 +6,62 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 11:45:45 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/25 14:27:54 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/25 17:47:18 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft/include/libft.h"
 #include "../include/executor.h"
+#include "../include/minishell.h"
 
-static void	check_left_node(t_tree *root)
+static int	check_left_node(t_tree *root)
 {
 	const int	type = root->type;
 
 	if (type == CTLOP)
 	{
 		if (root->left == NULL)
-			err_exit(ERR_MSG);
+			return (FALSE);
 	}
 	else if (type == PIPE)
 	{
 		if (root->left == NULL)
-			err_exit(ERR_MSG);
+			return (FALSE);
 		if (root->left->type == CTLOP || root->left->type == PIPE)
-			err_exit(ERR_MSG);
+			return (FALSE);
 	}
 	else if (type == CMD || type == SUBSH)
 	{
 		if (root->left != NULL)
-			err_exit(ERR_MSG);
+			return (FALSE);
 	}
+	return (TRUE);
 }
 
-static void	check_right_node(t_tree *root)
+static int	check_right_node(t_tree *root)
 {
 	const int	type = root->type;
 
 	if (type == CTLOP)
 	{
 		if (root->right == NULL)
-			err_exit(ERR_MSG);
+			return (FALSE);
 		if (root->right->type == CTLOP)
-			err_exit(ERR_MSG);
+			return (FALSE);
 	}
 	else if (type == PIPE)
 	{
 		if (root->right == NULL)
-			err_exit(ERR_MSG);
+			return (FALSE);
 		if (root->right->type == CTLOP)
-			err_exit(ERR_MSG);
+			return (FALSE);
 	}
 	else if (type == CMD || type == SUBSH)
 	{
 		if (root->right != NULL)
-			err_exit(ERR_MSG);
+			return (FALSE);
 	}
+	return (TRUE);
 }
 
 int	is_redir(t_token *toks)
@@ -77,7 +80,7 @@ t_token	*match_redir(t_token *toks)
 		if (is_redir(toks))
 		{
 			if (!toks->next || toks->next->type != WORD)
-				err_exit(ERR_MSG);
+				return (NULL);
 		}
 		else
 			break ;
@@ -86,7 +89,7 @@ t_token	*match_redir(t_token *toks)
 	return (toks);
 }
 
-void	check_node(t_tree *root)
+int	check_node(t_tree *root)
 {
 	t_token		*toks;
 	const int	type = root->type;
@@ -95,38 +98,18 @@ void	check_node(t_tree *root)
 	if (type == CTLOP || type == PIPE)
 	{
 		if (toks->next || toks->prev)
-			err_exit(ERR_MSG);
+			return (FALSE);
 	}
 	else if (type == SUBSH)
 	{
 		if (!(toks->type == OP && !ft_strcmp(toks->text, "(")))
-			err_exit(ERR_MSG);
+			return (FALSE);
 		while (!(toks->type == OP && !ft_strcmp(toks->text, ")")))
 			toks = toks->next;
 		match_redir(toks->next);
 	}
 	else if (type == CMD)
 	{
-		/*
-		int flag = 0;
-		if (toks->type == WORD)
-		{
-			while (toks && toks->type == WORD)
-				toks = toks->next;
-			flag = 1;
-		}
-		if (is_redir(toks))
-			toks = match_redir(toks);
-		if (!flag)
-		{
-			while (toks)
-			{
-				if (toks->type == OP)
-					err_exit(ERR_MSG);
-				toks = toks->next;
-			}
-		}
-		*/
 		while (toks)
 		{
 			if (toks->type == WORD)
@@ -140,15 +123,22 @@ void	check_node(t_tree *root)
 				toks = toks->next;
 		}
 	}
+	return (TRUE);
 }
 
-void	check_syntax(t_tree *root)
+int	check_syntax(t_tree *root, int ret)
 {
 	if (!root)
-		return ;
-	check_left_node(root);
-	check_right_node(root);
-	check_node(root);
-	check_syntax(root->left);
-	check_syntax(root->right);
+		return (TRUE);
+	if (!ret)
+		return (FALSE);
+	if (!check_left_node(root))
+		return (FALSE);
+	if (!check_right_node(root))
+		return (FALSE);
+	if (!check_node(root))
+		return (FALSE);
+	check_syntax(root->left, ret);
+	check_syntax(root->right, ret);
+	return (ret);
 }

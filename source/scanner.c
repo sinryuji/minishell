@@ -6,12 +6,13 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:05:06 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/25 14:33:34 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/25 17:44:32 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/scanner.h"
 #include "../libft/include/libft.h"
+#include "../include/minishell.h"
 
 int	is_op(char c)
 {
@@ -43,7 +44,7 @@ void	ctl_quote_flag(char *flag, char c)
 		(*flag) ^= D_QUOTE;
 }
 
-void	scanner(t_token **toks, char *script)
+int	scanner(t_token **toks, char *script)
 {
 	char	flag;
 	t_buf	buf;
@@ -68,7 +69,8 @@ void	scanner(t_token **toks, char *script)
 		script++;
 	}
 	if (flag & S_QUOTE || flag & D_QUOTE)
-		err_exit("syntax err\n");
+		return (FALSE);
 	flush_buf(toks, &buf);
 	free(buf.word);
+	return (TRUE);
 }
