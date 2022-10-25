@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 13:17:41 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/24 20:06:33 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/25 17:05:44 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,31 @@ static void	flush_pattern(t_list **pattern, t_buf *buf)
 		free(buf->word);
 		init_buf(buf);
 	}
+}
+
+void	filter_pattern(t_list **pattern)
+{
+	int		flag;
+	t_list	*origin;
+
+	flag = 0;
+	origin = *pattern;
+	while (*pattern)
+	{
+		if (!ft_strcmp((*pattern)->content, "*"))
+		{
+			flag = 1;
+			break ;
+		}
+		*pattern = (*pattern)->next;
+	}
+	if (!flag)
+	{
+		ft_lstclear(pattern, free);
+		*pattern = NULL;
+	}
+	else
+		*pattern = origin;
 }
 
 static t_list	*make_pattern(char *text)
@@ -53,6 +78,7 @@ static t_list	*make_pattern(char *text)
 		i++;
 	}
 	flush_pattern(&pattern, &buf);
+	filter_pattern(&pattern);
 	return (pattern);
 }
 
@@ -167,7 +193,7 @@ void	expand_pathname(t_tree *root)
 		if (toks->type == WORD)
 		{
 			pattern = make_pattern(toks->text);
-			//print_pattern(pattern);
+			print_pattern(pattern);
 			matches = find_matches(pattern);
 			toks = insert_matches(toks, matches);
 		}
