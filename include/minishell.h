@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 20:18:21 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/25 20:08:52 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/25 21:23:00 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,9 @@ void	put_error_cmd_exit(char *cmd, char *strerr, int exit_code);
 /* util.c */
 int		get_argc(char **argv);
 void	swap_str(char **a, char **b);
+int		get_toks_length(t_token *toks);
+void	print_toks(t_token *toks);
+void	print_tree(t_tree *root);
 
 /* signal.c */
 void	signal_handler(int sig);
@@ -97,5 +100,11 @@ void	redup_descriptor(t_lists* list);
 void	wait_child(void);
 void	set_exit_code(int exit_code);
 
+/* process.c */
+int		parsing(t_token **toks, t_tree **root, char *line);
+void	roop_convert_toks(t_tree *root, t_lists *list, char **ret);
+char	**convert_toks(t_tree *root, t_lists *list);
+void	processing(t_tree *root, t_lists *list, int *prev_fd, int pipe_fd[2]);
+void	line_processing(char *line, t_lists *list);
 
 #endif
