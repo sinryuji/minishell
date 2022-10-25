@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:05:06 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/25 17:44:32 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/25 21:30:32 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ int	scanner(t_token **toks, char *script)
 	}
 	if (flag & S_QUOTE || flag & D_QUOTE)
 		return (FALSE);
-	flush_buf(toks, &buf);
-	free(buf.word);
+	(flush_buf(toks, &buf), free(buf.word));
 	return (TRUE);
 }
