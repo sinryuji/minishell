@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 18:39:20 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/25 21:52:09 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/26 03:24:49 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,54 +16,38 @@
 #include "../libft/include/libft.h"
 #include "../include/minishell.h"
 
-static int	is_allowed(char c)
+static char	*get_mid_str(char *key, t_env_list *envl)
 {
-	return (ft_isalnum(c) || c == '_' || c == '?' || c == '$');
-}
+	char	*mid;
 
-static char	*get_env_val(t_env *env)
-{
-	if (env == NULL)
-		return (NULL);
+	if (!ft_strncmp(key, "?", 1))
+		mid = ft_strjoin(ft_itoa(g_exit_code), key + 1);
+	else if (!ft_strcmp(key, "$"))
+		mid = ft_strdup("$$");
 	else
-		return (env->value);
+		mid = get_env_val(get_env(envl, key));
+	return (mid);
 }
 
-static char	*strjoin_3way(char *pre, char *mid, char *post)
+static void	replace_text_addr(int *i, t_new_str *str, t_token *toks)
 {
-	size_t	i;
-	size_t	len;
-	char	*result;
-
-	i = 0;
-	len = ft_strlen(pre) + ft_strlen(mid) + ft_strlen(post);
-	result = (char *)malloc(sizeof(char) * len + 1);
-	while (pre && *pre)
+	if (str->mid != NULL)
 	{
-		result[i++] = *pre;
-		pre++;
+		*i = ft_strlen(str->mid);
+		toks->text = strjoin_3way(str->pre, str->mid, str->post);
 	}
-	while (mid && *mid)
+	else
 	{
-		result[i++] = *mid;
-		mid++;
+		*i = 0;
+		toks->text = ft_strjoin(str->pre, str->post);
 	}
-	while (post && *post)
-	{
-		result[i++] = *post;
-		post++;
-	}
-	result[len] = '\0';
-	return (result);
 }
 
 static int	replace_text(t_token *toks, int start, t_env_list *envl)
 {
-	int		i;
-	char	*key;
-	char	*pre;
-	char	*mid;
-	char	*post;
+	int			i;
+	char		*key;
+	t_new_str	str;
 
 	i = start;
 	while (toks->text[i] && is_allowed(toks->text[i]))
@@ -71,26 +55,12 @@ static int	replace_text(t_token *toks, int start, t_env_list *envl)
 	if (i == start)
 		return (i);
 	key = ft_strndup(toks->text + start, i - start);
-	if (!ft_strncmp(key, "?", 1))
-		mid = ft_strjoin(ft_itoa(g_exit_code), key + 1);
-	else if (!ft_strcmp(key, "$"))
-		mid = ft_strdup("$$");
-	else
-		mid = get_env_val(get_env(envl, key));
-	pre = ft_substr(toks->text, 0, start - 1);
-	post = ft_substr(toks->text, i, ft_strlen(toks->text) - i);
+	str.mid = get_mid_str(key, envl);
+	str.pre = ft_substr(toks->text, 0, start - 1);
+	str.post = ft_substr(toks->text, i, ft_strlen(toks->text) - i);
 	free(toks->text);
-	if (mid != NULL)
-	{
-		i = ft_strlen(mid);
-		toks->text = strjoin_3way(pre, mid, post);
-	}
-	else
-	{
-		i = 0;
-		toks->text = ft_strjoin(pre, post);
-	}
-	(free(pre), free(post), free(key));
+	replace_text_addr(&i, &str, toks);
+	(free(str.pre), free(str.post), free(key));
 	return (i);
 }
 

@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 21:59:37 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/25 22:35:59 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/26 02:48:26 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static t_token	*split_token(t_token *toks, int start)
 void	split_field(t_tree *root)
 {
 	int		i;
-	char	flag;
+	char	flg;
 	t_token	*save;
 
 	while (root->toks)
@@ -53,11 +53,11 @@ void	split_field(t_tree *root)
 		if (root->toks->type == WORD)
 		{
 			i = -1;
-			flag = 0;
+			flg = 0;
 			while (root->toks->text[++i])
 			{
-				ctl_quote_flag(&flag, root->toks->text[i]);
-				if (!(flag & S_QUOTE + D_QUOTE) && is_delim(root->toks->text[i]))
+				ctl_quote_flag(&flg, root->toks->text[i]);
+				if (!(flg & S_QUOTE + D_QUOTE) && is_delim(root->toks->text[i]))
 				{
 					root->toks = split_token(root->toks, i);
 					break ;
