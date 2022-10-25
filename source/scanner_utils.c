@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 17:25:51 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/25 17:46:37 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/25 21:25:16 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ void	flush_buf(t_token **toks, t_buf *buf)
 {
 	if (buf->size != 0)
 	{
-		tok_add_back(toks, get_new_token(WORD, ft_strndup(buf->word, buf->size)));
+		tok_add_back(toks, get_new_token(WORD, \
+					ft_strndup(buf->word, buf->size)));
 		free(buf->word);
 		init_buf(buf);
 	}

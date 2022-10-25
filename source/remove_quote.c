@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:54:58 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/25 14:32:02 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/26 03:34:47 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,29 @@ static char	*cat_a_char(char *str, char c)
 	return (new);
 }
 
+static char	*quote_removal_loop(t_token *toks, int *i, char *removed)
+{
+	char	*chunk;
+
+	while (toks->text[*i])
+	{
+		if (toks->text[*i] == '\"' || toks->text[*i] == '\'')
+		{
+			chunk = get_chunk(toks, &(*i));
+			removed = concat(removed, chunk);
+			free(chunk);
+		}
+		else
+			removed = cat_a_char(removed, toks->text[*i]);
+		(*i)++;
+	}
+	return (removed);
+}
+
 void	quote_removal(t_tree *root)
 {
 	int		i;
 	char	*removed;
-	char	*chunk;
 	t_token	*toks;
 
 	toks = root->toks;
@@ -93,20 +111,7 @@ void	quote_removal(t_tree *root)
 		i = 0;
 		removed = NULL;
 		if (toks->type == WORD || is_redir(toks))
-		{
-			while (toks->text[i])
-			{
-				if (toks->text[i] == '\"' || toks->text[i] == '\'')
-				{
-					chunk = get_chunk(toks, &i);
-					removed = concat(removed, chunk);
-					free(chunk);
-				}
-				else
-					removed = cat_a_char(removed, toks->text[i]);
-				i++;
-			}
-		}
+			removed = quote_removal_loop(toks, &i, removed);
 		if (i)
 		{
 			free(toks->text);

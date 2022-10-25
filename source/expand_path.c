@@ -6,52 +6,16 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 13:17:41 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/25 17:47:40 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/26 02:41:20 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <dirent.h>
 #include <stdlib.h>
-#include <stdio.h>
 
 #include "../libft/include/libft.h"
 #include "../include/executor.h"
 #include "../include/minishell.h"
-
-static void	flush_pattern(t_list **pattern, t_buf *buf)
-{
-	if (buf->size)
-	{
-		ft_lstadd_back(pattern, ft_lstnew(ft_strndup(buf->word, buf->size)));
-		free(buf->word);
-		init_buf(buf);
-	}
-}
-
-void	filter_pattern(t_list **pattern)
-{
-	int		flag;
-	t_list	*origin;
-
-	flag = 0;
-	origin = *pattern;
-	while (*pattern)
-	{
-		if (!ft_strcmp((*pattern)->content, "*"))
-		{
-			flag = 1;
-			break ;
-		}
-		*pattern = (*pattern)->next;
-	}
-	if (!flag)
-	{
-		ft_lstclear(pattern, free);
-		*pattern = NULL;
-	}
-	else
-		*pattern = origin;
-}
 
 static t_list	*make_pattern(char *text)
 {
@@ -78,38 +42,25 @@ static t_list	*make_pattern(char *text)
 			append_to_buf(text[i], &buf);
 		i++;
 	}
-	flush_pattern(&pattern, &buf);
-	filter_pattern(&pattern);
+	(flush_pattern(&pattern, &buf), filter_pattern(&pattern));
 	return (pattern);
 }
 
 static int	match_pattern(t_list *pattern, char *str)
 {
-	int	len;
-	int	flag;
+	int		len;
+	int		flag;
 
 	flag = 0;
 	while (pattern)
 	{
-		//printf("pattern match with (%s) and (%s)\n", pattern->content, str);
 		if (ft_strcmp(pattern->content, "*") == 0)
-		{
 			flag = 1;
-		}
 		else
 		{
 			len = ft_strlen(pattern->content);
-			if (flag)
-			{
-				str = ft_strnstr(str, pattern->content, ft_strlen(str));
-				if (str == NULL)
-					return (0);
-			}
-			else
-			{
-				if (ft_strncmp(str, pattern->content, len))
-					return (0);
-			}
+			if (!match_pattern_compare(&str, pattern, flag, len))
+				return (0);
 			str += len;
 			flag = 0;
 		}
@@ -169,18 +120,6 @@ static t_token	*insert_matches(t_token *toks, t_list *matches)
 	return (last);
 }
 
-void	print_pattern(t_list *pattern)
-{
-	if (!pattern)
-		return ;
-	printf("\ncheck pattern\n");
-	while (pattern)
-	{
-		printf("%s\n", (unsigned char *)pattern->content);
-		pattern = pattern->next;
-	}
-}
-
 void	expand_pathname(t_tree *root)
 {
 	t_token	*toks;
@@ -194,7 +133,6 @@ void	expand_pathname(t_tree *root)
 		if (toks->type == WORD)
 		{
 			pattern = make_pattern(toks->text);
-			print_pattern(pattern);
 			matches = find_matches(pattern);
 			toks = insert_matches(toks, matches);
 		}

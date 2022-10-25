@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 08:15:49 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/25 15:19:13 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/25 21:36:00 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,18 +67,6 @@ t_tree	*make_right_node(t_tree *root)
 		if (toks->next)
 			toks->next->prev = NULL;
 		new = get_new_node(PIPELINE, 0, toks->next, root);
-//=======
-//		if (toks->next == NULL)
-//			return (NULL);
-//		if (root->type == LIST)
-//		{
-//			if (toks->next)
-//				toks->next->prev = NULL;
-//			new = get_new_node(PIPELINE, 0, toks->next);
-//		}
-//		else if (root->type == PIPELINE)
-//			new = get_new_node(CMD, 0, toks->next);
-//>>>>>>> main
 	}
 	return (new);
 }

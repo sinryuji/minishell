@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 16:38:32 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/25 17:44:11 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/25 21:34:04 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,15 @@ int		parser(t_tree *root, int ret);
 int		parse_list(t_tree *root);
 int		parse_pipeline(t_tree *root);
 int		parse_cmd(t_tree *root);
+
+//parse_list.c
+int		parse_list(t_tree *root);
+
+//parse_cmd.c
+int		parse_cmd(t_tree *root);
+
+//parse_pipeline.c
+int		parse_pipeline(t_tree *root);
 
 //tree_utils_01.c
 t_tree	*get_new_node(int type, int flag, t_token *toks, t_tree *parent);
