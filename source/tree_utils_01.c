@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 08:15:49 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/25 14:26:02 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/25 15:19:13 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ t_tree	*get_new_node(int type, int flag, t_token *toks, t_tree *parent)
 {
 	t_tree	*node;
 
+	if (!toks)
+		return (NULL);
 	node = (t_tree *)malloc(sizeof(t_tree));
 	node->type = type;
 	node->flag = flag;
