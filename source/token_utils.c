@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:43:17 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/25 14:26:26 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/25 16:09:47 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ t_token	*get_first_token(t_token *toks)
 {
 	if (!toks)
 		return (NULL);
-	while (toks->prev)
+	while (toks && toks->prev)
 		toks = toks->prev;
 	return (toks);
 }
