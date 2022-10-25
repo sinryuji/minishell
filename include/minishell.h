@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 20:18:21 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/25 13:03:16 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/25 16:18:12 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,12 +84,13 @@ void	execute_subshell(t_tree *root, t_token *toks, t_lists *list, pid_t pid);
 
 /* execute_pipe.c */
 void	excute_pipe(t_tree *node, t_lists *list, int pipe_in, int pipe_fd[2]);
+void	wait_child(void);
 
 /* execute_utils.c */
 pid_t	ft_fork(void);
-void	wait_child(void);
 char	*get_command(char **paths, char *cmd);
 int		dir_check(char *path, char *cmd);
 void	remove_parenthesis(t_token **toks);
+void	redup_descriptor(t_lists* list);
 
 #endif

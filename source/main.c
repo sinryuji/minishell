@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 15:58:39 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/25 14:35:14 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/25 15:16:44 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ void	print_tree(t_tree *root)
 void	parsing(t_token **toks, t_tree **root, char *line)
 {
 	scanner(toks, line);
-	print_toks(*toks);
+//	print_toks(*toks);
 	*toks =  get_last_token(*toks);
 	*root = get_new_node(LIST, 0, *toks, NULL);
 	parser(*root);
@@ -168,7 +168,7 @@ void	line_processing(char *line, t_lists *list)
 
 	toks = NULL;
 	parsing(&toks, &root, line);
-	print_tree(root);
+//	print_tree(root);
 	check_syntax(root);
 	prev_fd = -1;
 	processing(root, list, &prev_fd, pipe_fd);
