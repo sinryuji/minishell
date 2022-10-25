@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:20:56 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/26 03:25:43 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/26 03:38:21 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	expand(t_tree *root, t_env_list *envl);
 void	expand_env(t_tree *root, t_env_list *envl);
 
 //expand_env_utils.c
-int	is_allowed(char c);
+int		is_allowed(char c);
 char	*get_env_val(t_env *env);
 char	*strjoin_3way(char *pre, char *mid, char *post);
 
