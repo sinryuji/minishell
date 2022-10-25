@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 13:17:41 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/25 17:47:40 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/25 21:56:06 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	flush_pattern(t_list **pattern, t_buf *buf)
 	}
 }
 
-void	filter_pattern(t_list **pattern)
+static void	filter_pattern(t_list **pattern)
 {
 	int		flag;
 	t_list	*origin;
@@ -78,8 +78,7 @@ static t_list	*make_pattern(char *text)
 			append_to_buf(text[i], &buf);
 		i++;
 	}
-	flush_pattern(&pattern, &buf);
-	filter_pattern(&pattern);
+	(flush_pattern(&pattern, &buf), filter_pattern(&pattern));
 	return (pattern);
 }
 
@@ -91,11 +90,8 @@ static int	match_pattern(t_list *pattern, char *str)
 	flag = 0;
 	while (pattern)
 	{
-		//printf("pattern match with (%s) and (%s)\n", pattern->content, str);
 		if (ft_strcmp(pattern->content, "*") == 0)
-		{
 			flag = 1;
-		}
 		else
 		{
 			len = ft_strlen(pattern->content);
@@ -169,18 +165,6 @@ static t_token	*insert_matches(t_token *toks, t_list *matches)
 	return (last);
 }
 
-void	print_pattern(t_list *pattern)
-{
-	if (!pattern)
-		return ;
-	printf("\ncheck pattern\n");
-	while (pattern)
-	{
-		printf("%s\n", (unsigned char *)pattern->content);
-		pattern = pattern->next;
-	}
-}
-
 void	expand_pathname(t_tree *root)
 {
 	t_token	*toks;
@@ -194,7 +178,6 @@ void	expand_pathname(t_tree *root)
 		if (toks->type == WORD)
 		{
 			pattern = make_pattern(toks->text);
-			print_pattern(pattern);
 			matches = find_matches(pattern);
 			toks = insert_matches(toks, matches);
 		}

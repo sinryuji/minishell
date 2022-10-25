@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 18:39:20 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/25 14:37:46 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/25 21:52:09 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,9 +90,7 @@ static int	replace_text(t_token *toks, int start, t_env_list *envl)
 		i = 0;
 		toks->text = ft_strjoin(pre, post);
 	}
-	free(pre);
-	free(post);
-	free(key);
+	(free(pre), free(post), free(key));
 	return (i);
 }
 

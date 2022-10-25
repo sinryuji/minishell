@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:20:56 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/25 17:36:40 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/25 22:17:16 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,13 @@
 //syntax.c
 int		check_syntax(t_tree *root, int ret);
 int		is_redir(t_token *toks);
+
+//syntax_check_lr.c
+int		check_left_node(t_tree *root);
+int		check_right_node(t_tree *root);
+
+//syntax_check_node.c
+int		check_node(t_tree *root);
 
 //expander.c
 void	expand(t_tree *root, t_env_list *envl);
