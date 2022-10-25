@@ -6,12 +6,27 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:23:25 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/25 14:34:45 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/25 20:32:53 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 #include "../include/redir.h"
+
+static int	read_tmp_file(t_heredoc *heredoc, int tmp)
+{
+	int	fd;
+
+	fd = open(TMP_FILE, O_RDONLY);
+	if (fd == -1)
+		return (FAILURE);
+	dup2(fd, STDIN_FILENO);
+	close(fd);
+	unlink(TMP_FILE);
+	if (heredoc->next != NULL)
+		dup2(tmp, STDIN_FILENO);
+	return (SUCCESS);
+}
 
 static int	heredoc_processing(t_heredoc *heredoc, int tmp)
 {
@@ -20,7 +35,7 @@ static int	heredoc_processing(t_heredoc *heredoc, int tmp)
 
 	if (heredoc == NULL || heredoc->eof == NULL)
 		return (FAILURE);
-	fd = open(TMP_FILE, O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+	fd = open(TMP_FILE, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
 		return (FAILURE);
 	while (TRUE)
@@ -33,19 +48,12 @@ static int	heredoc_processing(t_heredoc *heredoc, int tmp)
 			free(line);
 			break ;
 		}
-		write(fd, line, ft_strlen(line));
-		write(fd, "\n", 1);
+		ft_putendl_fd(line, fd);
 		free(line);
 	}
 	close(fd);
-	fd = open(TMP_FILE, O_RDONLY);
-	if (fd == -1)
+	if (read_tmp_file(heredoc, tmp) == FAILURE)
 		return (FAILURE);
-	dup2(fd, STDIN_FILENO);
-	close(fd);
-	unlink(TMP_FILE);
-	if (heredoc->next != NULL)
-		dup2(tmp, STDIN_FILENO);
 	return (SUCCESS);
 }
 
@@ -78,9 +86,11 @@ int	redir_open(char *redir, char *file)
 	if (!ft_strcmp("<", redir))
 		fd = open(file, O_RDONLY);
 	else if (!ft_strcmp(">", redir))
-		fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+		fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, \
+		S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	else
-		fd = open(file, O_WRONLY | O_CREAT | O_APPEND, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+		fd = open(file, O_WRONLY | O_CREAT | O_APPEND, \
+		S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	return (fd);
 }
 

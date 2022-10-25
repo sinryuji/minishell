@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 20:49:38 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/25 17:57:01 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/25 20:09:00 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,12 @@
 #include "../include/built_in.h"
 #include "../include/executor.h"
 
-void	execute_subshell(t_tree *root, t_token *toks, t_lists *list, pid_t pid)
+void	execute_subshell(t_token *toks, t_lists *list, pid_t pid)
 {
 	t_tree	*new;
 	int		prev_fd;
 	int		pipe_fd[2];
 
-	(void)root;
 	if (pid == -1)
 		pid = ft_fork();
 	if (pid == 0)
@@ -29,19 +28,11 @@ void	execute_subshell(t_tree *root, t_token *toks, t_lists *list, pid_t pid)
 		toks = get_last_token(toks);
 		new = get_new_node(LIST, 0, toks, NULL);
 		if (!parser(new, TRUE))
-		{
-			g_exit_code = 258;
-			write(STDERR_FILENO, "syntax err\n", 11);
-			exit(g_exit_code);
-		}
+			set_exit_code(258);
 		free_redirl(&list->redirl);
 		free_heredocl(&list->heredocl);
 		if (!check_syntax(new, TRUE))
-		{
-			g_exit_code = 258;
-			write(STDERR_FILENO, "syntax err\n", 11);
-			exit(g_exit_code);
-		}
+			set_exit_code(258);
 		expand(new, list->envl);
 		prev_fd = -1;
 		processing(new, list, &prev_fd, pipe_fd);
@@ -104,7 +95,7 @@ void	execute_command(t_tree *root, char **argv, t_lists *list, pid_t pid)
 		return ;
 	if (root->type == SUBSH)
 	{
-		execute_subshell(root, root->toks, list, pid);
+		execute_subshell(root->toks, list, pid);
 		redup_descriptor(list);
 		return ;
 	}
