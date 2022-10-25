@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 11:45:45 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/25 17:47:18 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/25 20:49:31 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,20 +73,20 @@ int	is_redir(t_token *toks)
 			!ft_strcmp(toks->text, "<<")));
 }
 
-t_token	*match_redir(t_token *toks)
+int	match_redir(t_token **toks)
 {
-	while (toks)
+	while (*toks)
 	{
-		if (is_redir(toks))
+		if (is_redir(*toks))
 		{
-			if (!toks->next || toks->next->type != WORD)
-				return (NULL);
+			if (!(*toks)->next || (*toks)->next->type != WORD)
+				return (FALSE);
 		}
 		else
 			break ;
-		toks = toks->next->next;
+		*toks = (*toks)->next->next;
 	}
-	return (toks);
+	return (TRUE);
 }
 
 int	check_node(t_tree *root)
@@ -106,7 +106,8 @@ int	check_node(t_tree *root)
 			return (FALSE);
 		while (!(toks->type == OP && !ft_strcmp(toks->text, ")")))
 			toks = toks->next;
-		match_redir(toks->next);
+		if (!match_redir(&(toks->next)))
+			return (FALSE);
 	}
 	else if (type == CMD)
 	{
@@ -118,7 +119,10 @@ int	check_node(t_tree *root)
 					toks = toks->next;
 			}
 			if (is_redir(toks))
-				toks = match_redir(toks);
+			{
+				if (!match_redir(&toks))
+					return (FALSE);
+			}
 			if (toks)
 				toks = toks->next;
 		}
