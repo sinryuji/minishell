@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_utils.c                                    :+:      :+:    :+:   */
+/*   execute_utils_01.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 18:28:27 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/25 16:17:36 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/25 20:59:36 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	remove_parenthesis(t_token **toks)
 	*toks = tmp;
 }
 
-void	redup_descriptor(t_lists* list)
+void	redup_descriptor(t_lists *list)
 {
 	if (list->redirl)
 	{

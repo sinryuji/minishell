@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 19:55:21 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/21 15:47:37 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/25 20:53:54 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,11 @@ int	ft_echo(int argc, char **argv, t_env_list *envl)
 	option = FALSE;
 	while (argv[i][0] == '-')
 	{
-		option = option_check(argv[i]);
-		if (option == TRUE)
-			i++;
+		if (option_check(argv[i]) == TRUE)
+			option = TRUE;
 		else
 			break ;
+		i++;
 	}
 	print_echo(argv, i);
 	if (!option)

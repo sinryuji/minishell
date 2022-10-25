@@ -6,41 +6,15 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 15:41:49 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/25 16:16:04 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/25 20:58:17 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	wait_child(void)
-{
-	int		status;
-	int		sig;
-	int		i;
-
-	i = 0;
-	set_signal(IGN, IGN);
-	while (wait(&status) != -1)
-	{
-		if (WIFSIGNALED(status))
-		{
-			sig = WTERMSIG(status);
-			if (sig == SIGINT && i == 0)
-				ft_putstr_fd("^C\n", STDERR_FILENO);
-			else if (sig == SIGQUIT && i == 0)
-				ft_putstr_fd("^\\Quit: 3\n", STDERR_FILENO);
-			g_exit_code = sig + 128;
-			i++;
-		}
-		else
-			g_exit_code = WEXITSTATUS(status);
-	}
-	set_signal(HAN, HAN);
-}
-
 static void	first_pipe(t_tree *node, t_lists *list, pid_t pid, int pipe_fd[2])
 {
-	if (pid == 0)	
+	if (pid == 0)
 	{
 		dup2(pipe_fd[2], STDOUT_FILENO);
 		close(pipe_fd[0]);
