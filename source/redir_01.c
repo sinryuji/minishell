@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:23:25 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/21 16:07:28 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/25 14:34:45 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	redir_open(char *redir, char *file)
 
 int	redir(t_redir_list *redirl)
 {
-	t_redir *redir;
+	t_redir	*redir;
 	int		fd;
 
 	if (redirl == NULL)

@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 15:58:39 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/24 22:24:22 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/25 14:35:14 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,7 @@ t_lists	*init_list(char **envp)
 
 void	line_processing(char *line, t_lists *list)
 {
-	t_token *toks;
+	t_token	*toks;
 	t_tree	*root;
 	int		prev_fd;
 	int		pipe_fd[2];

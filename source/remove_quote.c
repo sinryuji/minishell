@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:54:58 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/24 14:49:03 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/25 14:32:02 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*get_chunk(t_token *toks, int *i)
 			break ;
 		(*i)++;
 	}
-	return (ft_strndup(toks->text + start, (size_t)*i - start));
+	return (ft_strndup(toks->text + start, (size_t)(*i) - start));
 }
 
 static char	*concat(char *dst, char *src)
@@ -62,7 +62,6 @@ static char	*concat(char *dst, char *src)
 	concated[i] = '\0';
 	return (concated);
 }
-
 
 static char	*cat_a_char(char *str, char c)
 {
@@ -116,4 +115,3 @@ void	quote_removal(t_tree *root)
 		toks = toks->next;
 	}
 }
-

@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 21:59:37 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/23 20:53:41 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/25 14:29:28 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ static t_token	*split_token(t_token *toks, int start)
 	char	*old_text;
 	char	*new_text;
 	t_token	*parent;
-	t_token *child;
+	t_token	*child;
 
 	old_text = ft_substr(toks->text, 0, start);
 	i = 0;
 	while (is_delim(toks->text[start + i]))
 		i++;
-	new_text = ft_substr(toks->text, start + i,\
+	new_text = ft_substr(toks->text, start + i, \
 		ft_strlen(toks->text) - start - i);
 	parent = get_new_token(toks->type, old_text);
 	child = get_new_token(toks->type, new_text);
@@ -57,7 +57,8 @@ void	split_field(t_tree *root)
 			while (root->toks->text[i])
 			{
 				ctl_quote_flag(&flag, root->toks->text[i]);
-				if (!(flag & S_QUOTE + D_QUOTE) && is_delim(root->toks->text[i]))
+				if (!(flag & S_QUOTE + D_QUOTE) && \
+						is_delim(root->toks->text[i]))
 				{
 					root->toks = split_token(root->toks, i);
 					break ;

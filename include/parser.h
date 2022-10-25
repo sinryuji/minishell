@@ -6,14 +6,14 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 16:38:32 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/24 22:25:30 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/25 12:57:39 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
 
-#include "scanner.h"
+# include "scanner.h"
 
 # define PAREN 0x01 // set subshell pair
 # define FOUND 0x02 // terminate once it's on
@@ -21,7 +21,6 @@
 # define ROOT	0
 # define LEFT	1
 # define RIGHT	2
-
 
 enum e_type
 {

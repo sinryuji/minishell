@@ -6,12 +6,15 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:20:56 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/21 16:11:52 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/25 12:53:45 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "env.h"
-#include "parser.h"
+#ifndef EXECUTOR_H
+# define EXECUTOR_H
+
+# include "env.h"
+# include "parser.h"
 
 //syntax.c
 void	check_syntax(t_tree *root);
@@ -31,3 +34,5 @@ void	expand_pathname(t_tree *root);
 
 //remove_quote.c
 void	quote_removal(t_tree *root);
+
+#endif

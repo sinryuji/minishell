@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 17:25:51 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/13 14:42:58 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/25 14:34:11 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	append_to_buf(char c, t_buf *buf)
 		realloc_buf(buf);
 	buf->word[buf->size] = c;
 	(buf->size)++;
-} 
+}
 
 void	flush_buf(t_token **toks, t_buf *buf)
 {

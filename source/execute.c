@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 20:49:38 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/24 22:22:48 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/25 14:36:05 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	execute_subshell(t_tree *root, t_token *toks, t_lists *list, pid_t pid)
 	if (pid == 0)
 	{
 		remove_parenthesis(&toks);
-		toks =  get_last_token(toks);
+		toks = get_last_token(toks);
 		new = get_new_node(LIST, 0, toks, NULL);
 		parser(new);
 		free_redirl(&list->redirl);

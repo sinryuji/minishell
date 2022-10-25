@@ -6,19 +6,18 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:05:06 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/19 17:37:34 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/25 14:33:34 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../include/scanner.h"
 #include "../libft/include/libft.h"
 
 int	is_op(char c)
 {
-	return (c == '|'|| c == '&' ||\
-			c == '(' || c == ')'||\
-			c == '<'|| c == '>');
+	return (c == '|' || c == '&' || \
+			c == '(' || c == ')' || \
+			c == '<' || c == '>');
 }
 
 int	is_delim(char c)

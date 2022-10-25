@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 20:18:21 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/24 22:25:40 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/25 13:03:16 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ extern int	g_exit_code;
 
 typedef void	(*t_tree_func)(t_tree *tree, t_env_list *envl);
 
-typedef struct	s_lists
+typedef struct s_lists
 {
 	struct s_env_list		*envl;
 	struct s_redir_list		*redirl;
@@ -83,7 +83,7 @@ void	execve_command(char **argv, t_env_list *envl, pid_t pid);
 void	execute_subshell(t_tree *root, t_token *toks, t_lists *list, pid_t pid);
 
 /* execute_pipe.c */
-void		excute_pipe(t_tree *node, t_lists *list, int pipe_in, int pipe_fd[2]);
+void	excute_pipe(t_tree *node, t_lists *list, int pipe_in, int pipe_fd[2]);
 
 /* execute_utils.c */
 pid_t	ft_fork(void);

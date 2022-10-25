@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 18:39:20 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/24 19:03:35 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/25 14:37:46 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static char	*strjoin_3way(char *pre, char *mid, char *post)
 	size_t	i;
 	size_t	len;
 	char	*result;
-	
+
 	i = 0;
 	len = ft_strlen(pre) + ft_strlen(mid) + ft_strlen(post);
 	result = (char *)malloc(sizeof(char) * len + 1);
@@ -66,7 +66,7 @@ static int	replace_text(t_token *toks, int start, t_env_list *envl)
 	char	*post;
 
 	i = start;
-	while(toks->text[i] && is_allowed(toks->text[i]))
+	while (toks->text[i] && is_allowed(toks->text[i]))
 		i++;
 	if (i == start)
 		return (i);

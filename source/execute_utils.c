@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 18:28:27 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/24 22:25:07 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/25 14:36:46 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void	wait_child(void)
 
 void	remove_parenthesis(t_token **toks)
 {
-	t_token *tmp;
+	t_token	*tmp;
 
 	tmp = (*toks)->next;
 	tmp->prev = NULL;
