@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 20:49:38 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/25 15:24:58 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/25 15:54:37 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ void	execve_command(char **argv, t_env_list *envl, pid_t pid)
 	{
 		if (execve(argv[0], argv, reverse_env(envl)) == -1)
 			flag = FALSE;
+		if (get_env(envl, "PATH") == NULL)
+			put_error_cmd_exit(argv[0], "No such file or directory", CMD_NOT_FOUND);
 		cmd = get_command(ft_split(get_env(envl, "PATH")->value, ':'), \
 				argv[0]);
 		if (cmd != NULL)
