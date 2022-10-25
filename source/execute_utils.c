@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 18:28:27 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/25 14:36:46 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/25 16:17:36 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,32 +72,6 @@ char	*get_command(char **paths, char *cmd)
 	return (NULL);
 }
 
-void	wait_child(void)
-{
-	int		status;
-	int		sig;
-	int		i;
-
-	i = 0;
-	set_signal(IGN, IGN);
-	while (wait(&status) != -1)
-	{
-		if (WIFSIGNALED(status))
-		{
-			sig = WTERMSIG(status);
-			if (sig == SIGINT && i == 0)
-				ft_putstr_fd("^C\n", STDERR_FILENO);
-			else if (sig == SIGQUIT && i == 0)
-				ft_putstr_fd("^\\Quit: 3\n", STDERR_FILENO);
-			g_exit_code = sig + 128;
-			i++;
-		}
-		else
-			g_exit_code = WEXITSTATUS(status);
-	}
-	set_signal(HAN, HAN);
-}
-
 void	remove_parenthesis(t_token **toks)
 {
 	t_token	*tmp;
@@ -113,4 +87,16 @@ void	remove_parenthesis(t_token **toks)
 	free((*toks)->text);
 	free(*toks);
 	*toks = tmp;
+}
+
+void	redup_descriptor(t_lists* list)
+{
+	if (list->redirl)
+	{
+		dup2(list->redirl->tmp[0], STDIN_FILENO);
+		dup2(list->redirl->tmp[1], STDOUT_FILENO);
+	}
+	if (list->heredocl)
+		dup2(list->heredocl->tmp, STDIN_FILENO);
+	return ;
 }
