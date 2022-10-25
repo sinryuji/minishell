@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 15:58:39 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/25 17:55:07 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/25 20:18:22 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ int	parsing(t_token **toks, t_tree **root, char *line)
 {
 	if (!scanner(toks, line))
 		return (FALSE);
-	*toks =  get_last_token(*toks);
+	*toks = get_last_token(*toks);
 	*root = get_new_node(LIST, 0, *toks, NULL);
 	if (!parser(*root, TRUE))
 		return (FALSE);
