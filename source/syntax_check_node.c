@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 22:13:21 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/26 17:59:44 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/26 18:06:20 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 static int	match_redir(t_token **toks)
 {
-	t_token *origin;
+	t_token	*origin;
 
 	origin = *toks;
 	while (*toks)

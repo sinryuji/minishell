@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 20:49:38 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/26 16:46:18 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/26 18:05:36 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,5 +111,4 @@ void	execute_command(t_tree *root, char **argv, t_lists *list, pid_t pid)
 		execve_command(argv, list->envl, pid);
 	redup_descriptor(list);
 	free(argv);
-	//ft_split_free(argv);
 }
