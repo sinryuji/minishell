@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 02:39:04 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/26 02:46:13 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/26 15:51:18 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	filter_pattern(t_list **pattern)
 	}
 	if (!flag)
 	{
-		ft_lstclear(pattern, free);
+		ft_lstclear(&origin, free);
 		*pattern = NULL;
 	}
 	else
