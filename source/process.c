@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 21:21:06 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/26 18:00:33 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/26 18:03:21 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,17 @@
 int	parsing(t_token **toks, t_tree **root, char *line)
 {
 	if (!scanner(toks, line))
+	{
+		free_toks(toks);
 		return (FALSE);
+	}
 	*toks = get_last_token(*toks);
 	*root = get_new_node(LIST, 0, *toks, NULL);
 	if (!parser(*root, TRUE))
+	{
+		root_free(*root);
 		return (FALSE);
+	}
 	return (TRUE);
 }
 
@@ -130,6 +136,7 @@ void	line_processing(char *line, t_lists *list)
 	{
 		g_exit_code = 258;
 		write(STDERR_FILENO, "syntax err\n", 11);
+		root_free(root);
 		return ;
 	}
 	prev_fd = -1;

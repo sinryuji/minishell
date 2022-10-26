@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 20:18:21 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/26 15:21:21 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/26 17:28:23 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,5 +106,6 @@ void	roop_convert_toks(t_tree *root, t_lists *list, char **ret);
 char	**convert_toks(t_tree *root, t_lists *list);
 void	processing(t_tree *root, t_lists *list, int *prev_fd, int pipe_fd[2]);
 void	line_processing(char *line, t_lists *list);
+void	root_free(t_tree *root);
 
 #endif
