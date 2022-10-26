@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 20:49:38 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/26 16:03:59 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/26 16:46:18 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ void	execute_command(t_tree *root, char **argv, t_lists *list, pid_t pid)
 	{
 		execute_subshell(root->toks, list, pid);
 		redup_descriptor(list);
+		free(argv);
 		return ;
 	}
 	built_in = get_built_in(argv[0]);
@@ -109,5 +110,6 @@ void	execute_command(t_tree *root, char **argv, t_lists *list, pid_t pid)
 	else
 		execve_command(argv, list->envl, pid);
 	redup_descriptor(list);
-	ft_split_free(argv);
+	free(argv);
+	//ft_split_free(argv);
 }

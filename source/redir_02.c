@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:55:13 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/25 20:10:00 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/26 16:48:23 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,11 @@ int	set_redir(t_redir_list **redirl, t_redir *new)
 	return (SUCCESS);
 }
 
-void	free_redir(t_redir *redir)
+void	free_redir(t_redir **redir)
 {
-	free(redir->redir);
-	redir->redir = NULL;
-	free(redir->file);
-	redir->file = NULL;
-	free(redir);
-	redir = NULL;
+	free((*redir)->redir);
+	free((*redir)->file);
+	free(*redir);
 }
 
 void	free_redirl(t_redir_list **redirl)
@@ -77,7 +74,7 @@ void	free_redirl(t_redir_list **redirl)
 		tmp = redir;
 		redir = redir->next;
 		if (tmp)
-			free_redir(tmp);
+			free_redir(&tmp);
 	}
 	if (*redirl)
 		free(*redirl);
