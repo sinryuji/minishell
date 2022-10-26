@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 21:21:06 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/26 18:03:21 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/26 18:07:50 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,24 +55,6 @@ void	roop_convert_toks(t_tree *root, t_lists *list, char **ret)
 		i++;
 	}
 	ret[i] = NULL;
-}
-
-void	root_free(t_tree *root)
-{
-	t_token *tmp;
-
-	if (root == NULL)
-		return ;
-	root_free(root->left);
-	root_free(root->right);	
-	while (root->toks)
-	{
-		tmp = root->toks;
-		root->toks = root->toks->next;
-		free(tmp->text);
-		free(tmp);
-	}
-	free(root);
 }
 
 char	**convert_toks(t_tree *root, t_lists *list)

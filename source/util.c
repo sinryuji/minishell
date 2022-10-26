@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 22:38:16 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/26 17:34:04 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/26 18:06:42 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	print_toks(t_token *toks)
 {
 	while (toks)
 	{
-		printf("type : %d, text : %s, addr : %p\n", toks->type, toks->text, toks);
+		printf("type : %d, text : %s\n", toks->type, toks->text);
 		toks = toks->next;
 	}
 }
