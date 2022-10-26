@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 21:21:06 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/25 21:23:44 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/26 16:04:07 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	parsing(t_token **toks, t_tree **root, char *line)
 
 void	roop_convert_toks(t_tree *root, t_lists *list, char **ret)
 {
-	int	i;
+	int		i;
 
 	i = 0;
 	while (root->toks)
@@ -45,10 +45,27 @@ void	roop_convert_toks(t_tree *root, t_lists *list, char **ret)
 			continue ;
 		}
 		ret[i] = root->toks->text;
-		i++;
 		root->toks = root->toks->next;
+		i++;
 	}
 	ret[i] = NULL;
+}
+
+void	root_free(t_tree *root)
+{
+	t_token *tmp;
+
+	if (root == NULL)
+		return ;
+	root_free(root->left);
+	root_free(root->right);	
+	while (root->toks)
+	{
+		tmp = root->toks;
+		root->toks = root->toks->next;
+		free(tmp);
+	}
+	free(root);
 }
 
 char	**convert_toks(t_tree *root, t_lists *list)
@@ -116,6 +133,7 @@ void	line_processing(char *line, t_lists *list)
 	}
 	prev_fd = -1;
 	processing(root, list, &prev_fd, pipe_fd);
+	root_free(root);
 	free_redirl(&list->redirl);
 	free_heredocl(&list->heredocl);
 	add_history(line);

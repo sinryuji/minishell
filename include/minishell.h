@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 20:18:21 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/25 21:23:00 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/26 15:21:21 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@
 
 # define CMD_NOT_FOUND 127
 
-extern int	g_exit_code;
+extern int		g_exit_code;
 
 typedef void	(*t_tree_func)(t_tree *tree, t_env_list *envl);
 
@@ -94,7 +94,7 @@ pid_t	ft_fork(void);
 char	*get_command(char **paths, char *cmd);
 int		dir_check(char *path, char *cmd);
 void	remove_parenthesis(t_token **toks);
-void	redup_descriptor(t_lists* list);
+void	redup_descriptor(t_lists *list);
 
 /* execute_utils_02.c */
 void	wait_child(void);
