@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:15:41 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/25 12:57:05 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/26 16:49:00 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int			heredoc(t_heredoc_list *heredocl);
 t_redir		*new_redir(char *redir, char *file);
 int			set_redir(t_redir_list **redirl, t_redir *redir);
 void		free_redirl(t_redir_list **redirl);
-void		free_redir(t_redir *redir);
+void		free_redir(t_redir **redir);
 
 /* redir_03.c */
 t_heredoc	*new_heredoc(char *eof);

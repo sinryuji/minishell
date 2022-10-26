@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 21:21:06 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/26 16:04:07 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/26 16:51:18 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	root_free(t_tree *root)
 	{
 		tmp = root->toks;
 		root->toks = root->toks->next;
+		free(tmp->text);
 		free(tmp);
 	}
 	free(root);
