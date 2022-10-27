@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 21:41:23 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/10 21:02:54 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/27 14:20:50 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,11 @@ static int	print_export(t_env_list *envl)
 	env = envl->head;
 	while (env)
 	{
+		if (ft_strcmp(env->key, "_") == 0)
+		{
+			env = env->next;
+			continue ;
+		}
 		if (env->value)
 			printf("declare -x %s=\"%s\"\n", env->key, env->value);
 		else
