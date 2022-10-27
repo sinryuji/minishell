@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 18:21:12 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/10 21:03:37 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/27 14:25:47 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,10 @@ int	sort_env(t_env_list **envl)
 	if (!*envl)
 		return (FAILURE);
 	end = (*envl)->tail;
-	while (end != (*envl)->head->next)
+	while (end != (*envl)->head)
 	{
 		cur = (*envl)->head;
-		while (cur->next && cur->next != end)
+		while (cur->next)
 		{
 			if (ft_strcmp(cur->key, cur->next->key) > 0)
 			{
