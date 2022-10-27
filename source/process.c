@@ -6,7 +6,7 @@
 /*   By: hyeongki <hyeongki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 21:21:06 by hyeongki          #+#    #+#             */
-/*   Updated: 2022/10/26 18:07:50 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/27 15:19:58 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ char	**convert_toks(t_tree *root, t_lists *list)
 	char	**ret;
 	t_token	*origin;
 
-	origin = root->toks;
 	expand(root, list->envl);
+	origin = root->toks;
 	ret = (char **)malloc(sizeof(char *) * (get_toks_length(root->toks) + 1));
 	if (!ret)
 	{
