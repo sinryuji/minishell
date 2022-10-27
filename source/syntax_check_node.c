@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 22:13:21 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/27 12:01:48 by jiwahn           ###   ########.fr       */
+/*   Updated: 2022/10/27 12:27:06 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	check_node_subsh(t_token **toks)
 {
 	if (!((*toks)->type == OP && !ft_strcmp((*toks)->text, "(")))
 		return (FALSE);
-	if (!((*toks)->next->type == OP && !ft_strcmp((*toks)->next->text, "(")))
+	if ((*toks)->next->type == OP && !ft_strcmp((*toks)->next->text, ")"))
 		return (FALSE);
 	while (!((*toks)->type == OP && !ft_strcmp((*toks)->text, ")")))
 		*toks = (*toks)->next;
