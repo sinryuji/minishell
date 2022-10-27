@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 13:17:41 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/26 15:52:28 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/27 15:07:46 by hyeongki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,12 +99,15 @@ static t_token	*insert_matches(t_token *toks, t_list *matches)
 {
 	t_token	*new;
 	t_token	*last;
+	t_list	*tmp;
 
 	new = NULL;
 	while (matches && *(char *)(matches->content))
 	{
 		tok_add_back(&new, get_new_token(WORD, matches->content));
+		tmp = matches;
 		matches = matches->next;
+		free(tmp);
 	}
 	if (new == NULL)
 		return (toks);
@@ -142,5 +145,4 @@ void	expand_pathname(t_tree *root)
 	}
 	root->toks = get_first_token(save);
 	ft_lstclear(&pattern, free);
-	ft_lstclear(&matches, NULL);
 }
