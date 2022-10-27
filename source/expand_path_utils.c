@@ -6,7 +6,7 @@
 /*   By: jiwahn <jiwahn@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 02:39:04 by jiwahn            #+#    #+#             */
-/*   Updated: 2022/10/26 15:51:18 by hyeongki         ###   ########.fr       */
+/*   Updated: 2022/10/27 15:03:25 by jiwahn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int	match_pattern_compare(char **str, t_list *pattern, int flag, int len)
 	{
 		if (ft_strncmp(*str, pattern->content, len))
 			return (0);
+		*str += len;
 	}
 	return (1);
 }
