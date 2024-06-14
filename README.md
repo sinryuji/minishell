@@ -7,6 +7,9 @@ make && ./minishell
 ```
 
 ### Supported
+- quoting(`''`, `""`)
+- environment variable
+- sub shell
 - redirection(`<`, `<<`, `>`, `>>`)
 - pipe(`|`)
 - `&&`, `||`
