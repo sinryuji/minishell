@@ -1,2 +1,21 @@
 # minishell
-42 Seoul minishell By hyeongki
+Simple POSIX Shell.
+
+### Usage
+```shell
+make && ./minishell
+```
+
+### Supported
+- redirection(`<`, `<<`, `>`, `>>`)
+- pipe(`|`)
+- `&&`, `||`
+
+### Built-in functions
+- echo
+- cd
+- pwd
+- export
+- unset
+- env
+- exit
